@@ -1,8 +1,10 @@
 import { useState } from "react";
 import reactLogo from "./assets/react.svg";
+import { Rating } from "@mui/material";
 
 function App() {
   const [count, setCount] = useState(0);
+  const [value, setValue] = useState(2);
 
   return (
     <div className="bg-slate-300">
@@ -24,6 +26,14 @@ function App() {
         </p>
       </div>
       <p>Click on the Vite and React logos to learn more</p>
+      
+      <Rating
+        name="simple-controlled"
+        value={value}
+        onChange={(event, newValue) => {
+          setValue(newValue);
+        }}
+      />
     </div>
   );
 }
