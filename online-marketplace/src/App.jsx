@@ -26,14 +26,15 @@ function App() {
         </p>
       </div>
       <p>Click on the Vite and React logos to learn more</p>
-      
       <Rating
         name="simple-controlled"
         value={value}
+        precision={0.5}
         onChange={(event, newValue) => {
           setValue(newValue);
         }}
       />
+      Stars: {value}/5
     </div>
   );
 }
