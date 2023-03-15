@@ -3,8 +3,7 @@ import reactLogo from "../assets/react.svg";
 import { Rating } from "@mui/material";
 
 function LandingPage() {
-  const [count, setCount] = useState(0);
-  const [value, setValue] = useState(2);
+
 
   return (
 <div>
