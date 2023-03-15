@@ -2,14 +2,23 @@ import Sidebar from "./SideBar";
 import { Routes, Route, BrowserRouter } from "react-router-dom";
 import { useState, useEffect } from "react";
 import ShirtList from "./ShirtList";
+import PantsList from "./PantsList";
 
 
 function ProductList() {
 
     const [product, setProduct] = useState("");
+    const [categories, setCategories] = useState([])
 
     useEffect(() => {
-        console.log(product);
+      setCategories(fetch('https://fakestoreapi.com/products/categories')
+              .then(res=>res.json())
+              .then(json=>console.log(json)))
+        console.log(categories)
+    }, [])
+
+    useEffect(() => {
+        console.log(categories);
       }, [product]);
 
     function displayProducts(){
@@ -39,10 +48,9 @@ function ProductList() {
                     <img src="/images/jeans1.jpg" alt="Levi jeans" class="h-full w-full object-cover object-center object-scale-down "/>
                   </div>
                   <h3 class="mt-6 text-sm text-gray-500">
-                    <a href="#">
-                      <span class="absolute inset-0"></span>
+                  <button onClick={()=> setProduct("pants")}>                      <span class="absolute inset-0"></span>
                       Pants
-                    </a>
+                    </button>
                   </h3>
                   <p class="text-base font-semibold text-gray-900">Pants</p>
                 </div>
@@ -66,6 +74,8 @@ function ProductList() {
           </div>)
             case 'shirts':
                 return <ShirtList product = {product} setProduct = {setProduct}></ShirtList>
+            case 'pants':
+                return <PantsList product = {product} setProduct = {setProduct}></PantsList>
             default: 
                 return null
         }
