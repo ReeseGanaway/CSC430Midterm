@@ -18,15 +18,15 @@ function LandingPage() {
    <div class="h-full px-3 py-4 overflow-y-auto bg-gray-50 dark:bg-gray-800">
       <ul class="space-y-2">
          <li>
-            <a href="#" class="flex items-center p-2 text-base font-normal text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700">
+            <a href="/" class="flex items-center p-2 text-base font-normal text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700">
                <svg aria-hidden="true" class="w-6 h-6 text-gray-500 transition duration-75 dark:text-gray-400 group-hover:text-gray-900 dark:group-hover:text-white" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path d="M2 10a8 8 0 018-8v8h8a8 8 0 11-16 0z"></path><path d="M12 2.252A8.014 8.014 0 0117.748 8H12V2.252z"></path></svg>
-               <span class="ml-3">Dashboard</span>
+               <span class="ml-3">Home</span>
             </a>
          </li>
          <li>
             <a href="#" class="flex items-center p-2 text-base font-normal text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700">
                <svg aria-hidden="true" class="flex-shrink-0 w-6 h-6 text-gray-500 transition duration-75 dark:text-gray-400 group-hover:text-gray-900 dark:group-hover:text-white" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" d="M10 9a3 3 0 100-6 3 3 0 000 6zm-7 9a7 7 0 1114 0H3z" clip-rule="evenodd"></path></svg>
-               <span class="flex-1 ml-3 whitespace-nowrap">Users</span>
+               <span class="flex-1 ml-3 whitespace-nowrap">Account</span>
             </a>
          </li>
          <li>
@@ -55,7 +55,7 @@ function LandingPage() {
     <div class="100">
   <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
     <div class="mx-auto max-w-2xl py-16 sm:py-24 lg:max-w-none lg:py-32">
-      <h2 class="text-2xl font-bold text-gray-900">Collections</h2>
+      <h2 class="text-2xl font-bold text-gray-900">Categories</h2>
 
       <div class="mt-6 space-y-12 lg:grid lg:grid-cols-3 lg:gap-x-6 lg:space-y-0">
         <div class="group relative">
@@ -68,33 +68,33 @@ function LandingPage() {
               Shirts
             </a>
           </h3>
-          <p class="text-base font-semibold text-gray-900">Work from home accessories</p>
+          <p class="text-base font-semibold text-gray-900">Shirts</p>
         </div>
 
         <div class="group relative">
           <div class="relative h-80 w-full overflow-hidden rounded-lg bg-white group-hover:opacity-75 sm:aspect-w-2 sm:aspect-h-1 sm:h-64 lg:aspect-w-1 lg:aspect-h-1">
-            <img src="https://tailwindui.com/img/ecommerce-images/home-page-02-edition-02.jpg" alt="Wood table with porcelain mug, leather journal, brass pen, leather key ring, and a houseplant." class="h-full w-full object-cover object-center"/>
+            <img src="/images/jeans1.jpg" alt="Levi jeans" class="h-full w-full object-cover object-center object-scale-down "/>
           </div>
           <h3 class="mt-6 text-sm text-gray-500">
             <a href="#">
               <span class="absolute inset-0"></span>
-              Self-Improvement
+              Pants
             </a>
           </h3>
-          <p class="text-base font-semibold text-gray-900">Journals and note-taking</p>
+          <p class="text-base font-semibold text-gray-900">Pants</p>
         </div>
 
         <div class="group relative">
           <div class="relative h-80 w-full overflow-hidden rounded-lg bg-white group-hover:opacity-75 sm:aspect-w-2 sm:aspect-h-1 sm:h-64 lg:aspect-w-1 lg:aspect-h-1">
-            <img src="https://tailwindui.com/img/ecommerce-images/home-page-02-edition-03.jpg" alt="Collection of four insulated travel bottles on wooden shelf." class="h-full w-full object-cover object-center"/>
+            <img src="/images/jordans1.jpg" alt="Nike Men's Footbal Shoes" class="h-full w-full object-cover object-center object-scale-down"/>
           </div>
           <h3 class="mt-6 text-sm text-gray-500">
             <a href="#">
               <span class="absolute inset-0"></span>
-              Travel
+              Shoes
             </a>
           </h3>
-          <p class="text-base font-semibold text-gray-900">Daily commute essentials</p>
+          <p class="text-base font-semibold text-gray-900">Shoes</p>
         </div>
       </div>
     </div>
