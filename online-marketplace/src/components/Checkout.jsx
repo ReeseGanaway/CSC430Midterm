@@ -65,9 +65,42 @@ const Checkout = () => {
           Return to cart
         </small>
         <h1 className="text-3xl font-bold mt-2 tracking-wide">Checkout</h1>
-        <form action="" className="mt-6">
-          <h2 className="text-lg">1. Delivery Information</h2>
-          <div className="border border-slate-200 rounded max-w-md shadow-[0_0_5px_rgba(0,0,0,0.2)]">
+        <form
+          action="#"
+          className="mt-8 grid md:grid-cols-[1fr,1fr,minmax(24rem,1fr)] md:gap-x-5"
+        >
+          <div className="order-2 mt-6 md:mt-0 md:order-1 md:col-span-2">
+            <h2 className="text-lg">1. Delivery Information</h2>
+            <div className="w-full mt-5 grid gap-5 grid-cols-2">
+              <TextField label="First Name" type="text" required />
+              <TextField label="Last Name" type="text" required />
+            </div>
+            <div className="w-full mt-5 grid gap-5 grid-cols-2">
+              <TextField label="Email" type="email" required />
+              <TextField label="Phone Number" type="tel" required />
+            </div>
+            <div className="w-full mt-5 grid gap-5 grid-cols-2">
+              <TextField label="Street Address" type="text" required />
+              <TextField label="Apt, suite, etc (optional)" type="text" />
+            </div>
+            <div className="w-full mt-5 grid gap-5 grid-cols-4">
+              <TextField
+                label="City"
+                type="text"
+                className="col-span-2"
+                required
+              />
+              <TextField select label="State">
+                {states.map((state, idx) => (
+                  <MenuItem key={idx} value={state}>
+                    {state}
+                  </MenuItem>
+                ))}
+              </TextField>
+              <TextField label="Zip" type="number" required />
+            </div>
+          </div>
+          <div className="border border-slate-200 rounded max-w-sm shadow-[0_0_5px_rgba(0,0,0,0.2)] md:justify-self-end order-1 justify-self-center md:order-2 md:min-w-[24rem]">
             <h2 className="text-lg font-semibold p-3 border-b">
               Order Summary
             </h2>
@@ -125,34 +158,6 @@ const Checkout = () => {
                 .
               </p>
             </div>
-          </div>
-          <div className="w-full mt-5 grid gap-5 grid-cols-2">
-            <TextField label="First Name" type="text" required />
-            <TextField label="Last Name" type="text" required />
-          </div>
-          <div className="w-full mt-5 grid gap-5 grid-cols-2">
-            <TextField label="Email" type="email" required />
-            <TextField label="Phone Number" type="tel" required />
-          </div>
-          <div className="w-full mt-5 grid gap-5 grid-cols-2">
-            <TextField label="Street Address" type="text" required />
-            <TextField label="Apt, suite, etc (optional)" type="text" />
-          </div>
-          <div className="w-full mt-5 grid gap-5 grid-cols-4">
-            <TextField
-              label="City"
-              type="text"
-              className="col-span-2"
-              required
-            />
-            <TextField select label="Select">
-              {states.map((state, idx) => (
-                <MenuItem key={idx} value={state}>
-                  {state}
-                </MenuItem>
-              ))}
-            </TextField>
-            <TextField label="ZIP" type="number" required />
           </div>
         </form>
       </main>
