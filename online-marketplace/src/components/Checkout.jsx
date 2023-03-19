@@ -67,6 +67,65 @@ const Checkout = () => {
         <h1 className="text-3xl font-bold mt-2 tracking-wide">Checkout</h1>
         <form action="" className="mt-6">
           <h2 className="text-lg">1. Delivery Information</h2>
+          <div className="border border-slate-200 rounded max-w-md shadow-[0_0_5px_rgba(0,0,0,0.2)]">
+            <h2 className="text-lg font-semibold p-3 border-b">
+              Order Summary
+            </h2>
+            <div className="m-3 flex flex-col border-b-4 border-gray-600">
+              <div className="flex justify-between mb-2">
+                <p>Items (2):</p>
+                <span className="pl-[1.75rem] items-end inline-flex">
+                  $145.99
+                </span>
+              </div>
+              <div className="flex justify-between mb-4">
+                <p>Shipping &#38; handling:</p>
+                <span className="pl-[1.75rem] items-end inline-flex">
+                  $7.50
+                </span>
+              </div>
+              <div className="flex items-center justify-end">
+                <span className="border-b-2 border-gray-400 w-16" />
+              </div>
+              <div className="flex justify-between mt-4 mb-2">
+                <p>Total before tax:</p>
+                <span className="pl-[1.75rem] items-end inline-flex">
+                  $145.99
+                </span>
+              </div>
+              <div className="flex justify-between mb-2">
+                <p>Estimated tax to be collected:</p>
+                <span className="pl-[1.75rem] items-end inline-flex">
+                  $6.47
+                </span>
+              </div>
+            </div>
+            <div className="m-4 flex justify-between">
+              <p className="text-red-600 text-lg font-semibold">Order Total:</p>
+              <span className="pl-[1.75rem] items-end inline-flex text-red-600 text-lg font-semibold">
+                $152.46
+              </span>
+            </div>
+            <div className="m-3">
+              <button
+                type="submit"
+                className="bg-gradient-to-r from-[#3a577c] to-[#275350] rounded w-full py-2 text-white font-medium"
+              >
+                Place your order
+              </button>
+              <p className="text-zinc-500 py-2">
+                By placing your order, you agree to our{" "}
+                <a href="#" className="text-blue-600">
+                  privacy notice
+                </a>{" "}
+                and{" "}
+                <a href="#" className="text-blue-600">
+                  conditions of use
+                </a>
+                .
+              </p>
+            </div>
+          </div>
           <div className="w-full mt-5 grid gap-5 grid-cols-2">
             <TextField label="First Name" type="text" required />
             <TextField label="Last Name" type="text" required />
@@ -80,7 +139,12 @@ const Checkout = () => {
             <TextField label="Apt, suite, etc (optional)" type="text" />
           </div>
           <div className="w-full mt-5 grid gap-5 grid-cols-4">
-            <TextField label="City" type="text" className="col-span-2" required />
+            <TextField
+              label="City"
+              type="text"
+              className="col-span-2"
+              required
+            />
             <TextField select label="Select">
               {states.map((state, idx) => (
                 <MenuItem key={idx} value={state}>
