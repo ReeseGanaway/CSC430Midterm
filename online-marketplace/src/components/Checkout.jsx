@@ -79,28 +79,37 @@ const Checkout = () => {
               <TextField label="Email" type="email" required />
               <TextField label="Phone Number" type="tel" required />
             </div>
-            <div className="w-full mt-5 grid gap-5 grid-cols-2">
+            <div className="w-full mt-5 grid gap-5 tabletMd:grid-cols-2">
               <TextField label="Street Address" type="text" required />
               <TextField label="Apt, suite, etc (optional)" type="text" />
             </div>
-            <div className="w-full mt-5 grid gap-5 grid-cols-4">
+            <div className="w-full mt-5 grid gap-5 grid-cols-5 tabletMd:grid-cols-4">
               <TextField
                 label="City"
                 type="text"
-                className="col-span-2"
+                className="col-span-5 tabletMd:col-span-2"
                 required
               />
-              <TextField select label="State">
+              <TextField
+                select
+                label="State"
+                className="col-span-3 tabletMd:col-span-1"
+              >
                 {states.map((state, idx) => (
                   <MenuItem key={idx} value={state}>
                     {state}
                   </MenuItem>
                 ))}
               </TextField>
-              <TextField label="Zip" type="number" required />
+              <TextField
+                label="Zip"
+                type="number"
+                required
+                className="col-span-2 tabletMd:col-span-1"
+              />
             </div>
           </div>
-          <div className="border border-slate-200 rounded max-w-sm shadow-[0_0_5px_rgba(0,0,0,0.2)] md:justify-self-end order-1 justify-self-center md:order-2 md:min-w-[24rem]">
+          <div className="border border-slate-200 rounded max-w-sm h-max shadow-[0_0_5px_rgba(0,0,0,0.2)] justify-self-center md:justify-self-end order-1 md:order-2 md:min-w-[24rem]">
             <h2 className="text-lg font-semibold p-3 border-b">
               Order Summary
             </h2>
@@ -126,14 +135,14 @@ const Checkout = () => {
                   $145.99
                 </span>
               </div>
-              <div className="flex justify-between mb-2">
+              <div className="flex justify-between mb-4">
                 <p>Estimated tax to be collected:</p>
                 <span className="pl-[1.75rem] items-end inline-flex">
                   $6.47
                 </span>
               </div>
             </div>
-            <div className="m-4 flex justify-between">
+            <div className="m-4 flex justify-between items-center">
               <p className="text-red-600 text-lg font-semibold">Order Total:</p>
               <span className="pl-[1.75rem] items-end inline-flex text-red-600 text-lg font-semibold">
                 $152.46
