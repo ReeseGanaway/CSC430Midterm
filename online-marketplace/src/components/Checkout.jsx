@@ -71,29 +71,29 @@ const Checkout = () => {
         >
           <div className="order-2 mt-6 md:mt-0 md:order-1 md:col-span-2">
             <h2 className="text-lg">1. Delivery Information</h2>
-            <div className="w-full mt-5 grid gap-5 grid-cols-2">
+            <div className="w-full mt-5 grid gap-5 mobileM:grid-cols-2">
               <TextField label="First Name" type="text" required />
               <TextField label="Last Name" type="text" required />
             </div>
-            <div className="w-full mt-5 grid gap-5 grid-cols-2">
+            <div className="w-full mt-5 grid gap-5 mobileM:grid-cols-2">
               <TextField label="Email" type="email" required />
               <TextField label="Phone Number" type="tel" required />
             </div>
-            <div className="w-full mt-5 grid gap-5 tabletMd:grid-cols-2">
+            <div className="w-full mt-5 grid gap-5 mobileM:grid-cols-2 md:grid-cols-1">
               <TextField label="Street Address" type="text" required />
               <TextField label="Apt, suite, etc (optional)" type="text" />
             </div>
-            <div className="w-full mt-5 grid gap-5 grid-cols-5 tabletMd:grid-cols-4">
+            <div className="w-full mt-5 grid gap-5 grid-cols-5 mobileXl:grid-cols-4 md:grid-cols-5">
               <TextField
                 label="City"
                 type="text"
-                className="col-span-5 tabletMd:col-span-2"
+                className="col-span-5 mobileXl:col-span-2 md:col-span-5 lg:col-span-2"
                 required
               />
               <TextField
                 select
                 label="State"
-                className="col-span-3 tabletMd:col-span-1"
+                className="col-span-3 mobileXl:col-span-1 md:col-span-3 lg:col-span-2"
               >
                 {states.map((state, idx) => (
                   <MenuItem key={idx} value={state}>
@@ -102,10 +102,10 @@ const Checkout = () => {
                 ))}
               </TextField>
               <TextField
-                label="Zip"
+                label="ZIP Code"
                 type="number"
+                className="col-span-2 mobileXl:col-span-1 md:col-span-2 lg:col-span-1"
                 required
-                className="col-span-2 tabletMd:col-span-1"
               />
             </div>
           </div>
