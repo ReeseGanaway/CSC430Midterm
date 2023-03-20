@@ -94,6 +94,8 @@ const Checkout = () => {
                 select
                 label="State"
                 className="col-span-3 mobileXl:col-span-1 md:col-span-3 lg:col-span-2"
+                required
+                defaultValue=""
               >
                 {states.map((state, idx) => (
                   <MenuItem key={idx} value={state}>
@@ -166,6 +168,41 @@ const Checkout = () => {
                 </a>
                 .
               </p>
+            </div>
+          </div>
+          <div className="order-3 mt-6 col-span-full">
+            <h2 className="text-lg">2. Payment Method</h2>
+            <div className="mt-2 flex flex-col">
+              <div className="flex flex-row justify-center">
+                <button className="border border-slate-300 rounded h-fit px-5 mr-8">
+                  <img
+                    src="/google_pay.svg"
+                    alt="Google Pay button"
+                    className="w-16 h-12"
+                  />
+                </button>
+                <button className="border border-slate-300 rounded h-fit px-5 mr-8">
+                  <img
+                    src="/apple_pay.svg"
+                    alt="Apple Pay button"
+                    className="w-16 h-12"
+                  />
+                </button>
+                <button className="border border-slate-300 rounded h-fit px-3">
+                  <img
+                    src="/paypal.svg"
+                    alt="PayPal button"
+                    className="w-20 h-12"
+                  />
+                </button>
+              </div>
+              <div className="flex items-center mt-6">
+                <span className="hidden mobileS:block flex-[1] h-[2px] bg-zinc-500 mr-2" />
+                <p className="text-zinc-500 font-medium mx-auto">
+                  Or pay with different method
+                </p>
+                <span className="hidden mobileS:block flex-1 h-[2px] bg-zinc-500 ml-2" />
+              </div>
             </div>
           </div>
         </form>
