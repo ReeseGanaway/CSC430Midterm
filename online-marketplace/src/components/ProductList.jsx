@@ -3,6 +3,7 @@ import { Routes, Route, BrowserRouter } from "react-router-dom";
 import { useState, useEffect } from "react";
 import ShirtList from "./ShirtList";
 import PantsList from "./PantsList";
+import Drawer from "./Drawer";
 
 
 function ProductList() {
@@ -85,7 +86,7 @@ function ProductList() {
   return (
     <div>
 
-  <Sidebar/>
+  <Drawer/>
 
   {displayProducts()}
 

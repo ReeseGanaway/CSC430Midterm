@@ -6,8 +6,8 @@ function ShirtList(props) {
     return (
       
        
-      <div class="p-4 sm:ml-64">
-        <button class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded" onClick={() => {props.setProduct("")}}>Back</button>
+<div class="p-4 sm:ml-0">
+  <button class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded" onClick={() => {props.setProduct("")}}>Back</button>
         
 
   <div class="bg-white">

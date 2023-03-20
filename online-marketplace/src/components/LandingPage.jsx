@@ -3,12 +3,13 @@ import reactLogo from "../assets/react.svg";
 import { Rating } from "@mui/material";
 import Sidebar from "./SideBar";
 import { useEffect } from "react";
+import Drawer from "./Drawer";
 
 function LandingPage() {  
 
   return (
 <div>
-  <Sidebar/>
+  <Drawer/>
 
   <div class="p-4 sm:ml-64">
     <div class="100">
