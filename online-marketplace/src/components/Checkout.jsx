@@ -185,7 +185,7 @@ const Checkout = () => {
           </div>
           <div className="order-3 mt-6 col-span-full">
             <h2 className="text-lg">2. Payment Method</h2>
-            <div className="mt-2 flex flex-col">
+            <div className="mt-4 flex flex-col">
               <div className="flex flex-col mobileM:flex-row justify-center">
                 <button className="border border-slate-300 rounded h-fit px-4 mobileM:mr-8">
                   <img
@@ -209,7 +209,7 @@ const Checkout = () => {
                   />
                 </button>
               </div>
-              <div className="flex items-center mt-6">
+              <div className="flex items-center mt-4">
                 <span className="hidden mobileS:block flex-[1] h-[2px] bg-zinc-500 mr-2" />
                 <p className="text-zinc-500 font-medium mx-auto">
                   Or pay with different method
@@ -217,9 +217,14 @@ const Checkout = () => {
                 <span className="hidden mobileS:block flex-1 h-[2px] bg-zinc-500 ml-2" />
               </div>
             </div>
-            <div className="mt-4">
-              <TextField label="Cardholder Name" type="text" required />
-              <FormControl>
+            <div className="mt-6 grid grid-cols-4 mobileM:grid-cols-6 md:grid-cols-4 gap-6">
+              <TextField
+                label="Cardholder Name"
+                type="text"
+                className="col-span-4 mobileM:col-span-6 md:col-span-2 lg:col-span-1"
+                required
+              />
+              <FormControl className="col-span-4 mobileM:col-span-6 md:col-span-2 lg:col-span-1">
                 <InputLabel>Card Number</InputLabel>
                 <OutlinedInput
                   className="select-none"
@@ -243,9 +248,10 @@ const Checkout = () => {
                 label="Expiration Date"
                 type="text"
                 placeholder="MM/YY"
+                className="col-span-4 mobileM:col-span-3 md:col-span-2 lg:col-span-1"
                 required
               />
-              <FormControl>
+              <FormControl className="col-span-4 mobileM:col-span-3 md:col-span-2 lg:col-span-1">
                 <InputLabel>CVV</InputLabel>
                 <OutlinedInput
                   className="select-none"
