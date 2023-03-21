@@ -173,26 +173,26 @@ const Checkout = () => {
           <div className="order-3 mt-6 col-span-full">
             <h2 className="text-lg">2. Payment Method</h2>
             <div className="mt-2 flex flex-col">
-              <div className="flex flex-row justify-center">
-                <button className="border border-slate-300 rounded h-fit px-5 mr-8">
+              <div className="flex flex-col mobileM:flex-row justify-center">
+                <button className="border border-slate-300 rounded h-fit px-4 mobileM:mr-8">
                   <img
                     src="/google_pay.svg"
                     alt="Google Pay button"
-                    className="w-16 h-12"
+                    className="w-16 h-12 m-auto"
                   />
                 </button>
-                <button className="border border-slate-300 rounded h-fit px-5 mr-8">
+                <button className="border border-slate-300 rounded h-fit px-4 mt-4 mobileM:mr-8 mobileM:mt-0">
                   <img
                     src="/apple_pay.svg"
                     alt="Apple Pay button"
-                    className="w-16 h-12"
+                    className="w-16 h-12 m-auto"
                   />
                 </button>
-                <button className="border border-slate-300 rounded h-fit px-3">
+                <button className="border border-slate-300 rounded h-fit px-4 mt-4 mobileM:mt-0">
                   <img
                     src="/paypal.svg"
                     alt="PayPal button"
-                    className="w-20 h-12"
+                    className="w-16 h-12 m-auto"
                   />
                 </button>
               </div>
