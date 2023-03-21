@@ -1,9 +1,21 @@
-import React from "react";
+import { useState } from "react";
 import { FaAngleLeft } from "react-icons/fa";
 import TextField from "@mui/material/TextField";
 import MenuItem from "@mui/material/MenuItem";
+import FormControl from "@mui/material/FormControl";
+import InputLabel from "@mui/material/InputLabel";
+import OutlinedInput from "@mui/material/OutlinedInput";
+import InputAdornment from "@mui/material/InputAdornment";
+import Visibility from "@mui/icons-material/Visibility";
+import VisibilityOff from "@mui/icons-material/VisibilityOff";
+import IconButton from "@mui/material/IconButton";
 
 const Checkout = () => {
+  const [showCardNum, setShowCardNum] = useState(false);
+  const [showCVV, setShowCVV] = useState(false);
+  const toggleShowCardNum = () => setShowCardNum((show) => !show);
+  const toggleShowCVV = () => setShowCVV((show) => !show);
+
   const states = [
     "Alabama",
     "Alaska",
@@ -67,6 +79,7 @@ const Checkout = () => {
         <h1 className="text-3xl font-bold mt-2 tracking-wide">Checkout</h1>
         <form
           action="#"
+          autoComplete="off"
           className="mt-8 grid md:grid-cols-[1fr,1fr,minmax(24rem,1fr)] md:gap-x-5"
         >
           <div className="order-2 mt-6 md:mt-0 md:order-1 md:col-span-2">
@@ -203,6 +216,55 @@ const Checkout = () => {
                 </p>
                 <span className="hidden mobileS:block flex-1 h-[2px] bg-zinc-500 ml-2" />
               </div>
+            </div>
+            <div className="mt-4">
+              <TextField label="Cardholder Name" type="text" required />
+              <FormControl>
+                <InputLabel>Card Number</InputLabel>
+                <OutlinedInput
+                  className="select-none"
+                  type={showCardNum ? "number" : "password"}
+                  endAdornment={
+                    <InputAdornment position="end">
+                      <IconButton
+                        aria-label="toggle card number visibility"
+                        onClick={toggleShowCardNum}
+                        edge="end"
+                      >
+                        {showCardNum ? <VisibilityOff /> : <Visibility />}
+                      </IconButton>
+                    </InputAdornment>
+                  }
+                  label="Card Number"
+                  placeholder="1234 1234 1234 1234"
+                />
+              </FormControl>
+              <TextField
+                label="Expiration Date"
+                type="text"
+                placeholder="MM/YY"
+                required
+              />
+              <FormControl>
+                <InputLabel>CVV</InputLabel>
+                <OutlinedInput
+                  className="select-none"
+                  type={showCVV ? "number" : "password"}
+                  endAdornment={
+                    <InputAdornment position="end">
+                      <IconButton
+                        aria-label="toggle cvv visibility"
+                        onClick={toggleShowCVV}
+                        edge="end"
+                      >
+                        {showCVV ? <VisibilityOff /> : <Visibility />}
+                      </IconButton>
+                    </InputAdornment>
+                  }
+                  label="CVV"
+                  placeholder="123"
+                />
+              </FormControl>
             </div>
           </div>
         </form>
