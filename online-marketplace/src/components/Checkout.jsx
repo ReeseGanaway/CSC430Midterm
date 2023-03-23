@@ -9,6 +9,9 @@ import InputAdornment from "@mui/material/InputAdornment";
 import Visibility from "@mui/icons-material/Visibility";
 import VisibilityOff from "@mui/icons-material/VisibilityOff";
 import IconButton from "@mui/material/IconButton";
+import ProductImg from "../assets/checkout_desk.jpeg";
+import Radio from "@mui/material/Radio";
+import RadioGroup from "@mui/material/RadioGroup";
 
 const Checkout = () => {
   const [showCardNum, setShowCardNum] = useState(false);
@@ -124,19 +127,19 @@ const Checkout = () => {
               />
             </div>
           </div>
-          <div className="border border-slate-200 rounded max-w-sm h-max shadow-[0_0_5px_rgba(0,0,0,0.2)] justify-self-center md:justify-self-end order-1 md:order-2 md:min-w-[24rem]">
+          <div className="border border-zinc-300 rounded max-w-sm h-max shadow-[0_0_5px_rgba(0,0,0,0.2)] justify-self-center md:justify-self-end order-1 md:order-2 md:min-w-[24rem]">
             <h2 className="text-lg font-semibold p-3 border-b">
               Order Summary
             </h2>
             <div className="m-3 flex flex-col border-b-4 border-gray-600">
               <div className="flex justify-between mb-2">
-                <p>Items (2):</p>
+                <p>Items:</p>
                 <span className="pl-[1.75rem] items-end inline-flex">
                   $145.99
                 </span>
               </div>
               <div className="flex justify-between mb-4">
-                <p>Shipping &#38; handling:</p>
+                <p>Shipping &amp; handling:</p>
                 <span className="pl-[1.75rem] items-end inline-flex">
                   $7.50
                 </span>
@@ -160,7 +163,7 @@ const Checkout = () => {
             <div className="m-4 flex justify-between items-center">
               <p className="text-red-600 text-lg font-semibold">Order Total:</p>
               <span className="pl-[1.75rem] items-end inline-flex text-red-600 text-lg font-semibold">
-                $152.46
+                $159.96
               </span>
             </div>
             <div className="m-3">
@@ -271,6 +274,62 @@ const Checkout = () => {
                   placeholder="123"
                 />
               </FormControl>
+            </div>
+          </div>
+          <div className="order-4 mt-6 col-span-full">
+            <h2 className="text-lg">3. Review Items &amp; Shipping</h2>
+            <div className="mt-4 rounded border border-zinc-300 flex flex-col mobileL:flex-row p-2">
+              <div className="my-3 mobileL:my-0 flex justify-center">
+                <img
+                  className="productImg"
+                  src={ProductImg}
+                  alt="Picture of a computer desk"
+                />
+              </div>
+              <div className="py-2 w-full mobileL:pl-2 mobileL:py-0">
+                <h1 className="font-semibold mb-1">
+                  Dicunoy Computer Desk with 2 Drawers, 46" Solid Bamboo Home
+                  Office Writing Desk for Small Spaces, Compact Simple Style
+                  Tables with Gap Design and Hook for PC, Laptop, Students,
+                  Study, Makeup, Bedroom
+                </h1>
+                <p className="flex items-center mb-1">
+                  <span className="text-sm text-gray-600 line-through">
+                    $158.99
+                  </span>
+                  <span className="font-semibold ml-1 text-red-600">
+                    $145.99
+                  </span>
+                </p>
+                <p className="mb-1">Quantity: 1</p>
+                <p className="mb-4">Sold by Dicunoy</p>
+                <FormControl>
+                  <h2 className="font-medium">Choose a delivery option:</h2>
+                  <RadioGroup defaultValue="fast-delivery">
+                    <div className="flex items-center">
+                      <Radio
+                        size="small"
+                        value="fast-delivery"
+                        className="!py-1 !pl-0 !pr-2"
+                      />
+                      <h2>
+                        One-Day Delivery ($7.50){" "}
+                        <span className="text-green-800">
+                          &#8212; get it Tomorrow, March 24!
+                        </span>
+                      </h2>
+                    </div>
+                    <div className="flex items-center mt-2">
+                      <Radio
+                        size="small"
+                        value="free-delivery"
+                        className="!py-1 !pl-0 !pr-2"
+                      />
+                      <h2>Free Standard Shipping (4-6 business days)</h2>
+                    </div>
+                  </RadioGroup>
+                </FormControl>
+              </div>
             </div>
           </div>
         </form>
