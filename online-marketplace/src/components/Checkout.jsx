@@ -86,7 +86,7 @@ const Checkout = () => {
           className="mt-8 grid md:grid-cols-[1fr,1fr,minmax(24rem,1fr)] md:gap-x-5"
         >
           <div className="order-2 mt-6 md:mt-0 md:order-1 md:col-span-2">
-            <h2 className="text-lg">1. Delivery Information</h2>
+            <h2 className="text-lg leading-5">1. Delivery Information</h2>
             <div className="w-full mt-5 grid gap-5 mobileM:grid-cols-2">
               <TextField label="First Name" type="text" required />
               <TextField label="Last Name" type="text" required />
@@ -186,7 +186,7 @@ const Checkout = () => {
               </p>
             </div>
           </div>
-          <div className="order-3 mt-6 col-span-full">
+          <div className="order-3 mt-8 col-span-full">
             <h2 className="text-lg">2. Payment Method</h2>
             <div className="mt-4 flex flex-col">
               <div className="flex flex-col mobileM:flex-row justify-center">
@@ -276,7 +276,7 @@ const Checkout = () => {
               </FormControl>
             </div>
           </div>
-          <div className="order-4 mt-6 col-span-full">
+          <div className="order-4 mt-8 col-span-full">
             <h2 className="text-lg">3. Review Items &amp; Shipping</h2>
             <div className="mt-4 rounded border border-zinc-300 flex flex-col mobileL:flex-row p-2">
               <div className="my-3 mobileL:my-0 flex justify-center">
@@ -329,6 +329,32 @@ const Checkout = () => {
                     </div>
                   </RadioGroup>
                 </FormControl>
+              </div>
+            </div>
+          </div>
+          <div className="order-5 mt-8 col-span-full rounded p-2 border border-zinc-300">
+            <div className="flex flex-col mobileL:flex-row flex-grow">
+              <button
+                type="submit"
+                className="order-2 mt-3 mobileL:order-1 mobileL:mt-0 bg-gradient-to-r from-[#3a577c] to-[#275350] rounded p-2 mobileL:max-w-[10rem] w-full h-fit text-white font-medium"
+              >
+                Place your order
+              </button>
+              <div className="mobileL:ml-3 order-1 mobileL:order-2">
+                <p className="text-red-600 text-lg font-semibold mb-1">
+                  Order Total: $159.96
+                </p>
+                <p className="text-zinc-500">
+                  By placing your order, you agree to our{" "}
+                  <a href="#" className="text-blue-600">
+                    privacy notice
+                  </a>{" "}
+                  and{" "}
+                  <a href="#" className="text-blue-600">
+                    conditions of use
+                  </a>
+                  .
+                </p>
               </div>
             </div>
           </div>
