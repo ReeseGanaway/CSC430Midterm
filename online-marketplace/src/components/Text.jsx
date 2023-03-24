@@ -1,4 +1,4 @@
-import "./text.css";
+import "../text.css";
 const Text = () => {
   return (
     <div>

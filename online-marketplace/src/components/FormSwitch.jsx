@@ -1,4 +1,4 @@
-import "./Forms.css";
+import "../forms.css";
 import Text from "./Text";
 import { useState } from "react";
 import * as React from "react";
@@ -9,8 +9,8 @@ import AccountCircle from "@mui/icons-material/AccountCircle";
 import PasswordRoundedIcon from "@mui/icons-material/PasswordRounded";
 import EmailIcon from "@mui/icons-material/Email";
 import LockIcon from "@mui/icons-material/Lock";
-import TitanLogo from "./TitanLogo.png";
-import TitanLogo2 from "./Logo2.png";
+import TitanLogo from "../assets/TitanLogo.png";
+import TitanLogo2 from "../assets/Logo2.png";
 import HowToRegRoundedIcon from "@mui/icons-material/HowToRegRounded";
 
 function FormSwitch() {

@@ -26,6 +26,7 @@ const Sidebar = () => {
     <MdOutlineManageAccounts className="w-6 h-6 text-black" />,
     <AiOutlineShoppingCart className="w-6 h-6 text-black" />,
   ];
+  const navLinks = ["/", "/login", "/account", "/cart"];
 
   const Drawer = styled(MuiDrawer, {
     shouldForwardProp: (prop) => prop !== "open",
@@ -133,7 +134,7 @@ const Sidebar = () => {
                 <ListItemIcon
                   className={`!min-w-0 ${open ? "mr-3" : "mx-auto"}`}
                 >
-                  {navIcons[index]}
+                  <a href={`${navLinks[index]}`}>{navIcons[index]}</a>
                 </ListItemIcon>
                 <ListItemText primary={text} sx={{ opacity: open ? 1 : 0 }} />
               </ListItemButton>
