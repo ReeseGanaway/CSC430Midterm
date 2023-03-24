@@ -1,8 +1,5 @@
 import Sidebar from "./SideBar";
-import { Routes, Route, BrowserRouter } from "react-router-dom";
 import { useState, useEffect } from "react";
-import ShirtList from "./ShirtList";
-import PantsList from "./PantsList";
 import Drawer from "./Sidebar";
 
 function ProductList() {

@@ -7,15 +7,18 @@ import Toolbar from "@mui/material/Toolbar";
 import List from "@mui/material/List";
 import Typography from "@mui/material/Typography";
 import IconButton from "@mui/material/IconButton";
-import MenuIcon from "@mui/icons-material/Menu";
-import ChevronLeftIcon from "@mui/icons-material/ChevronLeft";
 import ListItem from "@mui/material/ListItem";
 import ListItemButton from "@mui/material/ListItemButton";
 import ListItemIcon from "@mui/material/ListItemIcon";
 import ListItemText from "@mui/material/ListItemText";
 import { RiLoginBoxLine } from "react-icons/ri";
-import { AiOutlineHome, AiOutlineShoppingCart } from "react-icons/ai";
-import { MdOutlineManageAccounts } from "react-icons/md";
+import {
+  AiOutlineHome,
+  AiOutlineShoppingCart,
+} from "react-icons/ai";
+import { MdOutlineManageAccounts, MdKeyboardArrowLeft } from "react-icons/md";
+import { FiMenu } from "react-icons/fi";
+
 const Sidebar = () => {
   const [open, setOpen] = useState(false);
   const drawerWidth = 220;
@@ -110,17 +113,17 @@ const Sidebar = () => {
               open ? "!hidden" : ""
             } !justify-start !text-white`}
           >
-            <MenuIcon />
+            <FiMenu />
           </IconButton>
         </Toolbar>
       </AppBar>
       <Drawer variant="permanent" open={open}>
         <DrawerHeader className="border-b border-zinc-200">
           <IconButton onClick={handleDrawerClose}>
-            <ChevronLeftIcon />
+            <MdKeyboardArrowLeft className="text-black" />
           </IconButton>
         </DrawerHeader>
-        <List className="!p-0">
+        <List className="!p-0 h-full border-r border-zinc-200">
           {navItems.map((text, index) => (
             <ListItem key={text} disablePadding>
               <ListItemButton
