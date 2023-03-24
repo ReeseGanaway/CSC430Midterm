@@ -12,10 +12,7 @@ import ListItemButton from "@mui/material/ListItemButton";
 import ListItemIcon from "@mui/material/ListItemIcon";
 import ListItemText from "@mui/material/ListItemText";
 import { RiLoginBoxLine } from "react-icons/ri";
-import {
-  AiOutlineHome,
-  AiOutlineShoppingCart,
-} from "react-icons/ai";
+import { AiOutlineHome, AiOutlineShoppingCart } from "react-icons/ai";
 import { MdOutlineManageAccounts, MdKeyboardArrowLeft } from "react-icons/md";
 import { FiMenu } from "react-icons/fi";
 

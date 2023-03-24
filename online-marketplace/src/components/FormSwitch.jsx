@@ -6,12 +6,12 @@ import Box from "@mui/material/Box";
 import Background from "./Background";
 import TextField from "@mui/material/TextField";
 import AccountCircle from "@mui/icons-material/AccountCircle";
-import PasswordRoundedIcon from '@mui/icons-material/PasswordRounded';
+import PasswordRoundedIcon from "@mui/icons-material/PasswordRounded";
 import EmailIcon from "@mui/icons-material/Email";
-import LockIcon from '@mui/icons-material/Lock';
-import TitanLogo from './TitanLogo.png';
-import TitanLogo2 from './Logo2.png';
-import HowToRegRoundedIcon from '@mui/icons-material/HowToRegRounded';
+import LockIcon from "@mui/icons-material/Lock";
+import TitanLogo from "./TitanLogo.png";
+import TitanLogo2 from "./Logo2.png";
+import HowToRegRoundedIcon from "@mui/icons-material/HowToRegRounded";
 
 function FormSwitch() {
   const [activeForm, setActiveForm] = useState("login");
@@ -22,7 +22,7 @@ function FormSwitch() {
 
   return (
     <section className="forms-section">
-        <Background></Background>
+      <Background></Background>
       <Text></Text>
       <div className="forms">
         <div
@@ -41,15 +41,15 @@ function FormSwitch() {
           </button>
           <form className="form form-login">
             <div className="image-container">
-          <img src={TitanLogo} alt="My Image" className="img1" />
-          </div>
-          <div class="container">
-  <div class="row">
-    <div class="col-md-12 text-center">
-      <h3 class="animate-charcter"> Login PAGE</h3>
-    </div>
-  </div>
-</div>
+              <img src={TitanLogo} alt="My Image" className="img1" />
+            </div>
+            <div class="container">
+              <div class="row">
+                <div class="col-md-12 text-center">
+                  <h3 class="animate-charcter"> Login PAGE</h3>
+                </div>
+              </div>
+            </div>
             <Box sx={{ padding: 10 }}>
               <EmailIcon sx={{ color: "action.active", mr: 1, my: 3.5 }} />
               <TextField
@@ -60,12 +60,9 @@ function FormSwitch() {
                 required
                 className="box-1"
               />
-    
-              <Box >
-                
-                <LockIcon
-                  sx={{ color: "action.active", mr: 1, my: 2.5 }}
-                />
+
+              <Box>
+                <LockIcon sx={{ color: "action.active", mr: 1, my: 2.5 }} />
                 <TextField
                   htmlFor="login-password"
                   id="login-password"
@@ -77,13 +74,16 @@ function FormSwitch() {
                 />
               </Box>
             </Box>
-          
+
             <button type="submit" className="btn-login">
-            <a href="#_" class="relative inline-flex items-center justify-center p-4 px-5 py-3 overflow-hidden font-medium text-indigo-600 transition duration-300 ease-out rounded-full shadow-xl group hover:ring-1 hover:ring-purple-500">
-<span class="absolute inset-0 w-full h-full bg-gradient-to-br from-blue-600 via-purple-600 to-pink-700"></span>
-<span class="absolute bottom-0 right-0 block w-64 h-64 mb-32 mr-4 transition duration-500 origin-bottom-left transform rotate-45 translate-x-24 bg-pink-500 rounded-full opacity-30 group-hover:rotate-90 ease"></span>
-<span class="relative text-white">Login</span>
-</a>
+              <a
+                href="#_"
+                class="relative inline-flex items-center justify-center p-4 px-5 py-3 overflow-hidden font-medium text-indigo-600 transition duration-300 ease-out rounded-full shadow-xl group hover:ring-1 hover:ring-purple-500"
+              >
+                <span class="absolute inset-0 w-full h-full bg-gradient-to-br from-blue-600 via-purple-600 to-pink-700"></span>
+                <span class="absolute bottom-0 right-0 block w-64 h-64 mb-32 mr-4 transition duration-500 origin-bottom-left transform rotate-45 translate-x-24 bg-pink-500 rounded-full opacity-30 group-hover:rotate-90 ease"></span>
+                <span class="relative text-white">Login</span>
+              </a>
             </button>
           </form>
         </div>
@@ -108,15 +108,15 @@ function FormSwitch() {
                 sign up.
               </legend>
               <div className="image-container">
-          <img src={TitanLogo2} alt="My Image" className="img1" />
-          </div>
-          <div class="container">
-  <div class="row">
-    <div class="col-md-12 text-center">
-      <h3 class="animate-charcter"> Signup Page</h3>
-    </div>
-  </div>
-</div>
+                <img src={TitanLogo2} alt="My Image" className="img1" />
+              </div>
+              <div class="container">
+                <div class="row">
+                  <div class="col-md-12 text-center">
+                    <h3 class="animate-charcter"> Signup Page</h3>
+                  </div>
+                </div>
+              </div>
               <Box sx={{ padding: 10 }}>
                 <EmailIcon sx={{ color: "action.active", mr: 1, my: 2.5 }} />
                 <TextField
@@ -129,9 +129,7 @@ function FormSwitch() {
                 />
 
                 <Box>
-                  <LockIcon
-                    sx={{ color: "action.active", mr: 1, my: 2.5 }}
-                  />
+                  <LockIcon sx={{ color: "action.active", mr: 1, my: 2.5 }} />
                   <TextField
                     htmlFor="login-password"
                     position="start"
@@ -158,20 +156,21 @@ function FormSwitch() {
                     variant="standard"
                     className="box-1"
                   />
-                
                 </Box>
               </Box>
             </fieldset>
-            <button type="submit" >
-            <a href="#_" class="relative inline-flex items-center justify-center inline-block p-4 px-5 py-3 overflow-hidden font-medium text-indigo-600 rounded-lg shadow-2xl group">
-<span class="absolute top-0 left-0 w-40 h-40 -mt-10 -ml-3 transition-all duration-700 bg-red-500 rounded-full blur-md ease"></span>
-<span class="absolute inset-0 w-full h-full transition duration-700 group-hover:rotate-180 ease">
-<span class="absolute bottom-0 left-0 w-24 h-24 -ml-10 bg-purple-500 rounded-full blur-md"></span>
-<span class="absolute bottom-0 right-0 w-24 h-24 -mr-10 bg-pink-500 rounded-full blur-md"></span>
-</span>
-<span class="relative text-white">Sign Up</span>
-</a>
-            
+            <button type="submit">
+              <a
+                href="#_"
+                class="relative inline-flex items-center justify-center inline-block p-4 px-5 py-3 overflow-hidden font-medium text-indigo-600 rounded-lg shadow-2xl group"
+              >
+                <span class="absolute top-0 left-0 w-40 h-40 -mt-10 -ml-3 transition-all duration-700 bg-red-500 rounded-full blur-md ease"></span>
+                <span class="absolute inset-0 w-full h-full transition duration-700 group-hover:rotate-180 ease">
+                  <span class="absolute bottom-0 left-0 w-24 h-24 -ml-10 bg-purple-500 rounded-full blur-md"></span>
+                  <span class="absolute bottom-0 right-0 w-24 h-24 -mr-10 bg-pink-500 rounded-full blur-md"></span>
+                </span>
+                <span class="relative text-white">Sign Up</span>
+              </a>
             </button>
           </form>
         </div>
