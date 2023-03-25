@@ -154,9 +154,11 @@ function SearchBar() {
                 />
                 <div>
                   <p className="text-gray-700 font-semibold mb-2">
+                  <strong>Price: </strong>
                     ${selectedProduct.price.toFixed(2)}
                   </p>
                   <p className="text-gray-700 mb-2">
+                  <strong>Description: </strong> 
                     {selectedProduct.description}
                   </p>
                   <div className="flex items-center">
