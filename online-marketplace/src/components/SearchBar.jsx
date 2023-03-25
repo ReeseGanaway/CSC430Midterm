@@ -1,11 +1,10 @@
-import React, { useState, useEffect } from "react";
+import { useState, useEffect } from "react";
 import Paper from "@mui/material/Paper";
 import InputBase from "@mui/material/InputBase";
 import IconButton from "@mui/material/IconButton";
 import SearchIcon from "@mui/icons-material/Search";
 import Rating from "@mui/material/Rating";
 import Modal from "@mui/material/Modal";
-import Box from "@mui/material/Box";
 
 function SearchBar() {
   const [products, setProducts] = useState([]);
@@ -44,7 +43,7 @@ function SearchBar() {
           display: "flex",
           alignItems: "center",
           justifyContent: "space-between",
-          width: 400,
+          maxWidth: 400,
           mb: 3,
         }}
       >
@@ -64,7 +63,7 @@ function SearchBar() {
         {filteredProducts.map((product, idx) => (
           <div
             key={idx}
-            className="flex flex-col border border-zinc-300 rounded p-3 shadow"
+            className="grid border border-zinc-300 rounded p-3 shadow"
           >
             <img
               src={product.image}
@@ -89,10 +88,10 @@ function SearchBar() {
               />
               <span className="pl-1">({product.rating.count})</span>
             </p>
-            <button className="btn" onClick={() => handleProductClick(product)}>
+            <button className="flex justify-center items-end" onClick={() => handleProductClick(product)}>
               <a
                 href="#_"
-                className="relative inline-flex items-center justify-center p-4 px-6 py-3 overflow-hidden font-medium text-blue-600 transition duration-300 ease-out border-2 border-blue-500 rounded-full shadow-md group"
+                className="relative inline-flex items-center justify-center my-3 px-5 py-2 overflow-hidden font-medium text-blue-600 transition duration-300 ease-out border-2 border-blue-500 rounded-full shadow-md group"
               >
                 <span className="absolute inset-0 flex items-center justify-center w-full h-full text-white duration-300 -translate-x-full bg-blue-500 group-hover:translate-x-0 ease">
                   <svg

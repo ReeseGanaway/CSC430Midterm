@@ -24,14 +24,7 @@ const ProductsList = () => {
     setFilteredProducts(newFilteredProducts);
   }, [searchQuery, products]);
 
-  return (
-    <div>
-      <SearchBar onSearch={(query) => setSearchQuery(query)} />
-      <div className="grid gap-6 grid-cols-1 mobileM:grid-cols-[repeat(auto-fit,minmax(14rem,1fr))]">
-        
-      </div>
-    </div>
-  );
+  return <SearchBar onSearch={(query) => setSearchQuery(query)} />;
 };
 
 export default ProductsList;
