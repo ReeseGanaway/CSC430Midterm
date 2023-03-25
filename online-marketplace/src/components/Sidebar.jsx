@@ -116,7 +116,7 @@ const Sidebar = () => {
         </Toolbar>
       </AppBar>
       <Drawer variant="permanent" open={open}>
-        <DrawerHeader className="border-b border-zinc-200">
+        <DrawerHeader className="border-b border-zinc-200 !min-h-[4rem]">
           <IconButton onClick={handleDrawerClose}>
             <MdKeyboardArrowLeft className="text-black" />
           </IconButton>
