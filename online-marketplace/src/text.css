@@ -2,7 +2,7 @@
   box-sizing: border-box;
 }
 
-h1 {
+.text-h1 {
   color: #333;
   font-size: 3rem;
   font-weight: 100;
@@ -14,7 +14,7 @@ h1 {
   width: 550px;
 }
 
-h1 span {
+.text-span {
   font-size: 40px;
   margin-left: 40px;
 }

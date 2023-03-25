@@ -216,14 +216,6 @@
   transition: opacity 0.4s ease-in, transform 0.35s ease-in;
 }
 
-.form legend {
-  position: absolute;
-  overflow: hidden;
-  width: 1px;
-  height: 1px;
-  clip: rect(0 0 0 0);
-}
-
 .input-block {
   margin-bottom: 20px;
 }
@@ -293,6 +285,7 @@
   justify-content: center;
   align-items: center;
 }
+
 .box-1 {
   width: 400px;
   padding: 12px 20px;
