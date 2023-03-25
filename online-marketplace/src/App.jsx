@@ -2,29 +2,21 @@ import { Routes, Route, BrowserRouter } from "react-router-dom";
 import LandingPage from "./components/LandingPage";
 import FormSwitch from "./components/FormSwitch";
 import Sidebar from "./components/Sidebar";
-import { styled } from "@mui/material/styles";
+import Checkout from "./components/Checkout";
 
 function App() {
-  const DrawerHeader = styled("div")(({ theme }) => ({
-    display: "flex",
-    alignItems: "center",
-    justifyContent: "flex-end",
-    padding: theme.spacing(0, 1),
-    ...theme.mixins.toolbar,
-  }));
-
   return (
     <div className="App">
       <Sidebar />
-      <DrawerHeader />
-      <main className="ml-16 p-6">
-        <BrowserRouter>
+      <BrowserRouter>
+        <main className="ml-16 mt-16 p-6">
           <Routes>
             <Route path="/" element={<LandingPage />} />
             <Route path="/login" element={<FormSwitch />} />
+            <Route path="/checkout" element={<Checkout />} />
           </Routes>
-        </BrowserRouter>
-      </main>
+        </main>
+      </BrowserRouter>
     </div>
   );
 }

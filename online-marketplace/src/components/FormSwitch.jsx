@@ -103,10 +103,6 @@ function FormSwitch() {
           </button>
           <form className="form form-signup">
             <fieldset>
-              <legend>
-                Please, enter your email, password and password confirmation for
-                sign up.
-              </legend>
               <div className="image-container">
                 <img src={TitanLogo2} alt="My Image" className="img1" />
               </div>
