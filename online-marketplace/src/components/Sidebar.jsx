@@ -15,6 +15,8 @@ import { RiLoginBoxLine } from "react-icons/ri";
 import { AiOutlineHome, AiOutlineShoppingCart } from "react-icons/ai";
 import { MdOutlineManageAccounts, MdKeyboardArrowLeft } from "react-icons/md";
 import { FiMenu } from "react-icons/fi";
+import SearchIcon from '@mui/icons-material/Search';
+
 
 const Sidebar = () => {
   const [open, setOpen] = useState(false);
@@ -111,6 +113,7 @@ const Sidebar = () => {
               open ? "!hidden" : ""
             } !justify-start !text-white`}
           >
+            
             <FiMenu />
           </IconButton>
         </Toolbar>
@@ -141,8 +144,11 @@ const Sidebar = () => {
               </ListItemButton>
             </ListItem>
           ))}
+          
         </List>
+        
       </Drawer>
+      
     </Box>
   );
 };
