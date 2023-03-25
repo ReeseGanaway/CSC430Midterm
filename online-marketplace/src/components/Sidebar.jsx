@@ -130,11 +130,12 @@ const Sidebar = () => {
                   justifyContent: open ? "initial" : "center",
                   px: 2.5,
                 }}
+                href={`${navLinks[index]}`}
               >
                 <ListItemIcon
                   className={`!min-w-0 ${open ? "mr-3" : "mx-auto"}`}
                 >
-                  <a href={`${navLinks[index]}`}>{navIcons[index]}</a>
+                  {navIcons[index]}
                 </ListItemIcon>
                 <ListItemText primary={text} sx={{ opacity: open ? 1 : 0 }} />
               </ListItemButton>
