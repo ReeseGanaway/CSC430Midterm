@@ -1,6 +1,6 @@
 import "../forms.css";
 import Text from "./Text";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import * as React from "react";
 import Box from "@mui/material/Box";
 import Background from "./Background";
@@ -12,14 +12,35 @@ import LockIcon from "@mui/icons-material/Lock";
 import TitanLogo from "../assets/TitanLogo.png";
 import TitanLogo2 from "../assets/Logo2.png";
 import HowToRegRoundedIcon from "@mui/icons-material/HowToRegRounded";
+import { useSelector, useDispatch } from "react-redux";
+import { userActions } from "../redux/slices/userSlice";
+import { Navigate } from "react-router-dom";
 
 function FormSwitch() {
   const [activeForm, setActiveForm] = useState("login");
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
+  const user = useSelector(state => state.user);
+  const dispatch = useDispatch();
 
   const handleSwitcherClick = (form) => {
     setActiveForm(form);
   };
 
+  const onEmailChanged = e => setEmail(e.target.value)
+  const onPasswordChanged = e => setPassword(e.target.value)
+  
+  const onLogin = () => {
+    if(email && password && document.getElementById("input-with-sx").checkValidity()){
+      dispatch(userActions.login({email: email}))
+    }
+  }
+  
+  
+  if(user.state.email){
+    console.log('here')
+    return <Navigate replace to = '/home' />
+  }
   return (
     <section className="forms-section">
       <Background />
@@ -43,10 +64,10 @@ function FormSwitch() {
             <div className="image-container">
               <img src={TitanLogo} alt="My Image" className="img1" />
             </div>
-            <div class="container">
-              <div class="row">
-                <div class="col-md-12 text-center">
-                  <h3 class="animate-charcter"> Login PAGE</h3>
+            <div className="container">
+              <div className="row">
+                <div className="col-md-12 text-center">
+                  <h3 className="animate-charcter"> Login PAGE</h3>
                 </div>
               </div>
             </div>
@@ -59,6 +80,7 @@ function FormSwitch() {
                 type="email"
                 required
                 className="box-1"
+                onChange={onEmailChanged}
               />
 
               <Box>
@@ -71,18 +93,19 @@ function FormSwitch() {
                   label="Password"
                   variant="standard"
                   className="box-1"
+                  onChange={onPasswordChanged}
                 />
               </Box>
             </Box>
 
-            <button type="submit" className="btn-login">
+            <button type="submit" className="btn-login" onClick={onLogin}>
               <a
                 href="#_"
-                class="relative inline-flex items-center justify-center p-4 px-5 py-3 overflow-hidden font-medium text-indigo-600 transition duration-300 ease-out rounded-full shadow-xl group hover:ring-1 hover:ring-purple-500"
+                className="relative inline-flex items-center justify-center p-4 px-5 py-3 overflow-hidden font-medium text-indigo-600 transition duration-300 ease-out rounded-full shadow-xl group hover:ring-1 hover:ring-purple-500"
               >
-                <span class="absolute inset-0 w-full h-full bg-gradient-to-br from-blue-600 via-purple-600 to-pink-700"></span>
-                <span class="absolute bottom-0 right-0 block w-64 h-64 mb-32 mr-4 transition duration-500 origin-bottom-left transform rotate-45 translate-x-24 bg-pink-500 rounded-full opacity-30 group-hover:rotate-90 ease"></span>
-                <span class="relative text-white">Login</span>
+                <span className="absolute inset-0 w-full h-full bg-gradient-to-br from-blue-600 via-purple-600 to-pink-700"></span>
+                <span className="absolute bottom-0 right-0 block w-64 h-64 mb-32 mr-4 transition duration-500 origin-bottom-left transform rotate-45 translate-x-24 bg-pink-500 rounded-full opacity-30 group-hover:rotate-90 ease"></span>
+                <span className="relative text-white">Login</span>
               </a>
             </button>
           </form>
@@ -106,10 +129,10 @@ function FormSwitch() {
               <div className="image-container">
                 <img src={TitanLogo2} alt="My Image" className="img1" />
               </div>
-              <div class="container">
-                <div class="row">
-                  <div class="col-md-12 text-center">
-                    <h3 class="animate-charcter"> Signup Page</h3>
+              <div className="container">
+                <div className="row">
+                  <div className="col-md-12 text-center">
+                    <h3 className="animate-charcter"> Signup Page</h3>
                   </div>
                 </div>
               </div>
@@ -156,14 +179,14 @@ function FormSwitch() {
             <button type="submit">
               <a
                 href="#_"
-                class="relative items-center justify-center inline-block p-4 px-5 py-3 overflow-hidden font-medium text-indigo-600 rounded-lg shadow-2xl group"
+                className="relative items-center justify-center inline-block p-4 px-5 py-3 overflow-hidden font-medium text-indigo-600 rounded-lg shadow-2xl group"
               >
-                <span class="absolute top-0 left-0 w-40 h-40 -mt-10 -ml-3 transition-all duration-700 bg-red-500 rounded-full blur-md ease"></span>
-                <span class="absolute inset-0 w-full h-full transition duration-700 group-hover:rotate-180 ease">
-                  <span class="absolute bottom-0 left-0 w-24 h-24 -ml-10 bg-purple-500 rounded-full blur-md"></span>
-                  <span class="absolute bottom-0 right-0 w-24 h-24 -mr-10 bg-pink-500 rounded-full blur-md"></span>
+                <span className="absolute top-0 left-0 w-40 h-40 -mt-10 -ml-3 transition-all duration-700 bg-red-500 rounded-full blur-md ease"></span>
+                <span className="absolute inset-0 w-full h-full transition duration-700 group-hover:rotate-180 ease">
+                  <span className="absolute bottom-0 left-0 w-24 h-24 -ml-10 bg-purple-500 rounded-full blur-md"></span>
+                  <span className="absolute bottom-0 right-0 w-24 h-24 -mr-10 bg-pink-500 rounded-full blur-md"></span>
                 </span>
-                <span class="relative text-white">Sign Up</span>
+                <span className="relative text-white">Sign Up</span>
               </a>
             </button>
           </form>
