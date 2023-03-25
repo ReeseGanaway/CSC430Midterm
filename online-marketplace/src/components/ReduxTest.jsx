@@ -1,21 +1,32 @@
-import React, { Fragment, useState } from 'react'
+import React, { Fragment, useState, useEffect } from 'react'
 import { useSelector, useDispatch } from 'react-redux'
 import { nanoid } from '@reduxjs/toolkit';
-import { productActions } from '../redux/slices/productsSlice';
+import { addProduct, resetProducts, fetchProducts } from '../redux/slices/productsSlice';
 
 
 export const ReduxTest = () => {
-  const products = useSelector(state => state.products);
+  const items = useSelector(state => state.products.items);
+  console.log(items)
 
   const [name, setName] = useState('')
   const [type, setType] = useState('')
 
   const dispatch = useDispatch();
 
+  const fetchProductStatus = useSelector(state => state.products.status)
+
+  useEffect(() => {
+    console.log('here')
+    if (fetchProductStatus === 'idle'){
+        dispatch(fetchProducts())
+    }
+  }, [fetchProductStatus, dispatch])
+  
+
   const onSaveProductClicked = () => {
     if (name && type) {
       dispatch(
-        productActions.addProduct({
+        addProduct({
           id: nanoid(),
           name,
           type
@@ -29,12 +40,13 @@ export const ReduxTest = () => {
   const onNameChanged = e => setName(e.target.value)
   const onTypeChanged = e => setType(e.target.value)
 
-  const renderedProducts = products.map(product => (
-    <article className="product-excerpt" key={product.id}>
-      <h3>{product.type}</h3>
-      <p className="product-name">{product.name.substring(0, 100)}</p>
+  function renderedProducts (){ 
+    if(items){items.map(item => (
+    <article className="product-excerpt" key={item.id}>
+      <h3>{item.type}</h3>
+      <p className="product-name">{item.name.substring(0, 100)}</p>
     </article>
-  ))
+  ))}}
 
   return (
     <Fragment>

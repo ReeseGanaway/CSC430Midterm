@@ -1,18 +1,30 @@
 import { useState, useEffect } from "react";
 import axios from "axios";
 import Rating from "@mui/material/Rating";
+import { useSelector, useDispatch } from 'react-redux'
+import { addProduct, resetProducts, fetchProducts } from '../redux/slices/productsSlice';
+
 
 const ProductsList = () => {
-  const [products, setProducts] = useState([]);
+  // const [products, setProducts] = useState([]);
 
-  const fetchProducts = async () => {
-    const productsList = await axios.get("https://fakestoreapi.com/products");
-    setProducts(productsList.data);
-  };
+  const products = useSelector(state => state.products.items);
+
+  const dispatch = useDispatch();
+
+  const fetchProductStatus = useSelector(state => state.products.status)
+
+  // const fetchProducts = async () => {
+  //   const productsList = await axios.get("https://fakestoreapi.com/products");
+  //   setProducts(productsList.data);
+  // };
 
   useEffect(() => {
-    fetchProducts();
-  }, []);
+    console.log('here')
+    if (fetchProductStatus === 'idle'){
+        dispatch(fetchProducts())
+    }
+  }, [fetchProductStatus, dispatch])
 
   return (
     <div className="grid gap-6 grid-cols-1 mobileM:grid-cols-[repeat(auto-fit,minmax(14rem,1fr))]">
