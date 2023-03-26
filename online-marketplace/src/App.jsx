@@ -12,7 +12,7 @@ function App() {
       <BrowserRouter>
         <main className="ml-16 mt-16 p-6">
           <Routes>
-            <Route path="/" element={<FormSwitch />} />
+            <Route path="/" element={<LandingPage />} />
             <Route path="/login" element={<FormSwitch />} />
             <Route path="/home" element={<LandingPage />} />
             <Route path="/checkout" element={<Checkout />} />
