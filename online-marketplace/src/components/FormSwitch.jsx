@@ -13,7 +13,7 @@ import TitanLogo from "../assets/TitanLogo.png";
 import TitanLogo2 from "../assets/Logo2.png";
 import HowToRegRoundedIcon from "@mui/icons-material/HowToRegRounded";
 import { useSelector, useDispatch } from "react-redux";
-import { userActions } from "../redux/slices/userSlice";
+import { login, logout } from "../redux/slices/userSlice";
 import { Navigate } from "react-router-dom";
 
 function FormSwitch() {
@@ -32,13 +32,13 @@ function FormSwitch() {
   
   const onLogin = () => {
     if(email && password && document.getElementById("input-with-sx").checkValidity()){
-      dispatch(userActions.login({email: email}))
+      dispatch(login({email: email}))
     }
   }
   
   
-  if(user.state.email){
-    console.log('here')
+  if(user.email){
+    console.log('Email exists')
     return <Navigate replace to = '/home' />
   }
   return (
