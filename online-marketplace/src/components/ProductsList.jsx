@@ -4,7 +4,7 @@ import Rating from "@mui/material/Rating";
 import { useSelector, useDispatch } from 'react-redux'
 import { addProduct, resetProducts, fetchProducts } from '../redux/slices/productsSlice';
 
-
+  
 const ProductsList = () => {
   // const [products, setProducts] = useState([]);
 
