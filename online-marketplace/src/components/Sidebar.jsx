@@ -18,6 +18,8 @@ import { FiMenu } from "react-icons/fi";
 import { useSelector, useDispatch } from "react-redux";
 import { logout } from "../redux/slices/userSlice";
 import { Navigate } from "react-router-dom";
+import SearchIcon from '@mui/icons-material/Search';
+
 
 const Sidebar = () => {
   const user = useSelector(state => state.user);
@@ -126,6 +128,7 @@ const Sidebar = () => {
               open ? "!hidden" : ""
             } !justify-start !text-white`}
           >
+            
             <FiMenu />
           </IconButton>
         </Toolbar>
@@ -177,7 +180,9 @@ const Sidebar = () => {
           </ListItem>
           }
         </List>
+        
       </Drawer>
+      
     </Box>
   );
 };
