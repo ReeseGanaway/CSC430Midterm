@@ -2,16 +2,8 @@
   box-sizing: border-box;
 }
 
-body {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  height: 100vh;
-  width: 100vw;
-}
-h1 {
+.text-h1 {
   color: #333;
-  font-family: tahoma;
   font-size: 3rem;
   font-weight: 100;
   line-height: 1.5;
@@ -22,7 +14,7 @@ h1 {
   width: 550px;
 }
 
-h1 span {
+.text-span {
   font-size: 40px;
   margin-left: 40px;
 }
@@ -39,7 +31,9 @@ h1 span {
   animation: openclose 5s ease-in-out infinite;
 }
 
-.word1, .word2,.word3{
+.word1,
+.word2,
+.word3 {
   font-family: tahoma;
   font-size: 45px;
 }
@@ -69,7 +63,6 @@ h1 span {
   }
   38% {
     top: -4.5rem;
-    
   }
   48% {
     top: -4.5rem;
@@ -108,4 +101,3 @@ h1 span {
     text-indent: 0;
   }
 }
-

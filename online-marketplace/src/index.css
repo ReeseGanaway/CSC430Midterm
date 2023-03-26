@@ -22,7 +22,11 @@
   padding: 0.75rem 1rem !important;
 }
 
-.productImg {
+.MuiDrawer-paper {
+  border-right: 0 !important;
+}
+
+.checkoutImg {
   block-size: auto;
   max-height: 10rem;
   max-inline-size: 10rem;

@@ -9,9 +9,12 @@ import InputAdornment from "@mui/material/InputAdornment";
 import Visibility from "@mui/icons-material/Visibility";
 import VisibilityOff from "@mui/icons-material/VisibilityOff";
 import IconButton from "@mui/material/IconButton";
-import ProductImg from "../assets/checkout_desk.jpeg";
+import CheckoutImg from "../assets/checkout_desk.jpeg";
 import Radio from "@mui/material/Radio";
 import RadioGroup from "@mui/material/RadioGroup";
+import GooglePayImg from "../assets/google_pay.svg";
+import ApplePayImg from "../assets/apple_pay.svg";
+import PayPalImg from "../assets/paypal.svg";
 
 const Checkout = () => {
   const [showCardNum, setShowCardNum] = useState(false);
@@ -73,7 +76,7 @@ const Checkout = () => {
   ];
 
   return (
-    <div className="flex flex-col min-h-screen p-6">
+    <div className="flex flex-col min-h-screen">
       <main>
         <small className="flex items-center text-sky-700 text-base font-semibold">
           <FaAngleLeft className="mr-1 stroke-2" />
@@ -192,21 +195,21 @@ const Checkout = () => {
               <div className="flex flex-col mobileM:flex-row justify-center">
                 <button className="border border-slate-300 rounded h-fit px-4 mobileM:mr-8">
                   <img
-                    src="/google_pay.svg"
+                    src={GooglePayImg}
                     alt="Google Pay button"
                     className="w-16 h-12 m-auto"
                   />
                 </button>
                 <button className="border border-slate-300 rounded h-fit px-4 mt-4 mobileM:mr-8 mobileM:mt-0">
                   <img
-                    src="/apple_pay.svg"
+                    src={ApplePayImg}
                     alt="Apple Pay button"
                     className="w-16 h-12 m-auto"
                   />
                 </button>
                 <button className="border border-slate-300 rounded h-fit px-4 mt-4 mobileM:mt-0">
                   <img
-                    src="/paypal.svg"
+                    src={PayPalImg}
                     alt="PayPal button"
                     className="w-16 h-12 m-auto"
                   />
@@ -281,8 +284,8 @@ const Checkout = () => {
             <div className="mt-4 rounded border border-zinc-300 flex flex-col mobileL:flex-row p-2">
               <div className="my-3 mobileL:my-0 flex justify-center">
                 <img
-                  className="productImg"
-                  src={ProductImg}
+                  className="checkoutImg"
+                  src={CheckoutImg}
                   alt="Picture of a computer desk"
                 />
               </div>
