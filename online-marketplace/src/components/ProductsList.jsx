@@ -1,21 +1,32 @@
 import { useState, useEffect } from "react";
 import axios from "axios";
 import SearchBar from "./SearchBar";
+import { useSelector, useDispatch } from 'react-redux'
+import { addProduct, resetProducts, fetchProducts } from '../redux/slices/productsSlice';
 
+  
 const ProductsList = () => {
-  const [products, setProducts] = useState([]);
+  // const [products, setProducts] = useState([]);
   const [filteredProducts, setFilteredProducts] = useState([]);
   const [searchQuery, setSearchQuery] = useState("");
 
-  const fetchProducts = async () => {
-    const productsList = await axios.get("https://fakestoreapi.com/products");
-    setProducts(productsList.data);
-    setFilteredProducts(productsList.data);
-  };
+  const products = useSelector(state => state.products.items);
+
+  const dispatch = useDispatch();
+
+  const fetchProductStatus = useSelector(state => state.products.status)
+
+  // const fetchProducts = async () => {
+  //   const productsList = await axios.get("https://fakestoreapi.com/products");
+  //   setProducts(productsList.data);
+  // };
 
   useEffect(() => {
-    fetchProducts();
-  }, []);
+    console.log('here')
+    if (fetchProductStatus === 'idle'){
+        dispatch(fetchProducts())
+    }
+  }, [fetchProductStatus, dispatch])
 
   useEffect(() => {
     const newFilteredProducts = products.filter((product) =>

@@ -6,18 +6,12 @@ import SearchIcon from "@mui/icons-material/Search";
 import Rating from "@mui/material/Rating";
 import Modal from "@mui/material/Modal";
 import { CgClose } from "react-icons/cg";
+import { useSelector } from "react-redux";
 
 const SearchBar = () => {
-  const [products, setProducts] = useState([]);
+  const products = useSelector(state => state.products.items);
   const [searchTerm, setSearchTerm] = useState("");
   const [selectedProduct, setSelectedProduct] = useState(null);
-
-  useEffect(() => {
-    fetch("https://fakestoreapi.com/products")
-      .then((response) => response.json())
-      .then((data) => setProducts(data))
-      .catch((error) => console.log(error));
-  }, []);
 
   const filteredProducts = products.filter((product) =>
     product.title.toLowerCase().includes(searchTerm.toLowerCase())

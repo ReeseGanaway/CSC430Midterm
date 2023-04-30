@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { styled } from "@mui/material/styles";
 import Box from "@mui/material/Box";
 import MuiDrawer from "@mui/material/Drawer";
@@ -11,24 +11,31 @@ import ListItem from "@mui/material/ListItem";
 import ListItemButton from "@mui/material/ListItemButton";
 import ListItemIcon from "@mui/material/ListItemIcon";
 import ListItemText from "@mui/material/ListItemText";
-import { RiLoginBoxLine } from "react-icons/ri";
+import { RiLoginBoxLine, RiLogoutBoxLine } from "react-icons/ri";
 import { AiOutlineHome, AiOutlineShoppingCart } from "react-icons/ai";
 import { MdOutlineManageAccounts, MdKeyboardArrowLeft } from "react-icons/md";
 import { FiMenu } from "react-icons/fi";
+import { useSelector, useDispatch } from "react-redux";
+import { logout } from "../redux/slices/userSlice";
+import { Navigate } from "react-router-dom";
 import SearchIcon from '@mui/icons-material/Search';
 
 
 const Sidebar = () => {
+  const user = useSelector(state => state.user);
+  const dispatch = useDispatch();
+  
+
   const [open, setOpen] = useState(false);
   const drawerWidth = 220;
-  const navItems = ["Home", "Sign In", "Your Account", "Your Cart"];
+  const navItems = ["Home", /*"Sign In",*/ "Your Account", "Your Cart"];
   const navIcons = [
     <AiOutlineHome className="w-6 h-6 text-black" />,
-    <RiLoginBoxLine className="w-6 h-6 text-black" />,
+    // <RiLoginBoxLine className="w-6 h-6 text-black" />,
     <MdOutlineManageAccounts className="w-6 h-6 text-black" />,
     <AiOutlineShoppingCart className="w-6 h-6 text-black" />,
   ];
-  const navLinks = ["/", "/login", "/account", "/cart"];
+  const navLinks = ["/", /*"/login",*/ "/account", "/cart"];
 
   const Drawer = styled(MuiDrawer, {
     shouldForwardProp: (prop) => prop !== "open",
@@ -102,6 +109,14 @@ const Sidebar = () => {
     setOpen(false);
   };
 
+  const signOut = () => {
+    if(user.email){
+      console.log('here')
+      dispatch(logout());
+      //return <Navigate replace to = '/login' />
+    }
+  }
+
   return (
     <Box className="flex">
       <AppBar position="fixed" open={open}>
@@ -144,7 +159,26 @@ const Sidebar = () => {
               </ListItemButton>
             </ListItem>
           ))}
-          
+          {
+            <ListItem key={user.email ? "Sign Out": "Sign In"} disablePadding>
+            <ListItemButton
+              sx={{
+                minHeight: 48,
+                justifyContent: open ? "initial" : "center",
+                px: 2.5,
+              }}
+              href = '/login'
+              onClick={signOut}
+            >
+              <ListItemIcon
+                className={`!min-w-0 ${open ? "mr-3" : "mx-auto"}`}
+              >
+                {user.email ? <RiLogoutBoxLine className="w-6 h-6 text-black" /> : <RiLoginBoxLine className="w-6 h-6 text-black" />}
+              </ListItemIcon>
+              <ListItemText primary={user.email ? "Sign Out": "Sign In"} sx={{ opacity: open ? 1 : 0 }} />
+            </ListItemButton>
+          </ListItem>
+          }
         </List>
         
       </Drawer>
