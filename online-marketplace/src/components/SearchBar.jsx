@@ -52,6 +52,14 @@ const SearchBar = () => {
         )
       }
     }
+    return(
+      <button 
+        className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded" 
+        onClick = {() => {dispatch(addToCart(selectedProduct))}}
+      >
+        Add To Cart
+      </button>
+    )
   }
 
   return (
@@ -185,7 +193,12 @@ const SearchBar = () => {
                       ({selectedProduct.rating.count})
                     </span>
                   </div>
-                      {checkCartForItem(selectedProduct)}
+                    <button 
+                      className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded" 
+                      onClick = {() => {dispatch(addToCart(selectedProduct))}}
+                    >
+                      Add To Cart
+                    </button>
                 </div>
               </div>
             </div>

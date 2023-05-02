@@ -160,7 +160,7 @@ const Sidebar = () => {
               </ListItemButton>
             </ListItem>
           ))}
-          {user.email ? <ListItem disablePadding>
+          <ListItem disablePadding>
             <ListItemButton
               sx={{
                 minHeight: 48,
@@ -180,7 +180,7 @@ const Sidebar = () => {
               </ListItemIcon>
               <ListItemText primary= 'Your Cart' sx={{ opacity: open ? 1 : 0 }} />
             </ListItemButton>
-          </ListItem> : null}
+          </ListItem>
           <ListItem disablePadding>
             <ListItemButton
               sx={{
