@@ -25,20 +25,18 @@ import { Badge } from "@mui/material";
 const Sidebar = () => {
   const user = useSelector(state => state.user);
   const cart = useSelector(state => state.cart);
-  console.log(cart.length)
   const dispatch = useDispatch();
   
 
   const [open, setOpen] = useState(false);
   const drawerWidth = 220;
-  const navItems = ["Home", /*"Sign In",*/ "Your Account", "Your Cart"];
+  const navItems = ["Home", "Your Account"];
   const navIcons = [
     <AiOutlineHome className="w-6 h-6 text-black" />,
     // <RiLoginBoxLine className="w-6 h-6 text-black" />,
-    <MdOutlineManageAccounts className="w-6 h-6 text-black" />,
-    <AiOutlineShoppingCart className="w-6 h-6 text-black" />,
+    <MdOutlineManageAccounts className="w-6 h-6 text-black" />
   ];
-  const navLinks = ["/", /*"/login",*/ "/account", "/cart"];
+  const navLinks = ["/",  "/account"];
 
   const Drawer = styled(MuiDrawer, {
     shouldForwardProp: (prop) => prop !== "open",
@@ -162,24 +160,6 @@ const Sidebar = () => {
               </ListItemButton>
             </ListItem>
           ))}
-            <ListItem key={user.email ? "Sign Out": "Sign In"} disablePadding>
-            <ListItemButton
-              sx={{
-                minHeight: 48,
-                justifyContent: open ? "initial" : "center",
-                px: 2.5,
-              }}
-              href = '/login'
-              onClick={signOut}
-            >
-              <ListItemIcon
-                className={`!min-w-0 ${open ? "mr-3" : "mx-auto"}`}
-              >
-                {user.email ? <RiLogoutBoxLine className="w-6 h-6 text-black" /> : <RiLoginBoxLine className="w-6 h-6 text-black" />}
-              </ListItemIcon>
-              <ListItemText primary={user.email ? "Sign Out": "Sign In"} sx={{ opacity: open ? 1 : 0 }} />
-            </ListItemButton>
-          </ListItem>
           <ListItem disablePadding>
             <ListItemButton
               sx={{
@@ -198,9 +178,28 @@ const Sidebar = () => {
                 {/* <span class="sr-only">Notifications</span>
                 <div class="absolute inline-flex items-center justify-center w-6 h-6 text-xs font-bold text-white bg-red-500 border-2 border-white rounded-full -top-2 -right-2 dark:border-gray-900">20</div> */}
               </ListItemIcon>
+              <ListItemText primary= 'Your Cart' sx={{ opacity: open ? 1 : 0 }} />
+            </ListItemButton>
+          </ListItem>
+            <ListItem disablePadding>
+            <ListItemButton
+              sx={{
+                minHeight: 48,
+                justifyContent: open ? "initial" : "center",
+                px: 2.5,
+              }}
+              href = '/login'
+              onClick={signOut}
+            >
+              <ListItemIcon
+                className={`!min-w-0 ${open ? "mr-3" : "mx-auto"}`}
+              >
+                {user.email ? <RiLogoutBoxLine className="w-6 h-6 text-black" /> : <RiLoginBoxLine className="w-6 h-6 text-black" />}
+              </ListItemIcon>
               <ListItemText primary={user.email ? "Sign Out": "Sign In"} sx={{ opacity: open ? 1 : 0 }} />
             </ListItemButton>
           </ListItem>
+          
         </List>
         
       </Drawer>
