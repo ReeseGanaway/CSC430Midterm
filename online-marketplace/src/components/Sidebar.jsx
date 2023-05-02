@@ -118,6 +118,14 @@ const Sidebar = () => {
     }
   }
 
+  const getCartSize = () => {
+    let cartSize = 0
+    for(let i = 0; i < cart.length; i++){
+      cartSize += cart[i].quantity;
+    }
+    return cartSize;
+  }
+
   return (
     <Box className="flex">
       <AppBar position="fixed" open={open}>
@@ -172,11 +180,9 @@ const Sidebar = () => {
               <ListItemIcon
                 className={`!min-w-0 ${open ? "mr-3" : "mx-auto"}`}
               >
-                <Badge badgeContent={cart.length} color="error">
-               <AiOutlineShoppingCart className="w-6 h-6 text-black" />
-               </Badge>
-                {/* <span class="sr-only">Notifications</span>
-                <div class="absolute inline-flex items-center justify-center w-6 h-6 text-xs font-bold text-white bg-red-500 border-2 border-white rounded-full -top-2 -right-2 dark:border-gray-900">20</div> */}
+                <Badge badgeContent={getCartSize()} color="error">
+                  <AiOutlineShoppingCart className="w-6 h-6 text-black" />
+                </Badge>
               </ListItemIcon>
               <ListItemText primary= 'Your Cart' sx={{ opacity: open ? 1 : 0 }} />
             </ListItemButton>
