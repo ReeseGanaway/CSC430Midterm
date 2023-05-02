@@ -16,13 +16,7 @@ const ProductsList = () => {
 
   const fetchProductStatus = useSelector(state => state.products.status)
 
-  // const fetchProducts = async () => {
-  //   const productsList = await axios.get("https://fakestoreapi.com/products");
-  //   setProducts(productsList.data);
-  // };
-
   useEffect(() => {
-    console.log('here')
     if (fetchProductStatus === 'idle'){
         dispatch(fetchProducts())
     }

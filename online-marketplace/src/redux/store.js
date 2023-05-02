@@ -11,10 +11,12 @@ import {
 } from "redux-persist";
 import storage from "redux-persist/lib/storage";
 import { user } from "./slices/userSlice";
+import { cart } from "./slices/cartSlice";
 
 const reducers = combineReducers({
   products: products.reducer,
   user: user.reducer,
+  cart: cart.reducer,
 });
 
 const rootReducer = (state, action) => {

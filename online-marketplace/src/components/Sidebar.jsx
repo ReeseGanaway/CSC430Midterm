@@ -19,10 +19,13 @@ import { useSelector, useDispatch } from "react-redux";
 import { logout } from "../redux/slices/userSlice";
 import { Navigate } from "react-router-dom";
 import SearchIcon from '@mui/icons-material/Search';
+import { Badge } from "@mui/material";
 
 
 const Sidebar = () => {
   const user = useSelector(state => state.user);
+  const cart = useSelector(state => state.cart);
+  console.log(cart.length)
   const dispatch = useDispatch();
   
 
@@ -159,7 +162,6 @@ const Sidebar = () => {
               </ListItemButton>
             </ListItem>
           ))}
-          {
             <ListItem key={user.email ? "Sign Out": "Sign In"} disablePadding>
             <ListItemButton
               sx={{
@@ -178,7 +180,27 @@ const Sidebar = () => {
               <ListItemText primary={user.email ? "Sign Out": "Sign In"} sx={{ opacity: open ? 1 : 0 }} />
             </ListItemButton>
           </ListItem>
-          }
+          <ListItem disablePadding>
+            <ListItemButton
+              sx={{
+                minHeight: 48,
+                justifyContent: open ? "initial" : "center",
+                px: 2.5,
+              }}
+              href = '/cart'
+            >
+              <ListItemIcon
+                className={`!min-w-0 ${open ? "mr-3" : "mx-auto"}`}
+              >
+                <Badge badgeContent={cart.length} color="error">
+               <AiOutlineShoppingCart className="w-6 h-6 text-black" />
+               </Badge>
+                {/* <span class="sr-only">Notifications</span>
+                <div class="absolute inline-flex items-center justify-center w-6 h-6 text-xs font-bold text-white bg-red-500 border-2 border-white rounded-full -top-2 -right-2 dark:border-gray-900">20</div> */}
+              </ListItemIcon>
+              <ListItemText primary={user.email ? "Sign Out": "Sign In"} sx={{ opacity: open ? 1 : 0 }} />
+            </ListItemButton>
+          </ListItem>
         </List>
         
       </Drawer>

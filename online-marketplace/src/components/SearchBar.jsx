@@ -6,10 +6,13 @@ import SearchIcon from "@mui/icons-material/Search";
 import Rating from "@mui/material/Rating";
 import Modal from "@mui/material/Modal";
 import { CgClose } from "react-icons/cg";
-import { useSelector } from "react-redux";
+import { useSelector, useDispatch } from "react-redux";
+import { addToCart, removeFromCart } from "../redux/slices/cartSlice";
 
 const SearchBar = () => {
+  const dispatch = useDispatch();
   const products = useSelector(state => state.products.items);
+  const cart = useSelector(state => state.cart)
   const [searchTerm, setSearchTerm] = useState("");
   const [selectedProduct, setSelectedProduct] = useState(null);
 
@@ -28,6 +31,28 @@ const SearchBar = () => {
   const handleCloseModal = () => {
     setSelectedProduct(null);
   };
+
+  const checkCartForItem = (item) => {
+    for(let i = 0; i < cart.length; i++){
+      if(cart[i].key === item.key){
+        return (
+          <button className="bg-blue-500 text-white font-bold py-2 px-4 rounded opacity-50 cursor-not-allowed">
+            Item is in Cart
+          </button>
+        )
+      }
+      else{
+        return(
+          <button 
+            className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded" 
+            onClick = {() => {dispatch(addToCart(selectedProduct))}}
+          >
+            Add To Cart
+          </button>
+        )
+      }
+    }
+  }
 
   return (
     <>
@@ -146,7 +171,7 @@ const SearchBar = () => {
                   <p className="text-gray-700 mb-2">
                     <strong>Price: </strong>${selectedProduct.price.toFixed(2)}
                   </p>
-                  <div className="flex items-center">
+                  <div className="flex items-center mb-2">
                     <strong className="text-gray-700 pr-1">Rating:</strong>
                     <span className="pr-1">{selectedProduct.rating.rate}</span>
                     <Rating
@@ -160,6 +185,7 @@ const SearchBar = () => {
                       ({selectedProduct.rating.count})
                     </span>
                   </div>
+                      {checkCartForItem(selectedProduct)}
                 </div>
               </div>
             </div>
