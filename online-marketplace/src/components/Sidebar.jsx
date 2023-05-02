@@ -30,13 +30,13 @@ const Sidebar = () => {
 
   const [open, setOpen] = useState(false);
   const drawerWidth = 220;
+  const accountLink = user.email ? '/account' : '/login';
   const navItems = ["Home", "Your Account"];
   const navIcons = [
     <AiOutlineHome className="w-6 h-6 text-black" />,
-    // <RiLoginBoxLine className="w-6 h-6 text-black" />,
     <MdOutlineManageAccounts className="w-6 h-6 text-black" />
   ];
-  const navLinks = ["/",  "/account"];
+  const navLinks = ["/", accountLink];
 
   const Drawer = styled(MuiDrawer, {
     shouldForwardProp: (prop) => prop !== "open",
@@ -160,7 +160,7 @@ const Sidebar = () => {
               </ListItemButton>
             </ListItem>
           ))}
-          <ListItem disablePadding>
+          {user.email ? <ListItem disablePadding>
             <ListItemButton
               sx={{
                 minHeight: 48,
@@ -180,8 +180,8 @@ const Sidebar = () => {
               </ListItemIcon>
               <ListItemText primary= 'Your Cart' sx={{ opacity: open ? 1 : 0 }} />
             </ListItemButton>
-          </ListItem>
-            <ListItem disablePadding>
+          </ListItem> : null}
+          <ListItem disablePadding>
             <ListItemButton
               sx={{
                 minHeight: 48,
