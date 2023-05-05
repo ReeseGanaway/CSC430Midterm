@@ -4,6 +4,7 @@ import FormSwitch from "./components/FormSwitch";
 import Sidebar from "./components/Sidebar";
 import Checkout from "./components/Checkout";
 import { ReduxTest } from "./components/ReduxTest";
+import Cart from "./components/Cart";
 
 function App() {
   return (
@@ -17,6 +18,8 @@ function App() {
             <Route path="/home" element={<LandingPage />} />
             <Route path="/checkout" element={<Checkout />} />
             <Route path='/redux' element={<ReduxTest/>}/>
+            <Route path='/cart' element={<Cart/>}/>
+
           </Routes>
         </main>
       </BrowserRouter>

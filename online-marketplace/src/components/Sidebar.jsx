@@ -19,23 +19,24 @@ import { useSelector, useDispatch } from "react-redux";
 import { logout } from "../redux/slices/userSlice";
 import { Navigate } from "react-router-dom";
 import SearchIcon from '@mui/icons-material/Search';
+import { Badge } from "@mui/material";
 
 
 const Sidebar = () => {
   const user = useSelector(state => state.user);
+  const cart = useSelector(state => state.cart);
   const dispatch = useDispatch();
   
 
   const [open, setOpen] = useState(false);
   const drawerWidth = 220;
-  const navItems = ["Home", /*"Sign In",*/ "Your Account", "Your Cart"];
+  const accountLink = user.email ? '/account' : '/login';
+  const navItems = ["Home", "Your Account"];
   const navIcons = [
     <AiOutlineHome className="w-6 h-6 text-black" />,
-    // <RiLoginBoxLine className="w-6 h-6 text-black" />,
-    <MdOutlineManageAccounts className="w-6 h-6 text-black" />,
-    <AiOutlineShoppingCart className="w-6 h-6 text-black" />,
+    <MdOutlineManageAccounts className="w-6 h-6 text-black" />
   ];
-  const navLinks = ["/", /*"/login",*/ "/account", "/cart"];
+  const navLinks = ["/", accountLink];
 
   const Drawer = styled(MuiDrawer, {
     shouldForwardProp: (prop) => prop !== "open",
@@ -117,6 +118,14 @@ const Sidebar = () => {
     }
   }
 
+  const getCartSize = () => {
+    let cartSize = 0
+    for(let i = 0; i < cart.length; i++){
+      cartSize += cart[i].quantity;
+    }
+    return cartSize;
+  }
+
   return (
     <Box className="flex">
       <AppBar position="fixed" open={open}>
@@ -159,8 +168,26 @@ const Sidebar = () => {
               </ListItemButton>
             </ListItem>
           ))}
-          {
-            <ListItem key={user.email ? "Sign Out": "Sign In"} disablePadding>
+          <ListItem disablePadding>
+            <ListItemButton
+              sx={{
+                minHeight: 48,
+                justifyContent: open ? "initial" : "center",
+                px: 2.5,
+              }}
+              href = '/cart'
+            >
+              <ListItemIcon
+                className={`!min-w-0 ${open ? "mr-3" : "mx-auto"}`}
+              >
+                <Badge badgeContent={getCartSize()} color="error">
+                  <AiOutlineShoppingCart className="w-6 h-6 text-black" />
+                </Badge>
+              </ListItemIcon>
+              <ListItemText primary= 'Your Cart' sx={{ opacity: open ? 1 : 0 }} />
+            </ListItemButton>
+          </ListItem>
+          <ListItem disablePadding>
             <ListItemButton
               sx={{
                 minHeight: 48,
@@ -178,7 +205,7 @@ const Sidebar = () => {
               <ListItemText primary={user.email ? "Sign Out": "Sign In"} sx={{ opacity: open ? 1 : 0 }} />
             </ListItemButton>
           </ListItem>
-          }
+          
         </List>
         
       </Drawer>
