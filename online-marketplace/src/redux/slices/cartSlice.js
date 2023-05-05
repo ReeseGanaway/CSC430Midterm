@@ -18,7 +18,7 @@ export const cart = createSlice({
       state.push(action.payload);
     },
     removeFromCart(state, action) {
-      for (i = 0; i < state.length; i++) {
+      for (let i = 0; i < state.length; i++) {
         if (state[i] === action.payload) {
           state = state.splice(i, i);
         }

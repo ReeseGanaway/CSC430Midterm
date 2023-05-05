@@ -11,13 +11,21 @@ function Cart() {
     const cart = useSelector(state => state.cart);
     const user = useSelector(state => state.user);
 
+    const getCartSize = () => {
+        let size = 0
+        for(let i = 0; i <cart.length; i++){
+            size+=cart[i].quantity;
+        }
+        return size;
+    }
+
 
     const getSubTotal = () => {
         let subtotal = 0;
         for(let i = 0; i < cart.length; i++){
             subtotal += cart[i].price * cart[i].quantity;
         }
-        return subtotal;
+        return subtotal.toFixed(2);
     }
     return (
         <div className="grid grid-cols-2 gap-4">
@@ -58,7 +66,7 @@ function Cart() {
             <div className="w-fit">          
                 <div className="border border-zinc-300 rounded max-w-sm h-max shadow-[0_0_5px_rgba(0,0,0,0.2)] justify-self-center md:justify-self-end order-1 md:order-2 md:min-w-[24rem] mb-10">
                     <h2 className="text-lg font-semibold p-3 border-b">
-                    Subtotal ({cart.length} items): ${getSubTotal()}
+                    Subtotal ({getCartSize()} items): ${getSubTotal()}
                     </h2>
                     <div className="m-3 text-center">
                         {cart.length > 0 ? (<button
