@@ -12,6 +12,7 @@ import LockIcon from "@mui/icons-material/Lock";
 import TitanLogo from "../assets/TitanLogo.png";
 import TitanLogo2 from "../assets/Logo2.png";
 import HowToRegRoundedIcon from "@mui/icons-material/HowToRegRounded";
+import Alert from '@mui/material/Alert';
 import supabase from "./utils/supabase";
 import { registerUser } from "./utils/data";
 
@@ -21,6 +22,7 @@ function FormSwitch() {
   const [submitSuccess, setSubmitSuccess] = useState(false);
   const [submitError, setSubmitError] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
+
   
   const [formData, setFormData] = useState({
     email: "",
@@ -34,30 +36,6 @@ function FormSwitch() {
   };
 
 
-// async function handleSubmit(e){
-//   e.preventDefault()
-
-// try {
-//   const { data, error } = await supabase.auth.signUp(
-//     {
-//       email: formData.email,
-//       password: formData.password,
-//       options: {
-//         data: {
-//           full_name: formData.fullName,
-//         }
-//       }
-//     }
-//   )
-//   alert("Check your email for a verification link")
-  
-// } catch (error) {
-//   alert(error)
-  
-// }
-
-//   }
-
 const handleSubmit = async (event) => {
   event.preventDefault();
 
@@ -69,14 +47,18 @@ const handleSubmit = async (event) => {
 
   const registerResponse = await registerUser(email, password, name, slug);
 
-  if (formData.password !== confirmPassword) {
-    alert("Passwords do not match!");
+  if (activeForm === "signup" && formData.password !== confirmPassword) {
+    setSubmitting(false);
+    setSubmitError(
+      <Alert variant="filled" severity="error">
+        Passwords do not match!
+      </Alert>
+    );
     return;
   }
-
+  
   if (registerResponse.success) {
     setSubmitSuccess(true);
-    alert("Check your email for a verification link")
   } else {
     alert(registerResponse.message)
   }
@@ -177,8 +159,15 @@ const handleInputChange = (event) => {
             <span className="underline"></span>
           </button>
           <form className="form form-signup" onSubmit={handleSubmit}>
-          {submitSuccess && <p>Registration successful!</p>}
-{submitError && <p>Error: {submitError}</p>}
+          {submitSuccess && <Alert variant="filled" severity="success">
+          Registration successful! Please check your email for verification.
+      </Alert>}
+{submitError && 
+  <Alert variant="filled" severity="error">
+        Error: {submitError}
+      </Alert>}
+
+      
 
             <fieldset>
               <div className="image-container">
@@ -239,10 +228,14 @@ const handleInputChange = (event) => {
                     onChange={(e) => setConfirmPassword(e.target.value)}
                   
                   />
+                  
+                  
                 </Box>
               </Box>
+              
             </fieldset>
             <button type="submit" disabled={submitting}>
+              
     
               <a
                 href="#_"

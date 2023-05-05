@@ -1,23 +1,40 @@
 import supabase from "./supabase";
 
 const registerUser = async (email, password, name, slug) => {
-  const { data, error } = await supabase
-    .from("profile")
-    .select("*")
-    .eq("slug", slug);
-  if (error) {
-    return {
-      success: false,
-      message: error.message,
-    };
-  }
+  const { data: emailData, error: emailError } = await supabase
+  .from("profile")
+  .select("*")
+  .eq("email", email);
+if (emailError) {
+  return {
+    success: false,
+    message: emailError.message,
+  };
+}
+if (emailData && emailData.length > 0) {
+  return {
+    success: false,
+    message: "Email address already exists.",
+  };
+}
 
-  if (data.length > 0) {
-    return {
-      success: false,
-      message: "User slug already exists",
-    };
-  }
+  // const { data, error } = await supabase
+  //   .from("profile")
+  //   .select("*")
+  //   .eq("slug", slug);
+  // if (error) {
+  //   return {
+  //     success: false,
+  //     message: error.message,
+  //   };
+  // }
+
+  // if (data.length > 0) {
+  //   return {
+  //     success: false,
+  //     message: "User slug already exists",
+  //   };
+  // }
 
   const authResponse = await supabase.auth.signUp({
     email,
@@ -34,7 +51,7 @@ const registerUser = async (email, password, name, slug) => {
   if (authResponse.data.user) {
     const addMetaResponse = await supabase
       .from("profile")
-      .insert([{ user_Id: authResponse.data.user.id, name, slug }]);
+      .insert([{ user_id: authResponse.data.user.id, name, slug }]);
 
     if (addMetaResponse.error) {
       return {
