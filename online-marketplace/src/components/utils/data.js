@@ -1,40 +1,25 @@
 import supabase from "./supabase";
 
 const registerUser = async (email, password, name, slug) => {
-  const { data: emailData, error: emailError } = await supabase
-  .from("profile")
-  .select("*")
-  .eq("email", email);
-if (emailError) {
-  return {
-    success: false,
-    message: emailError.message,
-  };
-}
-if (emailData && emailData.length > 0) {
-  return {
-    success: false,
-    message: "Email address already exists.",
-  };
-}
 
-  // const { data, error } = await supabase
-  //   .from("profile")
-  //   .select("*")
-  //   .eq("slug", slug);
-  // if (error) {
-  //   return {
-  //     success: false,
-  //     message: error.message,
-  //   };
-  // }
 
-  // if (data.length > 0) {
-  //   return {
-  //     success: false,
-  //     message: "User slug already exists",
-  //   };
-  // }
+  const { data, error } = await supabase
+    .from("profile")
+    .select("*")
+    .eq("email", email);
+  if (error) {
+    return {
+      success: false,
+      message: error.message,
+    };
+  }
+
+  if (data.length > 0) {
+    return {
+      success: false,
+      message: "User email already exists",
+    };
+  }
 
   const authResponse = await supabase.auth.signUp({
     email,
@@ -72,4 +57,42 @@ if (emailData && emailData.length > 0) {
   };
 };
 
-export { registerUser};
+const loginUser = async (email, password) => {
+  const authResponse = await supabase.auth.signInWithPassword({
+    email,
+    password,
+  });
+
+  if (authResponse.error) {
+    return {
+      success: false,
+      error: authResponse.error,
+    };
+  }
+
+  if (authResponse.data.user) {
+    const meta = await supabase
+      .from("profile")
+      .select("*")
+      .eq("user_id", authResponse.data.user.id);
+
+    if (meta.error) {
+      return {
+        success: false,
+        error: meta.error,
+      };
+    }
+    return {
+      ...authResponse,
+      meta,
+      success: true,
+    };
+  }
+
+  return {
+    success: false,
+    message: "An unknown error has occurred",
+  };
+};
+
+export { registerUser, loginUser};

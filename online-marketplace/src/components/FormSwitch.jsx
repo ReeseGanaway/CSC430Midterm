@@ -49,6 +49,7 @@ const handleSubmit = async (event) => {
 
   if (activeForm === "signup" && formData.password !== confirmPassword) {
     setSubmitting(false);
+    setSubmitSuccess(false);
     setSubmitError(
       <Alert variant="filled" severity="error">
         Passwords do not match!
@@ -59,6 +60,10 @@ const handleSubmit = async (event) => {
   
   if (registerResponse.success) {
     setSubmitSuccess(true);
+
+    setTimeout(() => {
+      handleSwitcherClick("login");
+    }, 1000);  
   } else {
     alert(registerResponse.message)
   }
@@ -131,6 +136,10 @@ const handleInputChange = (event) => {
                 />
               </Box>
             </Box>
+            <p className="pclass">Don't have an account? Click here to </p> 
+             <p className="pclass2" 
+            onClick={() => handleSwitcherClick("signup")}>Signup</p>
+              
 
             <button type="submit" className="btn-login">
               <a
@@ -232,7 +241,11 @@ const handleInputChange = (event) => {
                   
                 </Box>
               </Box>
+              <p className="pclass">Have an account already? Click here to </p> 
+             <p className="pclass2" 
+            onClick={() => handleSwitcherClick("login")}>Login</p>
               
+        
             </fieldset>
             <button type="submit" disabled={submitting}>
               
