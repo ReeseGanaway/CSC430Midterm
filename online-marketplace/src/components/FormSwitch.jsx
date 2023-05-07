@@ -14,14 +14,21 @@ import TitanLogo2 from "../assets/Logo2.png";
 import HowToRegRoundedIcon from "@mui/icons-material/HowToRegRounded";
 import Alert from '@mui/material/Alert';
 import supabase from "./utils/supabase";
-import { registerUser } from "./utils/data";
+import { registerUser, loginUser } from "./utils/data";
+import { useNavigate} from 'react-router-dom';
+
 
 function FormSwitch() {
+  let navigate = useNavigate()
   const [activeForm, setActiveForm] = useState("login");
   const [submitting, setSubmitting] = useState(false);
   const [submitSuccess, setSubmitSuccess] = useState(false);
+  const [submittingLog, setSubmittingLog] = useState(false);
+  const [submitLogSuccess, setLogSubmitSuccess] = useState(false);
   const [submitError, setSubmitError] = useState("");
+  const [submitErrorLog, setSubmitErrorLog] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
+  const [response, setResponse] = useState(null);
 
   
   const [formData, setFormData] = useState({
@@ -63,7 +70,7 @@ const handleSubmit = async (event) => {
 
     setTimeout(() => {
       handleSwitcherClick("login");
-    }, 1000);  
+    }, 3000);  
   } else {
     alert(registerResponse.message)
   }
@@ -79,6 +86,75 @@ const handleInputChange = (event) => {
     [name]: value,
   }));
 };
+
+
+
+// const handleLoginSubmit = async (event) => {
+//   event.preventDefault();
+
+//   setSubmittingLog(true);
+//   setLogSubmitSuccess(false);
+//   setSubmitErrorLog("");
+
+//   const { email, password } = formData;
+
+//   const { user, error } = await supabase.auth.signInWithPassword({
+//     email: email,
+//     password: password
+//   });
+
+//   if (error) {
+//     setSubmitErrorLog(
+//       <Alert variant="filled" severity="error">
+//         {error.message}
+//       </Alert>
+//     );
+//   } else {
+//     setLogSubmitSuccess(true);
+//     navigate("/LandingPage");
+//   }
+
+//   setSubmittingLog(false);
+// };
+
+const handleLoginSubmit = async (event) => {
+  event.preventDefault();
+
+  setSubmittingLog(true);
+  setLogSubmitSuccess(false);
+  setSubmitErrorLog("");
+
+  const { email, password } = formData;
+
+  const loginResponse = await loginUser(email, password);
+  // setResponse(authResponse);
+  if (loginResponse.success) {
+  //   setLogSubmitSuccess(true);
+  //   <Alert variant="filled" severity="success">
+  //   Welcome! Proceed to our store!
+  // </Alert>
+  //   setTimeout(() => {
+  //     navigate('/');
+  //   }, 1000);  
+  // } else {
+    // setSubmitErrorLog(
+    //   <Alert variant="filled" severity="error">
+    //     {loginResponse.error.message}
+    //   </Alert>
+    // );
+  } else {
+    setLogSubmitSuccess(true);
+    <Alert variant="filled" severity="success">
+    Welcome! Proceed to our store!
+  </Alert>
+    setTimeout(() => {
+      navigate('/');
+    }, 1000);  
+  }
+
+  setSubmitting(false);
+};
+
 
 
 
@@ -101,7 +177,14 @@ const handleInputChange = (event) => {
             Login
             <span className="underline"></span>
           </button>
-          <form className="form form-login">
+          <form className="form form-login" onSubmit={handleLoginSubmit}>
+          {submitLogSuccess && <Alert variant="filled" severity="success">
+          Login successful! Welcome! Proceed to our store! 
+      </Alert>}
+{submitErrorLog && 
+  <Alert variant="filled" severity="error">
+        Error: {submitErrorLog}
+      </Alert>}
             <div className="image-container">
               <img src={TitanLogo} alt="My Image" className="img1" />
             </div>
@@ -121,6 +204,8 @@ const handleInputChange = (event) => {
                 type="email"
                 required
                 className="box-1"
+                
+            
               />
 
               <Box>
@@ -133,15 +218,16 @@ const handleInputChange = (event) => {
                   label="Password"
                   variant="standard"
                   className="box-1"
+            
                 />
               </Box>
             </Box>
             <p className="pclass">Don't have an account? Click here to </p> 
              <p className="pclass2" 
-            onClick={() => handleSwitcherClick("signup")}>Signup</p>
+            onClick={() => handleSwitcherClick("signup")}>Sign up</p>
               
 
-            <button type="submit" className="btn-login">
+            <button type="submit" className="btn-login" >
               <a
                 href="#_"
                 className="relative inline-flex items-center justify-center p-4 px-5 py-3 overflow-hidden font-medium text-indigo-600 transition duration-300 ease-out rounded-full shadow-xl group hover:ring-1 hover:ring-purple-500"
