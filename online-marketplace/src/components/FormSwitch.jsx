@@ -12,20 +12,267 @@ import LockIcon from "@mui/icons-material/Lock";
 import TitanLogo from "../assets/TitanLogo.png";
 import TitanLogo2 from "../assets/Logo2.png";
 import HowToRegRoundedIcon from "@mui/icons-material/HowToRegRounded";
-import { useSelector, useDispatch } from "react-redux";
-import { login, logout } from "../redux/slices/userSlice";
-import { Navigate } from "react-router-dom";
+import Alert from '@mui/material/Alert';
+import supabase from "./utils/supabase";
+import { registerUser, loginUser } from "./utils/data";
+import { useNavigate} from 'react-router-dom';
+
 
 function FormSwitch() {
+  let navigate = useNavigate()
   const [activeForm, setActiveForm] = useState("login");
-  const [email, setEmail] = useState('');
-  const [password, setPassword] = useState('');
-  const user = useSelector(state => state.user);
-  const dispatch = useDispatch();
+  const [submitting, setSubmitting] = useState(false);
+  const [submitSuccess, setSubmitSuccess] = useState(false);
+  const [submittingLog, setSubmittingLog] = useState(false);
+  const [submitLogSuccess, setLogSubmitSuccess] = useState(false);
+  const [submitError, setSubmitError] = useState("");
+  const [submitErrorLog, setSubmitErrorLog] = useState("");
+  const [confirmPassword, setConfirmPassword] = useState("");
+  const [response, setResponse] = useState(null);
 
+  
+  const [formData, setFormData] = useState({
+    email: "",
+    password: "",
+    name: "",
+    slug: "",
+  });
+  
   const handleSwitcherClick = (form) => {
     setActiveForm(form);
   };
+
+
+const handleSubmit = async (event) => {
+  event.preventDefault();
+
+  setSubmitting(true);
+  setSubmitSuccess(false);
+  setSubmitError("");
+
+  const { email, password, name, slug } = formData;
+
+  const registerResponse = await registerUser(email, password, name, slug);
+
+  if (activeForm === "signup" && formData.password !== confirmPassword) {
+    setSubmitting(false);
+    setSubmitSuccess(false);
+    setSubmitError(
+      <Alert variant="filled" severity="error">
+        Passwords do not match!
+      </Alert>
+    );
+    return;
+  }
+  
+  if (registerResponse.success) {
+    setSubmitSuccess(true);
+
+    setTimeout(() => {
+      handleSwitcherClick("login");
+    }, 3000);  
+  } else {
+    alert(registerResponse.message)
+  }
+
+  setSubmitting(false);
+};
+
+const handleInputChange = (event) => {
+  const { name, value } = event.target;
+
+  setFormData((prevState) => ({
+    ...prevState,
+    [name]: value,
+  }));
+};
+
+
+
+// const handleLoginSubmit = async (event) => {
+//   event.preventDefault();
+
+//   setSubmittingLog(true);
+//   setLogSubmitSuccess(false);
+//   setSubmitErrorLog("");
+
+//   const { email, password } = formData;
+
+//   const { user, error } = await supabase.auth.signInWithPassword({
+//     email: email,
+//     password: password
+//   });
+
+//   if (error) {
+//     setSubmitErrorLog(
+//       <Alert variant="filled" severity="error">
+//         {error.message}
+//       </Alert>
+//     );
+//   } else {
+//     setLogSubmitSuccess(true);
+//     navigate("/LandingPage");
+//   }
+
+//   setSubmittingLog(false);
+// };
+
+const handleLoginSubmit = async (event) => {
+  event.preventDefault();
+
+  setSubmittingLog(true);
+  setLogSubmitSuccess(false);
+  setSubmitErrorLog("");
+
+  const { email, password } = formData;
+
+  const loginResponse = await loginUser(email, password);
+  // setResponse(authResponse);
+  if (loginResponse.success) {
+  //   setLogSubmitSuccess(true);
+  //   <Alert variant="filled" severity="success">
+  //   Welcome! Proceed to our store!
+  // </Alert>
+  //   setTimeout(() => {
+  //     navigate('/');
+  //   }, 1000);  
+  // } else {
+    // setSubmitErrorLog(
+    //   <Alert variant="filled" severity="error">
+    //     {loginResponse.error.message}
+    //   </Alert>
+    // );
+  } else {
+    setLogSubmitSuccess(true);
+    <Alert variant="filled" severity="success">
+    Welcome! Proceed to our store!
+  </Alert>
+    setTimeout(() => {
+      navigate('/');
+    }, 1000);  
+  }
+
+  setSubmitting(false);
+};
+
+
+
+
+
+const handleSubmit = async (event) => {
+  event.preventDefault();
+
+  setSubmitting(true);
+  setSubmitSuccess(false);
+  setSubmitError("");
+
+  const { email, password, name, slug } = formData;
+
+  const registerResponse = await registerUser(email, password, name, slug);
+
+  if (activeForm === "signup" && formData.password !== confirmPassword) {
+    setSubmitting(false);
+    setSubmitSuccess(false);
+    setSubmitError(
+      <Alert variant="filled" severity="error">
+        Passwords do not match!
+      </Alert>
+    );
+    return;
+  }
+  
+  if (registerResponse.success) {
+    setSubmitSuccess(true);
+
+    setTimeout(() => {
+      handleSwitcherClick("login");
+    }, 3000);  
+  } else {
+    alert(registerResponse.message)
+  }
+
+  setSubmitting(false);
+};
+
+const handleInputChange = (event) => {
+  const { name, value } = event.target;
+
+  setFormData((prevState) => ({
+    ...prevState,
+    [name]: value,
+  }));
+};
+
+
+
+// const handleLoginSubmit = async (event) => {
+//   event.preventDefault();
+
+//   setSubmittingLog(true);
+//   setLogSubmitSuccess(false);
+//   setSubmitErrorLog("");
+
+//   const { email, password } = formData;
+
+//   const { user, error } = await supabase.auth.signInWithPassword({
+//     email: email,
+//     password: password
+//   });
+
+//   if (error) {
+//     setSubmitErrorLog(
+//       <Alert variant="filled" severity="error">
+//         {error.message}
+//       </Alert>
+//     );
+//   } else {
+//     setLogSubmitSuccess(true);
+//     navigate("/LandingPage");
+//   }
+
+//   setSubmittingLog(false);
+// };
+
+const handleLoginSubmit = async (event) => {
+  event.preventDefault();
+
+  setSubmittingLog(true);
+  setLogSubmitSuccess(false);
+  setSubmitErrorLog("");
+
+  const { email, password } = formData;
+
+  const loginResponse = await loginUser(email, password);
+  // setResponse(authResponse);
+  if (loginResponse.success) {
+  //   setLogSubmitSuccess(true);
+  //   <Alert variant="filled" severity="success">
+  //   Welcome! Proceed to our store!
+  // </Alert>
+  //   setTimeout(() => {
+  //     navigate('/');
+  //   }, 1000);  
+  // } else {
+    // setSubmitErrorLog(
+    //   <Alert variant="filled" severity="error">
+    //     {loginResponse.error.message}
+    //   </Alert>
+    // );
+  } else {
+    setLogSubmitSuccess(true);
+    <Alert variant="filled" severity="success">
+    Welcome! Proceed to our store!
+  </Alert>
+    setTimeout(() => {
+      navigate('/');
+    }, 1000);  
+  }
+
+  setSubmitting(false);
+};
+
+
+
 
   const onEmailChanged = e => setEmail(e.target.value)
   const onPasswordChanged = e => setPassword(e.target.value)
@@ -60,7 +307,14 @@ function FormSwitch() {
             Login
             <span className="underline"></span>
           </button>
-          <form className="form form-login">
+          <form className="form form-login" onSubmit={handleLoginSubmit}>
+          {submitLogSuccess && <Alert variant="filled" severity="success">
+          Login successful! Welcome! Proceed to our store! 
+      </Alert>}
+{submitErrorLog && 
+  <Alert variant="filled" severity="error">
+        Error: {submitErrorLog}
+      </Alert>}
             <div className="image-container">
               <img src={TitanLogo} alt="My Image" className="img1" />
             </div>
@@ -80,7 +334,8 @@ function FormSwitch() {
                 type="email"
                 required
                 className="box-1"
-                onChange={onEmailChanged}
+                
+            
               />
 
               <Box>
@@ -93,12 +348,16 @@ function FormSwitch() {
                   label="Password"
                   variant="standard"
                   className="box-1"
-                  onChange={onPasswordChanged}
+            
                 />
               </Box>
             </Box>
+            <p className="pclass">Don't have an account? Click here to </p> 
+             <p className="pclass2" 
+            onClick={() => handleSwitcherClick("signup")}>Sign up</p>
+              
 
-            <button type="submit" className="btn-login" onClick={onLogin}>
+            <button type="submit" className="btn-login" >
               <a
                 href="#_"
                 className="relative inline-flex items-center justify-center p-4 px-5 py-3 overflow-hidden font-medium text-indigo-600 transition duration-300 ease-out rounded-full shadow-xl group hover:ring-1 hover:ring-purple-500"
@@ -124,7 +383,17 @@ function FormSwitch() {
             Sign Up
             <span className="underline"></span>
           </button>
-          <form className="form form-signup">
+          <form className="form form-signup" onSubmit={handleSubmit}>
+          {submitSuccess && <Alert variant="filled" severity="success">
+          Registration successful! Please check your email for verification.
+      </Alert>}
+{submitError && 
+  <Alert variant="filled" severity="error">
+        Error: {submitError}
+      </Alert>}
+
+      
+
             <fieldset>
               <div className="image-container">
                 <img src={TitanLogo2} alt="My Image" className="img1" />
@@ -143,6 +412,10 @@ function FormSwitch() {
                   label="E-mail"
                   variant="standard"
                   type="email"
+                  name="email"
+                  placeholder="Email"
+                  value={formData.email}
+                  onChange={handleInputChange}
                   required
                   className="box-1"
                 />
@@ -157,6 +430,10 @@ function FormSwitch() {
                     label="Password"
                     variant="standard"
                     className="box-1"
+                    name="password"
+                    value={formData.password}
+                    onChange={handleInputChange}
+          
                   />
                 </Box>
                 <Box>
@@ -172,11 +449,23 @@ function FormSwitch() {
                     label="Password"
                     variant="standard"
                     className="box-1"
+                    value={confirmPassword}
+                    onChange={(e) => setConfirmPassword(e.target.value)}
+                  
                   />
+                  
+                  
                 </Box>
               </Box>
+              <p className="pclass">Have an account already? Click here to </p> 
+             <p className="pclass2" 
+            onClick={() => handleSwitcherClick("login")}>Login</p>
+              
+        
             </fieldset>
-            <button type="submit">
+            <button type="submit" disabled={submitting}>
+              
+    
               <a
                 href="#_"
                 className="relative items-center justify-center inline-block p-4 px-5 py-3 overflow-hidden font-medium text-indigo-600 rounded-lg shadow-2xl group"
@@ -186,7 +475,8 @@ function FormSwitch() {
                   <span className="absolute bottom-0 left-0 w-24 h-24 -ml-10 bg-purple-500 rounded-full blur-md"></span>
                   <span className="absolute bottom-0 right-0 w-24 h-24 -mr-10 bg-pink-500 rounded-full blur-md"></span>
                 </span>
-                <span className="relative text-white">Sign Up</span>
+                <span className="relative text-white">
+                {submitting ? "Submitting..." : "Sign Up"}</span>
               </a>
             </button>
           </form>
