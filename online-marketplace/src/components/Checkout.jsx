@@ -1,4 +1,5 @@
 import { useState } from "react";
+import * as React from 'react';
 import { FaAngleLeft } from "react-icons/fa";
 import TextField from "@mui/material/TextField";
 import MenuItem from "@mui/material/MenuItem";
@@ -16,7 +17,49 @@ import GooglePayImg from "../assets/google_pay.svg";
 import ApplePayImg from "../assets/apple_pay.svg";
 import PayPalImg from "../assets/paypal.svg";
 import { useSelector, useDispatch } from "react-redux";
+import Modal from "@mui/material/Modal";
+import Box from '@mui/material/Box';
+import Typography from '@mui/material/Typography';
+import Button from '@mui/material/Button';
+import { makeStyles } from '@material-ui/styles';
 import Cart from "./Cart";
+import '../forms.css'
+
+
+const style = {
+  position: 'absolute',
+  top: '50%',
+  left: '50%',
+  transform: 'translate(-50%, -50%)',
+  width: 400,
+  bgcolor: 'background.paper',
+  border: '2px solid #000',
+  boxShadow: 24,
+  p: 4,
+};
+const useStyles = makeStyles({
+  modal: {
+    display: 'flex',
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
+  paper: {
+    backgroundColor: '#fff',
+    padding: '32px',
+    maxWidth: '600px',
+    borderRadius: '8px',
+    textAlign: 'center',
+  },
+  button: {
+    marginTop: '16px',
+    backgroundColor: '#0070f3',
+    color: '#fff',
+    '&:hover': {
+      backgroundColor: '#0061b8',
+    },
+  },
+});
+
 
 const Checkout = () => {
   const [showCardNum, setShowCardNum] = useState(false);
@@ -25,6 +68,12 @@ const Checkout = () => {
   const toggleShowCVV = () => setShowCVV((show) => !show);
   const dispatch = useDispatch();
   const cart = useSelector(state => state.cart)
+  const [open, setOpen] = React.useState(false);
+  const handleOpen = () => setOpen(true);
+  const handleClose = () => setOpen(false);
+  const classes = useStyles();
+  
+
   console.log(cart);
 
   const states = [
@@ -79,6 +128,17 @@ const Checkout = () => {
     "Wisconsin",
     "Wyoming",
   ];
+
+  function generateTrackingNumber() {
+    let result = '';
+    const characters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
+    const length = 10;
+    for (let i = 0; i < length; i++) {
+      result += characters.charAt(Math.floor(Math.random() * characters.length));
+    }
+    return result;
+  }
+  
 
   const getSubTotal = () => {
     let subtotal = 0;
@@ -188,9 +248,36 @@ const Checkout = () => {
               <button
                 type="submit"
                 className="bg-gradient-to-r from-[#3a577c] to-[#275350] rounded w-full py-2 text-white font-medium"
+                onClick={handleOpen}
               >
                 Place your order
               </button>
+              <Modal
+  open={open}
+  onClose={handleClose}
+  aria-labelledby="modal-modal-title"
+  aria-describedby="modal-modal-description"
+  className={classes.modal}
+>
+  <Box className={classes.paper}>
+    <Typography className="font" variant="h4" component="h2" gutterBottom>
+      Your order has been placed!
+    </Typography>
+    <Typography className="font" variant="body1" gutterBottom>
+      Thank you for shopping with us. Your order has been confirmed and will be shipped shortly.
+    </Typography>
+    <Typography className="font" variant="body2" gutterBottom>
+      Your tracking number is: 
+      <strong className="click"> {generateTrackingNumber()}</strong>
+    </Typography>
+    <a href="/cart">
+      <Button variant="contained" className={classes.button} onClick={handleClose}>
+        Continue shopping
+      </Button>
+    </a>
+  </Box>
+</Modal>
+
               <p className="text-zinc-500 py-2">
                 By placing your order, you agree to our{" "}
                 <a href="#" className="text-blue-600">
@@ -347,9 +434,36 @@ const Checkout = () => {
               <button
                 type="submit"
                 className="order-2 mt-3 mobileL:order-1 mobileL:mt-0 bg-gradient-to-r from-[#3a577c] to-[#275350] rounded p-2 mobileL:max-w-[10rem] w-full h-fit text-white font-medium"
+                onClick={handleOpen}
               >
                 Place your order
               </button>
+              <Modal
+  open={open}
+  onClose={handleClose}
+  aria-labelledby="modal-modal-title"
+  aria-describedby="modal-modal-description"
+  className={classes.modal}
+>
+  <Box className={classes.paper}>
+    <Typography className="font" variant="h4" component="h2" gutterBottom>
+      Your order has been placed!
+    </Typography>
+    <Typography className="font" variant="body1" gutterBottom>
+      Thank you for shopping with us. Your order has been confirmed and will be shipped shortly.
+    </Typography>
+    <Typography className="font" variant="body2" gutterBottom>
+      Your tracking number is: 
+      <strong className="click"> {generateTrackingNumber()}</strong>
+    </Typography>
+    <a href="/cart">
+      <Button variant="contained" className={classes.button} onClick={handleClose}>
+        Continue shopping
+      </Button>
+    </a>
+  </Box>
+</Modal>
+
               <div className="mobileL:ml-3 order-1 mobileL:order-2">
                 <p className="text-red-600 text-lg font-semibold mb-1">
                   Order Total: $159.96

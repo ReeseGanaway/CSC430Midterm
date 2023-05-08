@@ -346,3 +346,23 @@
 .pclass2:active {
   color: purple;
 }
+
+.order{
+  text-align: center;
+  font-weight: bold;
+  color: #1663ff;
+}
+
+.click:hover {
+  text-decoration: underline;
+  color: red;
+}
+
+
+.click:active {
+  color: purple;
+}
+.font{
+  font-weight: bold;
+  color: #0a6ba8;
+}
