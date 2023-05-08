@@ -16,6 +16,8 @@ import Alert from '@mui/material/Alert';
 import supabase from "./utils/supabase";
 import { registerUser, loginUser } from "./utils/data";
 import { useNavigate} from 'react-router-dom';
+import { useSelector, useDispatch } from "react-redux";
+import { login } from "../redux/slices/userSlice";
 
 
 function FormSwitch() {
@@ -29,6 +31,9 @@ function FormSwitch() {
   const [submitErrorLog, setSubmitErrorLog] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
   const [response, setResponse] = useState(null);
+  const dispatch = useDispatch();
+  const user = useSelector(state => state.user);
+  
 
   
   const [formData, setFormData] = useState({
@@ -144,6 +149,8 @@ const handleLoginSubmit = async (event) => {
     // );
   } else {
     setLogSubmitSuccess(true);
+    console.log(formData)
+    dispatch(login({email: formData.email}));
     <Alert variant="filled" severity="success">
     Welcome! Proceed to our store!
   </Alert>
@@ -153,54 +160,6 @@ const handleLoginSubmit = async (event) => {
   }
 
   setSubmitting(false);
-};
-
-
-
-
-
-const handleSubmit = async (event) => {
-  event.preventDefault();
-
-  setSubmitting(true);
-  setSubmitSuccess(false);
-  setSubmitError("");
-
-  const { email, password, name, slug } = formData;
-
-  const registerResponse = await registerUser(email, password, name, slug);
-
-  if (activeForm === "signup" && formData.password !== confirmPassword) {
-    setSubmitting(false);
-    setSubmitSuccess(false);
-    setSubmitError(
-      <Alert variant="filled" severity="error">
-        Passwords do not match!
-      </Alert>
-    );
-    return;
-  }
-  
-  if (registerResponse.success) {
-    setSubmitSuccess(true);
-
-    setTimeout(() => {
-      handleSwitcherClick("login");
-    }, 3000);  
-  } else {
-    alert(registerResponse.message)
-  }
-
-  setSubmitting(false);
-};
-
-const handleInputChange = (event) => {
-  const { name, value } = event.target;
-
-  setFormData((prevState) => ({
-    ...prevState,
-    [name]: value,
-  }));
 };
 
 
@@ -233,45 +192,6 @@ const handleInputChange = (event) => {
 //   setSubmittingLog(false);
 // };
 
-const handleLoginSubmit = async (event) => {
-  event.preventDefault();
-
-  setSubmittingLog(true);
-  setLogSubmitSuccess(false);
-  setSubmitErrorLog("");
-
-  const { email, password } = formData;
-
-  const loginResponse = await loginUser(email, password);
-  // setResponse(authResponse);
-  if (loginResponse.success) {
-  //   setLogSubmitSuccess(true);
-  //   <Alert variant="filled" severity="success">
-  //   Welcome! Proceed to our store!
-  // </Alert>
-  //   setTimeout(() => {
-  //     navigate('/');
-  //   }, 1000);  
-  // } else {
-    // setSubmitErrorLog(
-    //   <Alert variant="filled" severity="error">
-    //     {loginResponse.error.message}
-    //   </Alert>
-    // );
-  } else {
-    setLogSubmitSuccess(true);
-    <Alert variant="filled" severity="success">
-    Welcome! Proceed to our store!
-  </Alert>
-    setTimeout(() => {
-      navigate('/');
-    }, 1000);  
-  }
-
-  setSubmitting(false);
-};
-
-
 
 
   const onEmailChanged = e => setEmail(e.target.value)
@@ -284,10 +204,7 @@ const handleLoginSubmit = async (event) => {
   }
   
   
-  if(user.email){
-    console.log('Email exists')
-    return <Navigate replace to = '/home' />
-  }
+
   return (
     <section className="forms-section">
       <Background />
@@ -334,8 +251,8 @@ const handleLoginSubmit = async (event) => {
                 type="email"
                 required
                 className="box-1"
-                
-            
+                name = 'email'
+                onChange={handleInputChange}
               />
 
               <Box>
