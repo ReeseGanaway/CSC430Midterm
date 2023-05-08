@@ -85,7 +85,7 @@ const Checkout = () => {
     for(let i = 0; i < cart.length; i++){
         subtotal += cart[i].price * cart[i].quantity;
     }
-    return subtotal;
+    return subtotal.toFixed(2);
 }
 
   return (
