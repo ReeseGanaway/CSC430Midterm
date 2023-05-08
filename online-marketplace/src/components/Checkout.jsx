@@ -15,12 +15,17 @@ import RadioGroup from "@mui/material/RadioGroup";
 import GooglePayImg from "../assets/google_pay.svg";
 import ApplePayImg from "../assets/apple_pay.svg";
 import PayPalImg from "../assets/paypal.svg";
+import { useSelector, useDispatch } from "react-redux";
+import Cart from "./Cart";
 
 const Checkout = () => {
   const [showCardNum, setShowCardNum] = useState(false);
   const [showCVV, setShowCVV] = useState(false);
   const toggleShowCardNum = () => setShowCardNum((show) => !show);
   const toggleShowCVV = () => setShowCVV((show) => !show);
+  const dispatch = useDispatch();
+  const cart = useSelector(state => state.cart)
+  console.log(cart);
 
   const states = [
     "Alabama",
@@ -75,13 +80,23 @@ const Checkout = () => {
     "Wyoming",
   ];
 
+  const getSubTotal = () => {
+    let subtotal = 0;
+    for(let i = 0; i < cart.length; i++){
+        subtotal += cart[i].price * cart[i].quantity;
+    }
+    return subtotal;
+}
+
   return (
     <div className="flex flex-col min-h-screen">
       <main>
+        <a href="/cart">
         <small className="flex items-center text-sky-700 text-base font-semibold">
+          
           <FaAngleLeft className="mr-1 stroke-2" />
           Return to cart
-        </small>
+        </small></a>
         <h1 className="text-3xl font-bold mt-2 tracking-wide">Checkout</h1>
         <form
           action="#"
@@ -137,36 +152,36 @@ const Checkout = () => {
             <div className="m-3 flex flex-col border-b-4 border-gray-600">
               <div className="flex justify-between mb-2">
                 <p>Items:</p>
-                <span className="pl-[1.75rem] items-end inline-flex">
-                  $145.99
-                </span>
               </div>
-              <div className="flex justify-between mb-4">
-                <p>Shipping &amp; handling:</p>
-                <span className="pl-[1.75rem] items-end inline-flex">
-                  $7.50
-                </span>
+              <div className="justify-between mb-4">
+              {cart.map((product, id) => (
+                    <div
+                        key={id}
+                        className="pl-8"
+                    >
+                        <h1 className="font-semibold mb-2 truncate">{product.title}</h1>
+                        <p className="text-sm">${product.price.toFixed(2)}</p>
+                        <p className="flex mb-2">
+                            Quantity : {product.quantity}
+                        </p>
+                    </div> ))}
               </div>
               <div className="flex items-center justify-end">
                 <span className="border-b-2 border-gray-400 w-16" />
               </div>
               <div className="flex justify-between mt-4 mb-2">
-                <p>Total before tax:</p>
+                <p>Total:</p>
                 <span className="pl-[1.75rem] items-end inline-flex">
-                  $145.99
+                  {getSubTotal()}
                 </span>
               </div>
               <div className="flex justify-between mb-4">
-                <p>Estimated tax to be collected:</p>
-                <span className="pl-[1.75rem] items-end inline-flex">
-                  $6.47
-                </span>
               </div>
             </div>
             <div className="m-4 flex justify-between items-center">
               <p className="text-red-600 text-lg font-semibold">Order Total:</p>
               <span className="pl-[1.75rem] items-end inline-flex text-red-600 text-lg font-semibold">
-                $159.96
+                {getSubTotal()}
               </span>
             </div>
             <div className="m-3">
@@ -281,31 +296,25 @@ const Checkout = () => {
           </div>
           <div className="order-4 mt-8 col-span-full">
             <h2 className="text-lg">3. Review Items &amp; Shipping</h2>
-            <div className="mt-4 rounded border border-zinc-300 flex flex-col mobileL:flex-row p-2">
+            {cart.map((product, id) => (
+            <div key={product.id} className="mt-4 rounded border border-zinc-300 flex flex-col mobileL:flex-row p-2">
               <div className="my-3 mobileL:my-0 flex justify-center">
                 <img
                   className="checkoutImg"
-                  src={CheckoutImg}
-                  alt="Picture of a computer desk"
+                  src={product.image}
+                  alt={`Product #${id + 1}'s image`}
                 />
               </div>
               <div className="py-2 w-full mobileL:pl-2 mobileL:py-0">
                 <h1 className="font-semibold mb-1">
-                  Dicunoy Computer Desk with 2 Drawers, 46" Solid Bamboo Home
-                  Office Writing Desk for Small Spaces, Compact Simple Style
-                  Tables with Gap Design and Hook for PC, Laptop, Students,
-                  Study, Makeup, Bedroom
+                  {product.title}
                 </h1>
                 <p className="flex items-center mb-1">
-                  <span className="text-sm text-gray-600 line-through">
-                    $158.99
-                  </span>
                   <span className="font-semibold ml-1 text-red-600">
-                    $145.99
+                    {product.price}
                   </span>
                 </p>
-                <p className="mb-1">Quantity: 1</p>
-                <p className="mb-4">Sold by Dicunoy</p>
+                <p className="mb-1">Quantity: {product.quantity}</p>
                 <FormControl>
                   <h2 className="font-medium">Choose a delivery option:</h2>
                   <RadioGroup defaultValue="fast-delivery">
@@ -316,10 +325,8 @@ const Checkout = () => {
                         className="!py-1 !pl-0 !pr-2"
                       />
                       <h2>
-                        One-Day Delivery ($7.50){" "}
-                        <span className="text-green-800">
-                          &#8212; get it Tomorrow, March 24!
-                        </span>
+                        One-Day Delivery 
+                        
                       </h2>
                     </div>
                     <div className="flex items-center mt-2">
@@ -328,12 +335,12 @@ const Checkout = () => {
                         value="free-delivery"
                         className="!py-1 !pl-0 !pr-2"
                       />
-                      <h2>Free Standard Shipping (4-6 business days)</h2>
+                      <h2>Free Standard Shipping </h2>
                     </div>
                   </RadioGroup>
                 </FormControl>
               </div>
-            </div>
+            </div>))}
           </div>
           <div className="order-5 mt-8 col-span-full rounded p-2 border border-zinc-300">
             <div className="flex flex-col mobileL:flex-row flex-grow">

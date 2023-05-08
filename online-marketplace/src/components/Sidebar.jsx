@@ -20,6 +20,8 @@ import { logout } from "../redux/slices/userSlice";
 import { Navigate } from "react-router-dom";
 import SearchIcon from '@mui/icons-material/Search';
 import { Badge } from "@mui/material";
+import { MdOutlineShoppingCartCheckout } from "react-icons/md";
+import { FaAngleLeft } from "react-icons/fa";
 
 
 const Sidebar = () => {
@@ -183,6 +185,23 @@ const Sidebar = () => {
                 <Badge badgeContent={getCartSize()} color="error">
                   <AiOutlineShoppingCart className="w-6 h-6 text-black" />
                 </Badge>
+              </ListItemIcon>
+              <ListItemText primary= 'Your Cart' sx={{ opacity: open ? 1 : 0 }} />
+            </ListItemButton>
+          </ListItem>
+          <ListItem disablePadding>
+            <ListItemButton
+              sx={{
+                minHeight: 48,
+                justifyContent: open ? "initial" : "center",
+                px: 2.5,
+              }}
+              href = '/checkout'
+            >
+              <ListItemIcon
+                className={`!min-w-0 ${open ? "mr-3" : "mx-auto"}`}
+              >
+                  <MdOutlineShoppingCartCheckout className="w-6 h-6 text-black" />
               </ListItemIcon>
               <ListItemText primary= 'Your Cart' sx={{ opacity: open ? 1 : 0 }} />
             </ListItemButton>

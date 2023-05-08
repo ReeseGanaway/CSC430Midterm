@@ -155,7 +155,10 @@ const handleLoginSubmit = async (event) => {
     Welcome! Proceed to our store!
   </Alert>
     setTimeout(() => {
-      navigate('/');
+      if(!!loginResponse.success){
+        navigate('/checkout')
+      }else{
+      navigate('/');}
     }, 1000);  
   }
 
