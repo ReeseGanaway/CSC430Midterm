@@ -267,7 +267,7 @@ const Checkout = () => {
       Your tracking number is: 
       <strong className="click"> {generateTrackingNumber()}</strong>
     </Typography>
-    <a href="/cart">
+    <a href="/">
       <Button variant="contained" className={classes.button} onClick={handleClose}>
         Continue shopping
       </Button>
@@ -452,7 +452,7 @@ const Checkout = () => {
       Your tracking number is: 
       <strong className="click"> {generateTrackingNumber()}</strong>
     </Typography>
-    <a href="/cart">
+    <a href="/">
       <Button variant="contained" className={classes.button} onClick={handleClose}>
         Continue shopping
       </Button>
