@@ -13,12 +13,11 @@ import TitanLogo from "../assets/TitanLogo.png";
 import TitanLogo2 from "../assets/Logo2.png";
 import HowToRegRoundedIcon from "@mui/icons-material/HowToRegRounded";
 import Alert from "@mui/material/Alert";
-import supabase from "./utils/supabase";
 import { registerUser, loginUser } from "./utils/data";
 import { useNavigate } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
 import { login } from "../redux/slices/userSlice";
-import AccountCircleIcon from '@mui/icons-material/AccountCircle';
+import AccountCircleIcon from "@mui/icons-material/AccountCircle";
 
 function FormSwitch() {
   let navigate = useNavigate();
@@ -29,15 +28,17 @@ function FormSwitch() {
   const [submitLogSuccess, setLogSubmitSuccess] = useState(false);
   const [submitError, setSubmitError] = useState("");
   const [submitErrorLog, setSubmitErrorLog] = useState("");
-  const [confirmPassword, setConfirmPassword] = useState("");
   const [response, setResponse] = useState(null);
   const dispatch = useDispatch();
   const user = useSelector((state) => state.user);
-
+  const [username, setUsername] = useState("");
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const [confirmPassword, setConfirmPassword] = useState("");
   const [formData, setFormData] = useState({
-    email: "",
-    password: "",
-    username: "",
+    username,
+    email,
+    password,
   });
 
   const handleSwitcherClick = (form) => {
@@ -51,11 +52,7 @@ function FormSwitch() {
     setSubmitSuccess(false);
     setSubmitError("");
 
-    const { email, password, username } = formData;
-
-    const registerResponse = await registerUser(email, password, username);
-
-    if (activeForm === "signup" && formData.password !== confirmPassword) {
+    if (activeForm === "signup" && password !== confirmPassword) {
       setSubmitting(false);
       setSubmitSuccess(false);
       setSubmitError(
@@ -65,6 +62,9 @@ function FormSwitch() {
       );
       return;
     }
+
+    const registerResponse = await registerUser(email, password, username);
+console.log(registerResponse);
 
     if (registerResponse.success) {
       setSubmitSuccess(true);
@@ -79,42 +79,13 @@ function FormSwitch() {
     setSubmitting(false);
   };
 
-  const handleInputChange = (event) => {
-    const { name, value } = event.target;
-
-    setFormData((prevState) => ({
-      ...prevState,
-      [name]: value,
-    }));
+  const handleInputChange = () => {
+    setFormData({
+      username,
+      email,
+      password,
+    });
   };
-
-  // const handleLoginSubmit = async (event) => {
-  //   event.preventDefault();
-
-  //   setSubmittingLog(true);
-  //   setLogSubmitSuccess(false);
-  //   setSubmitErrorLog("");
-
-  //   const { email, password } = formData;
-
-  //   const { user, error } = await supabase.auth.signInWithPassword({
-  //     email: email,
-  //     password: password
-  //   });
-
-  //   if (error) {
-  //     setSubmitErrorLog(
-  //       <Alert variant="filled" severity="error">
-  //         {error.message}
-  //       </Alert>
-  //     );
-  //   } else {
-  //     setLogSubmitSuccess(true);
-  //     navigate("/LandingPage");
-  //   }
-
-  //   setSubmittingLog(false);
-  // };
 
   const handleLoginSubmit = async (event) => {
     event.preventDefault();
@@ -123,7 +94,7 @@ function FormSwitch() {
     setLogSubmitSuccess(false);
     setSubmitErrorLog("");
 
-    const { email, password, username} = formData;
+    const { email, password, username } = formData;
 
     const loginResponse = await loginUser(email, password);
     // setResponse(authResponse);
@@ -158,47 +129,6 @@ function FormSwitch() {
     }
 
     setSubmitting(false);
-  };
-
-  // const handleLoginSubmit = async (event) => {
-  //   event.preventDefault();
-
-  //   setSubmittingLog(true);
-  //   setLogSubmitSuccess(false);
-  //   setSubmitErrorLog("");
-
-  //   const { email, password } = formData;
-
-  //   const { user, error } = await supabase.auth.signInWithPassword({
-  //     email: email,
-  //     password: password
-  //   });
-
-  //   if (error) {
-  //     setSubmitErrorLog(
-  //       <Alert variant="filled" severity="error">
-  //         {error.message}
-  //       </Alert>
-  //     );
-  //   } else {
-  //     setLogSubmitSuccess(true);
-  //     navigate("/LandingPage");
-  //   }
-
-  //   setSubmittingLog(false);
-  // };
-
-  const onEmailChanged = (e) => setEmail(e.target.value);
-  const onPasswordChanged = (e) => setPassword(e.target.value);
-
-  const onLogin = () => {
-    if (
-      email &&
-      password &&
-      document.getElementById("input-with-sx").checkValidity()
-    ) {
-      dispatch(login({ email: email }));
-    }
   };
 
   return (
@@ -242,7 +172,9 @@ function FormSwitch() {
               </div>
             </div>
             <Box sx={{ padding: 10 }}>
-            <AccountCircleIcon sx={{ color: "action.active", mr: 1, my: 3.5 }} />
+              <AccountCircleIcon
+                sx={{ color: "action.active", mr: 1, my: 3.5 }}
+              />
               <TextField
                 id="input-with-sx"
                 label="Username"
@@ -250,7 +182,6 @@ function FormSwitch() {
                 type="Usermame"
                 required
                 className="box-1"
-                name="Username"
                 onChange={handleInputChange}
               />
               <EmailIcon sx={{ color: "action.active", mr: 1, my: 3.5 }} />
@@ -261,10 +192,9 @@ function FormSwitch() {
                 type="email"
                 required
                 className="box-1"
-                name="email"
                 onChange={handleInputChange}
               />
-              <Box sx={{ display: "flex"}}>
+              <Box sx={{ display: "flex" }}>
                 <LockIcon sx={{ color: "action.active", mr: 1, my: 2.5 }} />
                 <TextField
                   htmlFor="login-password"
@@ -336,27 +266,27 @@ function FormSwitch() {
                 </div>
               </div>
               <Box sx={{ padding: 10 }}>
-               <AccountCircleIcon sx={{ color: "action.active", mr: 1, my: 3.5 }}/>
-              <TextField
-                id="input-with-sx"
-                label="Username"
-                variant="standard"
-                type="Usermame"
-                required
-                className="box-1"
-                name="Username"
-                onChange={handleInputChange}
-              />
+                <AccountCircleIcon
+                  sx={{ color: "action.active", mr: 1, my: 3.5 }}
+                />
+                <TextField
+                  id="input-with-sx"
+                  label="Username"
+                  variant="standard"
+                  type="Usermame"
+                  required
+                  className="box-1"
+                  onChange={(e) => setUsername(e.target.value)}
+                />
                 <EmailIcon sx={{ color: "action.active", mr: 1, my: 2.5 }} />
                 <TextField
                   id="signup-email"
                   label="E-mail"
                   variant="standard"
                   type="email"
-                  name="email"
                   placeholder="Email"
-                  value={formData.email}
-                  onChange={handleInputChange}
+                  defaultValue={email}
+                  onChange={(e) => setEmail(e.target.value)}
                   required
                   className="box-1"
                 />
@@ -371,9 +301,8 @@ function FormSwitch() {
                     label="Password"
                     variant="standard"
                     className="box-1"
-                    name="password"
-                    value={formData.password}
-                    onChange={handleInputChange}
+                    defaultValue={password}
+                    onChange={(e) => setPassword(e.target.value)}
                   />
                 </Box>
                 <Box sx={{ display: "flex" }}>
@@ -389,7 +318,7 @@ function FormSwitch() {
                     label="Confirm Password"
                     variant="standard"
                     className="box-1"
-                    value={confirmPassword}
+                    defaultValue={confirmPassword}
                     onChange={(e) => setConfirmPassword(e.target.value)}
                   />
                 </Box>

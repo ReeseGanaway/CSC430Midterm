@@ -1,12 +1,11 @@
 import supabase from "./supabase";
 
 const registerUser = async (email, password, username) => {
-
-
   const { data, error } = await supabase
     .from("users")
     .select("*")
     .eq("email", email);
+
   if (error) {
     return {
       success: false,
@@ -21,25 +20,24 @@ const registerUser = async (email, password, username) => {
     };
   }
 
-
   const usernameData = await supabase
-  .from("users")
-  .select("*")
-  .eq("username", username);
+    .from("users")
+    .select("*")
+    .eq("username", username);
 
-if (usernameData.error != null) {
-  return {
-    success: false,
-    message: errorUsername.message,
-  };
-}
+  if (usernameData.error != null) {
+    return {
+      success: false,
+      message: errorUsername.message,
+    };
+  }
 
-if (usernameData.data.length > 0) {
-  return {
-    success: false,
-    message: "Username already exists",
-  };
-}
+  if (usernameData.data.length > 0) {
+    return {
+      success: false,
+      message: "Username already exists",
+    };
+  }
 
   const authResponse = await supabase.auth.signUp({
     email,
@@ -47,14 +45,16 @@ if (usernameData.data.length > 0) {
     username,
   });
 
-  if (authResponse.error) {
+  console.log("authResponse", authResponse);
+
+  if (authResponse.error != null) {
     return {
       success: false,
       message: authResponse.error.message,
     };
   }
 
-  if (authResponse.data.username) {
+  if (authResponse.data.email) {
     const addMetaResponse = await supabase
       .from("users")
       .insert([{ username, email, password }]);
@@ -71,18 +71,13 @@ if (usernameData.data.length > 0) {
       ...addMetaResponse.data,
     };
   }
-
-  return {
-    success: false,
-    message: "An Unknown error has occured",
-  };
 };
 
 const loginUser = async (email, password) => {
   const authResponse = await supabase.auth.signInWithPassword({
     username,
     email,
-    password
+    password,
   });
 
   if (authResponse.error) {
@@ -117,4 +112,4 @@ const loginUser = async (email, password) => {
   };
 };
 
-export { registerUser, loginUser};
+export { registerUser, loginUser };
