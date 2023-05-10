@@ -45,8 +45,6 @@ const registerUser = async (email, password, username) => {
     username,
   });
 
-  console.log("authResponse", authResponse);
-
   if (authResponse.error != null) {
     return {
       success: false,
@@ -54,10 +52,10 @@ const registerUser = async (email, password, username) => {
     };
   }
 
-  if (authResponse.data.email) {
+  if (authResponse.data.user.email !== null) {
     const addMetaResponse = await supabase
       .from("users")
-      .insert([{ username, email, password }]);
+      .insert([{ userId:authResponse.data.user.id, username, email, password }]);
 
     if (addMetaResponse.error) {
       return {
