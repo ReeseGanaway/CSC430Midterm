@@ -18,6 +18,7 @@ import { registerUser, loginUser } from "./utils/data";
 import { useNavigate } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
 import { login } from "../redux/slices/userSlice";
+import AccountCircleIcon from '@mui/icons-material/AccountCircle';
 
 function FormSwitch() {
   let navigate = useNavigate();
@@ -36,8 +37,7 @@ function FormSwitch() {
   const [formData, setFormData] = useState({
     email: "",
     password: "",
-    name: "",
-    slug: "",
+    username: "",
   });
 
   const handleSwitcherClick = (form) => {
@@ -51,9 +51,9 @@ function FormSwitch() {
     setSubmitSuccess(false);
     setSubmitError("");
 
-    const { email, password, name, slug } = formData;
+    const { email, password, username } = formData;
 
-    const registerResponse = await registerUser(email, password, name, slug);
+    const registerResponse = await registerUser(email, password, username);
 
     if (activeForm === "signup" && formData.password !== confirmPassword) {
       setSubmitting(false);
@@ -123,7 +123,7 @@ function FormSwitch() {
     setLogSubmitSuccess(false);
     setSubmitErrorLog("");
 
-    const { email, password } = formData;
+    const { email, password, username} = formData;
 
     const loginResponse = await loginUser(email, password);
     // setResponse(authResponse);
@@ -242,6 +242,17 @@ function FormSwitch() {
               </div>
             </div>
             <Box sx={{ padding: 10 }}>
+            <AccountCircleIcon sx={{ color: "action.active", mr: 1, my: 3.5 }} />
+              <TextField
+                id="input-with-sx"
+                label="Username"
+                variant="standard"
+                type="Usermame"
+                required
+                className="box-1"
+                name="Username"
+                onChange={handleInputChange}
+              />
               <EmailIcon sx={{ color: "action.active", mr: 1, my: 3.5 }} />
               <TextField
                 id="input-with-sx"
@@ -325,6 +336,17 @@ function FormSwitch() {
                 </div>
               </div>
               <Box sx={{ padding: 10 }}>
+               <AccountCircleIcon sx={{ color: "action.active", mr: 1, my: 3.5 }}/>
+              <TextField
+                id="input-with-sx"
+                label="Username"
+                variant="standard"
+                type="Usermame"
+                required
+                className="box-1"
+                name="Username"
+                onChange={handleInputChange}
+              />
                 <EmailIcon sx={{ color: "action.active", mr: 1, my: 2.5 }} />
                 <TextField
                   id="signup-email"

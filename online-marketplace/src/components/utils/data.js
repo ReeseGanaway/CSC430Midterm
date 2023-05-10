@@ -1,10 +1,10 @@
 import supabase from "./supabase";
 
-const registerUser = async (email, password, name, slug) => {
+const registerUser = async (email, password, username) => {
 
 
   const { data, error } = await supabase
-    .from("profile")
+    .from("users")
     .select("*")
     .eq("email", email);
   if (error) {
@@ -21,9 +21,30 @@ const registerUser = async (email, password, name, slug) => {
     };
   }
 
+
+  const usernameData = await supabase
+  .from("users")
+  .select("*")
+  .eq("username", username);
+
+if (usernameData.error != null) {
+  return {
+    success: false,
+    message: errorUsername.message,
+  };
+}
+
+if (usernameData.data.length > 0) {
+  return {
+    success: false,
+    message: "Username already exists",
+  };
+}
+
   const authResponse = await supabase.auth.signUp({
     email,
     password,
+    username,
   });
 
   if (authResponse.error) {
@@ -33,10 +54,10 @@ const registerUser = async (email, password, name, slug) => {
     };
   }
 
-  if (authResponse.data.user) {
+  if (authResponse.data.username) {
     const addMetaResponse = await supabase
-      .from("profile")
-      .insert([{ user_id: authResponse.data.user.id, name, slug }]);
+      .from("users")
+      .insert([{ username, email, password }]);
 
     if (addMetaResponse.error) {
       return {
@@ -59,8 +80,9 @@ const registerUser = async (email, password, name, slug) => {
 
 const loginUser = async (email, password) => {
   const authResponse = await supabase.auth.signInWithPassword({
+    username,
     email,
-    password,
+    password
   });
 
   if (authResponse.error) {
@@ -70,11 +92,11 @@ const loginUser = async (email, password) => {
     };
   }
 
-  if (authResponse.data.user) {
+  if (authResponse.data.username) {
     const meta = await supabase
-      .from("profile")
+      .from("users")
       .select("*")
-      .eq("user_id", authResponse.data.user.id);
+      .eq("userId", authResponse.data.username.id);
 
     if (meta.error) {
       return {
