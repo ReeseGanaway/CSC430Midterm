@@ -64,7 +64,6 @@ function FormSwitch() {
     }
 
     const registerResponse = await registerUser(email, password, username);
-console.log(registerResponse);
 
     if (registerResponse.success) {
       setSubmitSuccess(true);
@@ -72,9 +71,17 @@ console.log(registerResponse);
       setTimeout(() => {
         handleSwitcherClick("login");
       }, 3000);
-    } else {
-      alert(registerResponse.message);
+    } else if (!registerResponse.success) {
+      setSubmitError(
+        <Alert variant="filled" severity="error">
+          {registerResponse.message}
+        </Alert>
+      )
+    
     }
+
+
+    
 
     setSubmitting(false);
   };
