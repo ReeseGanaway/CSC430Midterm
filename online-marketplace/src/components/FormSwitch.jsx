@@ -18,9 +18,11 @@ import { useNavigate } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
 import { login } from "../redux/slices/userSlice";
 import AccountCircleIcon from "@mui/icons-material/AccountCircle";
+import { useLocation } from "react-router-dom";
 
 function FormSwitch() {
   let navigate = useNavigate();
+  const location = useLocation();
   const [activeForm, setActiveForm] = useState("login");
   const [submitting, setSubmitting] = useState(false);
   const [submitSuccess, setSubmitSuccess] = useState(false);
@@ -76,12 +78,8 @@ function FormSwitch() {
         <Alert variant="filled" severity="error">
           {registerResponse.message}
         </Alert>
-      )
-    
+      );
     }
-
-
-    
 
     setSubmitting(false);
   };
@@ -94,48 +92,40 @@ function FormSwitch() {
     });
   };
 
-  const handleLoginSubmit = async (event) => {
+  const handleLogin = async (event) => {
     event.preventDefault();
 
     setSubmittingLog(true);
     setLogSubmitSuccess(false);
     setSubmitErrorLog("");
 
-    const { email, password, username } = formData;
+    const loginResponse = await loginUser(email, password, username);
 
-    const loginResponse = await loginUser(email, password);
-    // setResponse(authResponse);
     if (loginResponse.success) {
-      //   setLogSubmitSuccess(true);
-      //   <Alert variant="filled" severity="success">
-      //   Welcome! Proceed to our store!
-      // </Alert>
-      //   setTimeout(() => {
-      //     navigate('/');
-      //   }, 1000);
-      // } else {
-      // setSubmitErrorLog(
-      //   <Alert variant="filled" severity="error">
-      //     {loginResponse.error.message}
-      //   </Alert>
-      // );
-    } else {
       setLogSubmitSuccess(true);
-      console.log(formData);
-      dispatch(login({ email: formData.email }));
       <Alert variant="filled" severity="success">
-        Welcome! Proceed to our store!
+        Welcome! You have successfully logged in! Proceed to our store!
       </Alert>;
       setTimeout(() => {
-        if (!!loginResponse.success) {
+        if (
+          location.state &&
+          location.state.from === "/cart" &&
+          location.pathname === "/login"
+        ) {
           navigate("/checkout");
         } else {
           navigate("/");
         }
       }, 1000);
+    } else if (!loginResponse.success) {
+      setSubmitErrorLog(
+        <Alert variant="filled" severity="error">
+          {loginResponse.error.message}
+        </Alert>
+      );
     }
 
-    setSubmitting(false);
+    setSubmittingLog(false);
   };
 
   return (
@@ -157,7 +147,7 @@ function FormSwitch() {
             Login
             <span className="underline"></span>
           </button>
-          <form className="form form-login" onSubmit={handleLoginSubmit}>
+          <form className="form form-login" onSubmit={handleLogin}>
             {submitLogSuccess && (
               <Alert variant="filled" severity="success">
                 Login successful! Welcome! Proceed to our store!
@@ -189,7 +179,7 @@ function FormSwitch() {
                 type="Usermame"
                 required
                 className="box-1"
-                onChange={handleInputChange}
+                onChange={(e) => setUsername(e.target.value)}
               />
               <EmailIcon sx={{ color: "action.active", mr: 1, my: 3.5 }} />
               <TextField
@@ -199,7 +189,7 @@ function FormSwitch() {
                 type="email"
                 required
                 className="box-1"
-                onChange={handleInputChange}
+                onChange={(e) => setEmail(e.target.value)}
               />
               <Box sx={{ display: "flex" }}>
                 <LockIcon sx={{ color: "action.active", mr: 1, my: 2.5 }} />
@@ -211,6 +201,7 @@ function FormSwitch() {
                   label="Password"
                   variant="standard"
                   className="box-1"
+                  onChange={(e) => setPassword(e.target.value)}
                 />
               </Box>
             </Box>

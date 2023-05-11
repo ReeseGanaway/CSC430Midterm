@@ -55,7 +55,7 @@ const registerUser = async (email, password, username) => {
   if (authResponse.data.user.email !== null) {
     const addMetaResponse = await supabase
       .from("users")
-      .insert([{ userId:authResponse.data.user.id, username, email, password }]);
+      .insert([{ userId: authResponse.data.user.id, username, email, password }]);
 
     if (addMetaResponse.error) {
       return {
@@ -71,7 +71,7 @@ const registerUser = async (email, password, username) => {
   }
 };
 
-const loginUser = async (email, password) => {
+const loginUser = async (email, password, username) => {
   const authResponse = await supabase.auth.signInWithPassword({
     username,
     email,
@@ -85,11 +85,14 @@ const loginUser = async (email, password) => {
     };
   }
 
-  if (authResponse.data.username) {
+  if (authResponse.data.user) {
     const meta = await supabase
       .from("users")
       .select("*")
-      .eq("userId", authResponse.data.username.id);
+      .eq("username", username)
+      .eq("email", email)
+      .eq("password", password);
+    
 
     if (meta.error) {
       return {
@@ -97,6 +100,7 @@ const loginUser = async (email, password) => {
         error: meta.error,
       };
     }
+
     return {
       ...authResponse,
       meta,
@@ -109,5 +113,7 @@ const loginUser = async (email, password) => {
     message: "An unknown error has occurred",
   };
 };
+
+
 
 export { registerUser, loginUser };
