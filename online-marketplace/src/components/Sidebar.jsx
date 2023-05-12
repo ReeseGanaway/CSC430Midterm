@@ -203,7 +203,7 @@ const Sidebar = () => {
               >
                   <MdOutlineShoppingCartCheckout className="w-6 h-6 text-black" />
               </ListItemIcon>
-              <ListItemText primary= 'Your Cart' sx={{ opacity: open ? 1 : 0 }} />
+              <ListItemText primary= 'Checkout' sx={{ opacity: open ? 1 : 0 }} />
             </ListItemButton>
           </ListItem>
           <ListItem disablePadding>
