@@ -5,7 +5,6 @@ import MuiDrawer from "@mui/material/Drawer";
 import MuiAppBar from "@mui/material/AppBar";
 import Toolbar from "@mui/material/Toolbar";
 import List from "@mui/material/List";
-import Typography from "@mui/material/Typography";
 import IconButton from "@mui/material/IconButton";
 import ListItem from "@mui/material/ListItem";
 import ListItemButton from "@mui/material/ListItemButton";
@@ -18,25 +17,21 @@ import { FiMenu } from "react-icons/fi";
 import { useSelector, useDispatch } from "react-redux";
 import { logout } from "../redux/slices/userSlice";
 import { Navigate } from "react-router-dom";
-import SearchIcon from '@mui/icons-material/Search';
 import { Badge } from "@mui/material";
 import { MdOutlineShoppingCartCheckout } from "react-icons/md";
-import { FaAngleLeft } from "react-icons/fa";
-
 
 const Sidebar = () => {
-  const user = useSelector(state => state.user);
-  const cart = useSelector(state => state.cart);
+  const user = useSelector((state) => state.user);
+  const cart = useSelector((state) => state.cart);
   const dispatch = useDispatch();
   
-
   const [open, setOpen] = useState(false);
   const drawerWidth = 220;
-  const accountLink = user.email ? '/account' : '/login';
+  const accountLink = user.email ? "/account" : "/login";
   const navItems = ["Home", "Your Account"];
   const navIcons = [
     <AiOutlineHome className="w-6 h-6 text-black" />,
-    <MdOutlineManageAccounts className="w-6 h-6 text-black" />
+    <MdOutlineManageAccounts className="w-6 h-6 text-black" />,
   ];
   const navLinks = ["/", accountLink];
 
@@ -113,20 +108,19 @@ const Sidebar = () => {
   };
 
   const signOut = () => {
-    if(user.email){
-      console.log('here')
+    if (user.email) {
       dispatch(logout());
       //return <Navigate replace to = '/login' />
     }
-  }
+  };
 
   const getCartSize = () => {
-    let cartSize = 0
-    for(let i = 0; i < cart.length; i++){
+    let cartSize = 0;
+    for (let i = 0; i < cart.length; i++) {
       cartSize += cart[i].quantity;
     }
     return cartSize;
-  }
+  };
 
   return (
     <Box className="flex">
@@ -139,7 +133,6 @@ const Sidebar = () => {
               open ? "!hidden" : ""
             } !justify-start !text-white`}
           >
-            
             <FiMenu />
           </IconButton>
         </Toolbar>
@@ -177,35 +170,41 @@ const Sidebar = () => {
                 justifyContent: open ? "initial" : "center",
                 px: 2.5,
               }}
-              href = '/cart'
+              href="/cart"
             >
-              <ListItemIcon
-                className={`!min-w-0 ${open ? "mr-3" : "mx-auto"}`}
-              >
+              <ListItemIcon className={`!min-w-0 ${open ? "mr-3" : "mx-auto"}`}>
                 <Badge badgeContent={getCartSize()} color="error">
                   <AiOutlineShoppingCart className="w-6 h-6 text-black" />
                 </Badge>
               </ListItemIcon>
-              <ListItemText primary= 'Your Cart' sx={{ opacity: open ? 1 : 0 }} />
+              <ListItemText
+                primary="Your Cart"
+                sx={{ opacity: open ? 1 : 0 }}
+              />
             </ListItemButton>
           </ListItem>
-          <ListItem disablePadding>
-            <ListItemButton
-              sx={{
-                minHeight: 48,
-                justifyContent: open ? "initial" : "center",
-                px: 2.5,
-              }}
-              href = '/checkout'
-            >
-              <ListItemIcon
-                className={`!min-w-0 ${open ? "mr-3" : "mx-auto"}`}
+          {cart.length > 0 ? (
+            <ListItem disablePadding>
+              <ListItemButton
+                sx={{
+                  minHeight: 48,
+                  justifyContent: open ? "initial" : "center",
+                  px: 2.5,
+                }}
+                href="/checkout"
               >
+                <ListItemIcon
+                  className={`!min-w-0 ${open ? "mr-3" : "mx-auto"}`}
+                >
                   <MdOutlineShoppingCartCheckout className="w-6 h-6 text-black" />
-              </ListItemIcon>
-              <ListItemText primary= 'Checkout' sx={{ opacity: open ? 1 : 0 }} />
-            </ListItemButton>
-          </ListItem>
+                </ListItemIcon>
+                <ListItemText
+                  primary="Checkout"
+                  sx={{ opacity: open ? 1 : 0 }}
+                />
+              </ListItemButton>
+            </ListItem>
+          ) : null}
           <ListItem disablePadding>
             <ListItemButton
               sx={{
@@ -213,22 +212,24 @@ const Sidebar = () => {
                 justifyContent: open ? "initial" : "center",
                 px: 2.5,
               }}
-              href = '/login'
+              href="/login"
               onClick={signOut}
             >
-              <ListItemIcon
-                className={`!min-w-0 ${open ? "mr-3" : "mx-auto"}`}
-              >
-                {user.email ? <RiLogoutBoxLine className="w-6 h-6 text-black" /> : <RiLoginBoxLine className="w-6 h-6 text-black" />}
+              <ListItemIcon className={`!min-w-0 ${open ? "mr-3" : "mx-auto"}`}>
+                {user.email ? (
+                  <RiLogoutBoxLine className="w-6 h-6 text-black" />
+                ) : (
+                  <RiLoginBoxLine className="w-6 h-6 text-black" />
+                )}
               </ListItemIcon>
-              <ListItemText primary={user.email ? "Sign Out": "Sign In"} sx={{ opacity: open ? 1 : 0 }} />
+              <ListItemText
+                primary={user.email ? "Sign Out" : "Sign In"}
+                sx={{ opacity: open ? 1 : 0 }}
+              />
             </ListItemButton>
           </ListItem>
-          
         </List>
-        
       </Drawer>
-      
     </Box>
   );
 };
