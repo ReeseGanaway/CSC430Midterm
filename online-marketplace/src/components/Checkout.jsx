@@ -1,16 +1,9 @@
 import { useState } from "react";
-import * as React from 'react';
+import * as React from "react";
 import { FaAngleLeft } from "react-icons/fa";
 import TextField from "@mui/material/TextField";
 import MenuItem from "@mui/material/MenuItem";
 import FormControl from "@mui/material/FormControl";
-import InputLabel from "@mui/material/InputLabel";
-import OutlinedInput from "@mui/material/OutlinedInput";
-import InputAdornment from "@mui/material/InputAdornment";
-import Visibility from "@mui/icons-material/Visibility";
-import VisibilityOff from "@mui/icons-material/VisibilityOff";
-import IconButton from "@mui/material/IconButton";
-import CheckoutImg from "../assets/checkout_desk.jpeg";
 import Radio from "@mui/material/Radio";
 import RadioGroup from "@mui/material/RadioGroup";
 import GooglePayImg from "../assets/google_pay.svg";
@@ -18,48 +11,47 @@ import ApplePayImg from "../assets/apple_pay.svg";
 import PayPalImg from "../assets/paypal.svg";
 import { useSelector, useDispatch } from "react-redux";
 import Modal from "@mui/material/Modal";
-import Box from '@mui/material/Box';
-import Typography from '@mui/material/Typography';
-import Button from '@mui/material/Button';
-import { makeStyles } from '@material-ui/styles';
+import Box from "@mui/material/Box";
+import Typography from "@mui/material/Typography";
+import Button from "@mui/material/Button";
+import { makeStyles } from "@material-ui/styles";
 import Cart from "./Cart";
-import '../forms.css'
-
+import "../forms.css";
 
 const style = {
-  position: 'absolute',
-  top: '50%',
-  left: '50%',
-  transform: 'translate(-50%, -50%)',
+  position: "absolute",
+  top: "50%",
+  left: "50%",
+  transform: "translate(-50%, -50%)",
   width: 400,
-  bgcolor: 'background.paper',
-  border: '2px solid #000',
+  bgcolor: "background.paper",
+  border: "2px solid #000",
   boxShadow: 24,
   p: 4,
 };
 const useStyles = makeStyles({
   modal: {
-    display: 'flex',
-    alignItems: 'center',
-    justifyContent: 'center',
+    display: "flex",
+    alignItems: "center",
+    justifyContent: "center",
   },
   paper: {
-    backgroundColor: '#fff',
-    padding: '32px',
-    maxWidth: '600px',
-    borderRadius: '8px',
-    textAlign: 'center',
+    backgroundColor: "#fff",
+    padding: "32px",
+    marginInline: "1rem",
+    maxWidth: "600px",
+    borderRadius: "8px",
+    textAlign: "center",
   },
   button: {
-    marginTop: '16px',
-    backgroundColor: '#0070f3',
-    color: '#fff',
-    '&:hover': {
-      backgroundColor: '#0061b8',
+    marginTop: "1rem !important",
+    backgroundColor: "#0070f3",
+    color: "#fff",
+    "&:hover": {
+      backgroundColor: "#0061b8",
     },
   },
 });
-
 
 const Checkout = () => {
   const [showCardNum, setShowCardNum] = useState(false);
@@ -67,12 +59,13 @@ const Checkout = () => {
   const toggleShowCardNum = () => setShowCardNum((show) => !show);
   const toggleShowCVV = () => setShowCVV((show) => !show);
   const dispatch = useDispatch();
-  const cart = useSelector(state => state.cart)
+  const cart = useSelector((state) => state.cart);
   const [open, setOpen] = React.useState(false);
   const handleOpen = () => setOpen(true);
   const handleClose = () => setOpen(false);
   const classes = useStyles();
-  
+
+  console.log(cart);
 
   console.log(cart);
 
@@ -130,23 +123,25 @@ const Checkout = () => {
   ];
 
   function generateTrackingNumber() {
-    let result = '';
-    const characters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
+    let result = "";
+    const characters =
+      "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
     const length = 10;
     for (let i = 0; i < length; i++) {
-      result += characters.charAt(Math.floor(Math.random() * characters.length));
+      result += characters.charAt(
+        Math.floor(Math.random() * characters.length)
+      );
     }
     return result;
   }
-  
 
   const getSubTotal = () => {
     let subtotal = 0;
-    for(let i = 0; i < cart.length; i++){
-        subtotal += cart[i].price * cart[i].quantity;
+    for (let i = 0; i < cart.length; i++) {
+      subtotal += cart[i].price * cart[i].quantity;
     }
     return subtotal.toFixed(2);
-}
+  };
 
   return (
     <div className="flex flex-col min-h-screen">
@@ -162,6 +157,7 @@ const Checkout = () => {
           action="#"
           autoComplete="off"
           className="mt-8 grid md:grid-cols-[1fr,1fr,minmax(24rem,1fr)] md:gap-x-5"
+          onSubmit={handleOpen}
         >
           <div className="order-2 mt-6 md:mt-0 md:order-1 md:col-span-2">
             <h2 className="text-lg leading-5">1. Delivery Information</h2>
@@ -245,35 +241,46 @@ const Checkout = () => {
               <button
                 type="submit"
                 className="bg-gradient-to-r from-[#3a577c] to-[#275350] rounded w-full py-2 text-white font-medium"
-                onClick={handleOpen}
               >
                 Place your order
               </button>
               <Modal
-  open={open}
-  onClose={handleClose}
-  aria-labelledby="modal-modal-title"
-  aria-describedby="modal-modal-description"
-  className={classes.modal}
->
-  <Box className={classes.paper}>
-    <Typography className="font" variant="h4" component="h2" gutterBottom>
-      Your order has been placed!
-    </Typography>
-    <Typography className="font" variant="body1" gutterBottom>
-      Thank you for shopping with us. Your order has been confirmed and will be shipped shortly.
-    </Typography>
-    <Typography className="font" variant="body2" gutterBottom>
-      Your tracking number is: 
-      <strong className="click"> {generateTrackingNumber()}</strong>
-    </Typography>
-    <a href="/">
-      <Button variant="contained" className={classes.button} onClick={handleClose}>
-        Continue shopping
-      </Button>
-    </a>
-  </Box>
-</Modal>
+                open={open}
+                onClose={handleClose}
+                aria-labelledby="modal-modal-title"
+                aria-describedby="modal-modal-description"
+                className={classes.modal}
+              >
+                <Box className={classes.paper}>
+                  <Typography
+                    className="font"
+                    variant="h4"
+                    component="h2"
+                    gutterBottom
+                  >
+                    Your order has been placed!
+                  </Typography>
+                  <Typography className="font" variant="body1" gutterBottom>
+                    Thank you for shopping with us. Your order has been
+                    confirmed and will be shipped shortly.
+                  </Typography>
+                  <Typography className="font" variant="body2" gutterBottom>
+                    Your tracking number is:
+                    <strong className="click !inline-block !ml-1 cursor-pointer">
+                      {generateTrackingNumber()}
+                    </strong>
+                  </Typography>
+                  <a href="/">
+                    <Button
+                      variant="contained"
+                      className={classes.button}
+                      onClick={handleClose}
+                    >
+                      Continue shopping
+                    </Button>
+                  </a>
+                </Box>
+              </Modal>
 
               <p className="text-zinc-500 py-2">
                 By placing your order, you agree to our{" "}
@@ -327,55 +334,30 @@ const Checkout = () => {
                 label="Cardholder Name"
                 type="text"
                 className="col-span-4 mobileM:col-span-6 md:col-span-2 lg:col-span-1"
-                required
+                value="John Doe"
+                disabled
               />
-              <FormControl className="col-span-4 mobileM:col-span-6 md:col-span-2 lg:col-span-1">
-                <InputLabel>Card Number</InputLabel>
-                <OutlinedInput
-                  className="select-none"
-                  type={showCardNum ? "number" : "password"}
-                  endAdornment={
-                    <InputAdornment position="end">
-                      <IconButton
-                        aria-label="toggle card number visibility"
-                        onClick={toggleShowCardNum}
-                        edge="end"
-                      >
-                        {showCardNum ? <VisibilityOff /> : <Visibility />}
-                      </IconButton>
-                    </InputAdornment>
-                  }
-                  label="Card Number"
-                  placeholder="1234 1234 1234 1234"
-                />
-              </FormControl>
+              <TextField
+                label="Card Number"
+                type="password"
+                className="col-span-4 mobileM:col-span-6 md:col-span-2 lg:col-span-1"
+                value="1234 1234 1234 1234"
+                disabled
+              />
               <TextField
                 label="Expiration Date"
                 type="text"
-                placeholder="MM/YY"
+                value="05/28"
                 className="col-span-4 mobileM:col-span-3 md:col-span-2 lg:col-span-1"
-                required
+                disabled
               />
-              <FormControl className="col-span-4 mobileM:col-span-3 md:col-span-2 lg:col-span-1">
-                <InputLabel>CVV</InputLabel>
-                <OutlinedInput
-                  className="select-none"
-                  type={showCVV ? "number" : "password"}
-                  endAdornment={
-                    <InputAdornment position="end">
-                      <IconButton
-                        aria-label="toggle cvv visibility"
-                        onClick={toggleShowCVV}
-                        edge="end"
-                      >
-                        {showCVV ? <VisibilityOff /> : <Visibility />}
-                      </IconButton>
-                    </InputAdornment>
-                  }
-                  label="CVV"
-                  placeholder="123"
-                />
-              </FormControl>
+              <TextField
+                label="CVV"
+                type="text"
+                value="123"
+                className="col-span-4 mobileM:col-span-3 md:col-span-2 lg:col-span-1"
+                disabled
+              />
             </div>
           </div>
           <div className="order-4 mt-8 col-span-full">
@@ -396,7 +378,7 @@ const Checkout = () => {
                   <h1 className="font-semibold mb-1">{product.title}</h1>
                   <p className="flex items-center mb-1">
                     <span className="font-semibold ml-1 text-red-600">
-                      {product.price}
+                      ${product.price}
                     </span>
                   </p>
                   <p className="mb-1">Quantity: {product.quantity}</p>
@@ -430,35 +412,46 @@ const Checkout = () => {
               <button
                 type="submit"
                 className="order-2 mt-3 mobileL:order-1 mobileL:mt-0 bg-gradient-to-r from-[#3a577c] to-[#275350] rounded p-2 mobileL:max-w-[10rem] w-full h-fit text-white font-medium"
-                onClick={handleOpen}
               >
                 Place your order
               </button>
               <Modal
-  open={open}
-  onClose={handleClose}
-  aria-labelledby="modal-modal-title"
-  aria-describedby="modal-modal-description"
-  className={classes.modal}
->
-  <Box className={classes.paper}>
-    <Typography className="font" variant="h4" component="h2" gutterBottom>
-      Your order has been placed!
-    </Typography>
-    <Typography className="font" variant="body1" gutterBottom>
-      Thank you for shopping with us. Your order has been confirmed and will be shipped shortly.
-    </Typography>
-    <Typography className="font" variant="body2" gutterBottom>
-      Your tracking number is: 
-      <strong className="click"> {generateTrackingNumber()}</strong>
-    </Typography>
-    <a href="/">
-      <Button variant="contained" className={classes.button} onClick={handleClose}>
-        Continue shopping
-      </Button>
-    </a>
-  </Box>
-</Modal>
+                open={open}
+                onClose={handleClose}
+                aria-labelledby="modal-modal-title"
+                aria-describedby="modal-modal-description"
+                className={classes.modal}
+              >
+                <Box className={classes.paper}>
+                  <Typography
+                    className="font"
+                    variant="h4"
+                    component="h2"
+                    gutterBottom
+                  >
+                    Your order has been placed!
+                  </Typography>
+                  <Typography className="font" variant="body1" gutterBottom>
+                    Thank you for shopping with us. Your order has been
+                    confirmed and will be shipped shortly.
+                  </Typography>
+                  <Typography className="font" variant="body2" gutterBottom>
+                    Your tracking number is:
+                    <strong className="click !inline-block !ml-1 cursor-pointer">
+                      {generateTrackingNumber()}
+                    </strong>
+                  </Typography>
+                  <a href="/">
+                    <Button
+                      variant="contained"
+                      className={classes.button}
+                      onClick={handleClose}
+                    >
+                      Continue shopping
+                    </Button>
+                  </a>
+                </Box>
+              </Modal>
 
               <div className="mobileL:ml-3 order-1 mobileL:order-2">
                 <p className="text-red-600 text-lg font-semibold mb-1">
