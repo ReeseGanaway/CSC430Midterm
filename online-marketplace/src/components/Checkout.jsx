@@ -14,8 +14,8 @@ import Box from "@mui/material/Box";
 import Typography from "@mui/material/Typography";
 import Button from "@mui/material/Button";
 import { makeStyles } from "@material-ui/styles";
-import Cart from "./Cart";
 import "../forms.css";
+import { emptyCart } from "../redux/slices/cartSlice";
 
 const style = {
   position: "absolute",
@@ -56,8 +56,14 @@ const Checkout = () => {
   const dispatch = useDispatch();
   const cart = useSelector((state) => state.cart);
   const [open, setOpen] = useState(false);
-  const handleOpen = () => setOpen(true);
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    setOpen(true);
+    dispatch(emptyCart());
+  };
   const handleClose = () => setOpen(false);
+
   const classes = useStyles();
   const states = [
     "Alabama",
@@ -147,7 +153,7 @@ const Checkout = () => {
           action="#"
           autoComplete="off"
           className="mt-8 grid md:grid-cols-[1fr,1fr,minmax(24rem,1fr)] md:gap-x-5"
-          onSubmit={handleOpen}
+          onSubmit={(e) => handleSubmit(e)}
         >
           <div className="order-2 mt-6 md:mt-0 md:order-1 md:col-span-2">
             <h2 className="text-lg leading-5">1. Delivery Information</h2>
@@ -197,9 +203,9 @@ const Checkout = () => {
             </h2>
             <div className="m-3 flex flex-col border-b-4 border-gray-600">
               <div className="flex justify-between mb-2">
-                <p>Items:</p>
+                <p>Items ({cart.length}):</p>
               </div>
-              <div className="justify-between mb-4 h-[5.5rem] overflow-scroll">
+              <div className="justify-between mb-4 max-h-[5.5rem] overflow-scroll">
                 {cart.map((product, id) => (
                   <div key={id} className="pl-8">
                     <h1 className="font-semibold mb-2 truncate">

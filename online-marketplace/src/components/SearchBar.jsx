@@ -11,8 +11,8 @@ import { addToCart, removeFromCart } from "../redux/slices/cartSlice";
 
 const SearchBar = () => {
   const dispatch = useDispatch();
-  const products = useSelector(state => state.products.items);
-  const cart = useSelector(state => state.cart)
+  const products = useSelector((state) => state.products.items);
+  const cart = useSelector((state) => state.cart);
   const [searchTerm, setSearchTerm] = useState("");
   const [selectedProduct, setSelectedProduct] = useState(null);
 
@@ -33,34 +33,37 @@ const SearchBar = () => {
   };
 
   const checkCartForItem = (item) => {
-    for(let i = 0; i < cart.length; i++){
-      if(cart[i].key === item.key){
+    for (let i = 0; i < cart.length; i++) {
+      if (cart[i].key === item.key) {
         return (
           <button className="bg-blue-500 text-white font-bold py-2 px-4 rounded opacity-50 cursor-not-allowed">
             Item is in Cart
           </button>
-        )
-      }
-      else{
-        return(
-          <button 
-            className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded" 
-            onClick = {() => {dispatch(addToCart(selectedProduct))}}
+        );
+      } else {
+        return (
+          <button
+            className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded mt-2"
+            onClick={() => {
+              dispatch(addToCart(selectedProduct));
+            }}
           >
             Add To Cart
           </button>
-        )
+        );
       }
     }
-    return(
-      <button 
-        className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded" 
-        onClick = {() => {dispatch(addToCart(selectedProduct))}}
+    return (
+      <button
+        className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded mt-2"
+        onClick={() => {
+          dispatch(addToCart(selectedProduct));
+        }}
       >
         Add To Cart
       </button>
-    )
-  }
+    );
+  };
 
   return (
     <>
@@ -193,12 +196,14 @@ const SearchBar = () => {
                       ({selectedProduct.rating.count})
                     </span>
                   </div>
-                    <button 
-                      className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded" 
-                      onClick = {() => {dispatch(addToCart(selectedProduct))}}
-                    >
-                      Add To Cart
-                    </button>
+                  <button
+                    className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded mt-2"
+                    onClick={() => {
+                      dispatch(addToCart(selectedProduct));
+                    }}
+                  >
+                    Add To Cart
+                  </button>
                 </div>
               </div>
             </div>
