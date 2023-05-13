@@ -19,7 +19,6 @@ function App() {
             <Route path="/checkout" element={<Checkout />} />
             <Route path='/redux' element={<ReduxTest/>}/>
             <Route path='/cart' element={<Cart/>}/>
-
           </Routes>
         </main>
       </BrowserRouter>

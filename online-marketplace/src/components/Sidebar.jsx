@@ -24,7 +24,7 @@ const Sidebar = () => {
   const user = useSelector((state) => state.user);
   const cart = useSelector((state) => state.cart);
   const dispatch = useDispatch();
-  
+
   const [open, setOpen] = useState(false);
   const drawerWidth = 220;
   const accountLink = user.email ? "/account" : "/login";
@@ -191,7 +191,7 @@ const Sidebar = () => {
                   justifyContent: open ? "initial" : "center",
                   px: 2.5,
                 }}
-                href="/checkout"
+                href={user.email ? "/checkout" : "/login"}
               >
                 <ListItemIcon
                   className={`!min-w-0 ${open ? "mr-3" : "mx-auto"}`}

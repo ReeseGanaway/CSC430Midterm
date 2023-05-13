@@ -30,7 +30,10 @@ const Checkout = () => {
 
   const dispatch = useDispatch();
   const cart = useSelector((state) => state.cart);
-  const [open, setOpen] = useState(false);
+  const user = useSelector((state) => state.user);
+  const [modalOpen, setModalOpen] = useState(false);
+
+  console.log(user)
 
   const resetFormData = () => {
     setFirstName("");
@@ -46,11 +49,11 @@ const Checkout = () => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    setOpen(true);
+    setModalOpen(true);
     resetFormData();
     dispatch(emptyCart());
   };
-  const handleClose = () => setOpen(false);
+  const handleClose = () => setModalOpen(false);
 
   const style = {
     position: "absolute",
@@ -63,7 +66,6 @@ const Checkout = () => {
     boxShadow: 24,
     p: 4,
   };
-
   const useStyles = makeStyles({
     modal: {
       display: "flex",
@@ -87,7 +89,6 @@ const Checkout = () => {
       },
     },
   });
-
   const classes = useStyles();
   const states = [
     "Alabama",
@@ -305,7 +306,7 @@ const Checkout = () => {
                 Place your order
               </button>
               <Modal
-                open={open}
+                open={modalOpen}
                 onClose={handleClose}
                 aria-labelledby="modal-modal-title"
                 aria-describedby="modal-modal-description"
@@ -355,7 +356,7 @@ const Checkout = () => {
               </p>
             </div>
           </div>
-          <div className="order-3 mt-8 col-span-full">
+          <div className="order-3 mt-[2.25rem] col-span-full">
             <h2 className="text-lg">2. Payment Method</h2>
             <div className="mt-4 flex flex-col">
               <div className="flex flex-col mobileM:flex-row justify-center">
@@ -476,7 +477,7 @@ const Checkout = () => {
                 Place your order
               </button>
               <Modal
-                open={open}
+                open={modalOpen}
                 onClose={handleClose}
                 aria-labelledby="modal-modal-title"
                 aria-describedby="modal-modal-description"
