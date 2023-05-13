@@ -13,7 +13,6 @@ export const cart = createSlice({
           return;
         }
       }
-      console.log(action);
       action.payload.quantity = 1;
       state.push(action.payload);
     },
