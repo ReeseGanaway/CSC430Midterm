@@ -1,5 +1,4 @@
 import { useState } from "react";
-import * as React from "react";
 import { FaAngleLeft } from "react-icons/fa";
 import TextField from "@mui/material/TextField";
 import MenuItem from "@mui/material/MenuItem";
@@ -54,21 +53,12 @@ const useStyles = makeStyles({
 });
 
 const Checkout = () => {
-  const [showCardNum, setShowCardNum] = useState(false);
-  const [showCVV, setShowCVV] = useState(false);
-  const toggleShowCardNum = () => setShowCardNum((show) => !show);
-  const toggleShowCVV = () => setShowCVV((show) => !show);
   const dispatch = useDispatch();
   const cart = useSelector((state) => state.cart);
-  const [open, setOpen] = React.useState(false);
+  const [open, setOpen] = useState(false);
   const handleOpen = () => setOpen(true);
   const handleClose = () => setOpen(false);
   const classes = useStyles();
-
-  console.log(cart);
-
-  console.log(cart);
-
   const states = [
     "Alabama",
     "Alaska",
@@ -209,7 +199,7 @@ const Checkout = () => {
               <div className="flex justify-between mb-2">
                 <p>Items:</p>
               </div>
-              <div className="justify-between mb-4">
+              <div className="justify-between mb-4 h-[5.5rem] overflow-scroll">
                 {cart.map((product, id) => (
                   <div key={id} className="pl-8">
                     <h1 className="font-semibold mb-2 truncate">
@@ -377,7 +367,7 @@ const Checkout = () => {
                 <div className="py-2 w-full mobileL:pl-2 mobileL:py-0">
                   <h1 className="font-semibold mb-1">{product.title}</h1>
                   <p className="flex items-center mb-1">
-                    <span className="font-semibold ml-1 text-red-600">
+                    <span className="font-semibold text-red-600">
                       ${product.price}
                     </span>
                   </p>
