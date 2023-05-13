@@ -17,52 +17,76 @@ import { makeStyles } from "@material-ui/styles";
 import "../forms.css";
 import { emptyCart } from "../redux/slices/cartSlice";
 
-const style = {
-  position: "absolute",
-  top: "50%",
-  left: "50%",
-  transform: "translate(-50%, -50%)",
-  width: 400,
-  bgcolor: "background.paper",
-  border: "2px solid #000",
-  boxShadow: 24,
-  p: 4,
-};
-const useStyles = makeStyles({
-  modal: {
-    display: "flex",
-    alignItems: "center",
-    justifyContent: "center",
-  },
-  paper: {
-    backgroundColor: "#fff",
-    padding: "32px",
-    marginInline: "1rem",
-    maxWidth: "600px",
-    borderRadius: "8px",
-    textAlign: "center",
-  },
-  button: {
-    marginTop: "1rem !important",
-    backgroundColor: "#0070f3",
-    color: "#fff",
-    "&:hover": {
-      backgroundColor: "#0061b8",
-    },
-  },
-});
-
 const Checkout = () => {
+  const [firstName, setFirstName] = useState("");
+  const [lastName, setLastName] = useState("");
+  const [email, setEmail] = useState("");
+  const [phoneNum, setPhoneNum] = useState("");
+  const [address, setAddress] = useState("");
+  const [apt, setApt] = useState("");
+  const [city, setCity] = useState("");
+  const [state, setState] = useState("");
+  const [zipCode, setZipCode] = useState("");
+
   const dispatch = useDispatch();
   const cart = useSelector((state) => state.cart);
   const [open, setOpen] = useState(false);
 
+  const resetFormData = () => {
+    setFirstName("");
+    setLastName("");
+    setEmail("");
+    setPhoneNum("");
+    setAddress("");
+    setApt("");
+    setCity("");
+    setState("");
+    setZipCode("");
+  };
+
   const handleSubmit = (e) => {
     e.preventDefault();
     setOpen(true);
+    resetFormData();
     dispatch(emptyCart());
   };
   const handleClose = () => setOpen(false);
+
+  const style = {
+    position: "absolute",
+    top: "50%",
+    left: "50%",
+    transform: "translate(-50%, -50%)",
+    width: 400,
+    bgcolor: "background.paper",
+    border: "2px solid #000",
+    boxShadow: 24,
+    p: 4,
+  };
+
+  const useStyles = makeStyles({
+    modal: {
+      display: "flex",
+      alignItems: "center",
+      justifyContent: "center",
+    },
+    paper: {
+      backgroundColor: "#fff",
+      padding: "32px",
+      marginInline: "1rem",
+      maxWidth: "600px",
+      borderRadius: "8px",
+      textAlign: "center",
+    },
+    button: {
+      marginTop: "1rem !important",
+      backgroundColor: "#0070f3",
+      color: "#fff",
+      "&:hover": {
+        backgroundColor: "#0061b8",
+      },
+    },
+  });
 
   const classes = useStyles();
   const states = [
@@ -158,30 +182,68 @@ const Checkout = () => {
           <div className="order-2 mt-6 md:mt-0 md:order-1 md:col-span-2">
             <h2 className="text-lg leading-5">1. Delivery Information</h2>
             <div className="w-full mt-5 grid gap-5 mobileM:grid-cols-2">
-              <TextField label="First Name" type="text" required />
-              <TextField label="Last Name" type="text" required />
+              <TextField
+                label="First Name"
+                type="text"
+                value={firstName}
+                onChange={(e) => setFirstName(e.target.value)}
+                required
+              />
+              <TextField
+                label="Last Name"
+                type="text"
+                value={lastName}
+                onChange={(e) => setLastName(e.target.value)}
+                required
+              />
             </div>
             <div className="w-full mt-5 grid gap-5 mobileM:grid-cols-2">
-              <TextField label="Email" type="email" required />
-              <TextField label="Phone Number" type="tel" required />
+              <TextField
+                label="Email"
+                type="email"
+                value={email}
+                onChange={(e) => setEmail(e.target.value)}
+                required
+              />
+              <TextField
+                label="Phone Number"
+                type="number"
+                value={phoneNum}
+                onChange={(e) => setPhoneNum(e.target.value)}
+                required
+              />
             </div>
             <div className="w-full mt-5 grid gap-5 mobileM:grid-cols-2 md:grid-cols-1">
-              <TextField label="Street Address" type="text" required />
-              <TextField label="Apt, suite, etc (optional)" type="text" />
+              <TextField
+                label="Street Address"
+                type="text"
+                value={address}
+                onChange={(e) => setAddress(e.target.value)}
+                required
+              />
+              <TextField
+                label="Apt, suite, etc (optional)"
+                type="text"
+                value={apt}
+                onChange={(e) => setApt(e.target.value)}
+              />
             </div>
             <div className="w-full mt-5 grid gap-5 grid-cols-5 mobileXl:grid-cols-4 md:grid-cols-5">
               <TextField
                 label="City"
                 type="text"
                 className="col-span-5 mobileXl:col-span-2 md:col-span-5 lg:col-span-2"
+                value={city}
+                onChange={(e) => setCity(e.target.value)}
                 required
               />
               <TextField
                 select
                 label="State"
                 className="col-span-3 mobileXl:col-span-1 md:col-span-3 lg:col-span-2"
+                value={state}
+                onChange={(e) => setState(e.target.value)}
                 required
-                defaultValue=""
               >
                 {states.map((state, idx) => (
                   <MenuItem key={idx} value={state}>
@@ -193,6 +255,8 @@ const Checkout = () => {
                 label="ZIP Code"
                 type="number"
                 className="col-span-2 mobileXl:col-span-1 md:col-span-2 lg:col-span-1"
+                value={zipCode}
+                onChange={(e) => setZipCode(e.target.value)}
                 required
               />
             </div>
