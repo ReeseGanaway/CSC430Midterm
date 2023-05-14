@@ -7,7 +7,7 @@ import Rating from "@mui/material/Rating";
 import Modal from "@mui/material/Modal";
 import { CgClose } from "react-icons/cg";
 import { useSelector, useDispatch } from "react-redux";
-import { addToCart, removeFromCart } from "../redux/slices/cartSlice";
+import { addToCart } from "../redux/slices/cartSlice";
 
 const SearchBar = () => {
   const dispatch = useDispatch();

@@ -1,8 +1,7 @@
-import { Fragment } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import Rating from "@mui/material/Rating";
 import { useNavigate } from "react-router-dom";
-import { emptyCart } from "../redux/slices/cartSlice";
+import { emptyCart, removeProductFromCart } from "../redux/slices/cartSlice";
 
 function Cart() {
   const navigate = useNavigate();
@@ -23,7 +22,7 @@ function Cart() {
         {cart.map((product, id) => (
           <div
             key={id}
-            className="grid border border-zinc-300 rounded p-3 shadow"
+            className="grid border border-zinc-300 rounded p-3 shadow max-w-[20rem]"
           >
             <img
               src={product.image}
@@ -48,7 +47,13 @@ function Cart() {
               />
               <span className="pl-1">({product.rating.count})</span>
             </p>
-            <p className="flex mb-2">Quantity: {product.quantity}</p>
+            <p className="flex my-2">Quantity: {product.quantity}</p>
+            <button
+              className="bg-orange-500 hover:bg-orange-700 py-2 mt-auto rounded-md text-white"
+              onClick={() => dispatch(removeProductFromCart(cart[id]))}
+            >
+              Delete
+            </button>
           </div>
         ))}
       </div>
@@ -80,7 +85,7 @@ function Cart() {
                 </button>
               </div>
             ) : (
-              <button className="bg-blue-500 text-white font-bold py-2 px-4 rounded opacity-50 cursor-not-allowed">
+              <button className="bg-blue-500 text-white font-bold py-2 px-4 rounded opacity-80 cursor-not-allowed">
                 No items in cart
               </button>
             )}

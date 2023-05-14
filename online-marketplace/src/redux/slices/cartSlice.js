@@ -1,4 +1,4 @@
-import { createSlice } from "@reduxjs/toolkit";
+import { createSlice, current } from "@reduxjs/toolkit";
 
 const initialState = [];
 
@@ -16,12 +16,11 @@ export const cart = createSlice({
       action.payload.quantity = 1;
       state.push(action.payload);
     },
-    removeFromCart(state, action) {
-      for (i = 0; i < state.length; i++) {
-        if (state[i] === action.payload) {
-          state = state.splice(i, i);
-        }
-      }
+    removeProductFromCart(state, action) {
+      const index = current(state)
+        .map((e) => e.id)
+        .indexOf(action.payload.id);
+      state.splice(index, 1);
     },
     emptyCart() {
       return initialState;
@@ -29,4 +28,4 @@ export const cart = createSlice({
   },
 });
 
-export const { addToCart, removeFromCart, emptyCart } = cart.actions;
+export const { addToCart, removeProductFromCart, emptyCart } = cart.actions;
