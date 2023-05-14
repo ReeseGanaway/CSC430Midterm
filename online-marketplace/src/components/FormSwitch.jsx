@@ -99,7 +99,7 @@ function FormSwitch() {
     setLogSubmitSuccess(false);
     setSubmitErrorLog("");
 
-    const loginResponse = await loginUser(email, password, username);
+    const loginResponse = await loginUser(username, email, password);
 
     if (loginResponse.success) {
       setLogSubmitSuccess(true);
