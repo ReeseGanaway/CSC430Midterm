@@ -18,7 +18,7 @@ function Cart() {
     return subtotal.toFixed(2);
   };
   return (
-    <div className="grid grid-cols-2 gap-4">
+    <div className="grid grid-cols-[1fr,260px] gap-4 ">
       <div className="grid grid-cols-1 mobileM:grid-cols-[repeat(auto-fit,minmax(14rem,1fr))] gap-4">
         {cart.map((product, id) => (
           <div
@@ -52,40 +52,38 @@ function Cart() {
           </div>
         ))}
       </div>
-      <div className="w-full flex flex-col items-end">
-        <div className="border border-zinc-300 rounded max-w-sm h-max shadow-[0_0_5px_rgba(0,0,0,0.2)] justify-self-center md:justify-self-end order-1 md:order-2 md:min-w-[24rem] mb-10">
+      <div className="w-max h-max grid">
+        <div className="w-max border border-zinc-300 rounded max-w-sm shadow-[0_0_5px_rgba(0,0,0,0.2)] justify-self-center md:justify-self-end order-1 md:order-2">
           <h2 className="text-lg font-semibold p-3 border-b">
             Subtotal ({cart.length} {cart.length > 1 ? "items" : "item"}): $
             {getSubTotal()}
           </h2>
           <div className="m-3 text-center">
             {cart.length > 0 ? (
-              <button
-                onClick={() => {
-                  navigate(user.email ? "/checkout" : "/login");
-                }}
-                className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
-                disabled={cart.length === 0}
-              >
-                Proceed To Checkout
-              </button>
+              <div className="flex flex-col gap-4">
+                <button
+                  onClick={() => {
+                    navigate(user.email ? "/checkout" : "/login");
+                  }}
+                  className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
+                  disabled={cart.length === 0}
+                >
+                  Proceed To Checkout
+                </button>
+                <button
+                  className="bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded"
+                  onClick={() => {
+                    dispatch(emptyCart());
+                  }}
+                >
+                  Empty Cart
+                </button>
+              </div>
             ) : (
               <button className="bg-blue-500 text-white font-bold py-2 px-4 rounded opacity-50 cursor-not-allowed">
                 No items in cart
               </button>
             )}
-          </div>
-        </div>
-        <div className="border border-zinc-300 rounded max-w-sm h-max shadow-[0_0_5px_rgba(0,0,0,0.2)] justify-self-center md:justify-self-end order-1 md:order-2 md:min-w-[24rem] flex flex-col items-center">
-          <div className="m-3 text-center">
-            <button
-              className="bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded"
-              onClick={() => {
-                dispatch(emptyCart());
-              }}
-            >
-              Empty Cart
-            </button>
           </div>
         </div>
       </div>
