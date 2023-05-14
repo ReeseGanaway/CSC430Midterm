@@ -106,6 +106,7 @@ function FormSwitch() {
       <Alert variant="filled" severity="success">
         Welcome! You have successfully logged in! Proceed to our store!
       </Alert>;
+      dispatch(login(loginResponse.data.user.email));
       setTimeout(() => {
         if (
           location.state &&

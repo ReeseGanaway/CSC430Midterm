@@ -163,11 +163,10 @@ const Checkout = () => {
     }
     return subtotal.toFixed(2);
   };
-  console.log(user);
 
   return (
     <>
-      {user === null ? (
+      {user.email === "" ? (
         <div className="flex flex-col text-center min-h-[calc(100vh-7rem)] mt-5">
           <h1 className="font-semibold text-2xl text-red-600">
             You are not logged in!
