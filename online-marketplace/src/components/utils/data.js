@@ -1,4 +1,5 @@
 import supabase from "./supabase";
+import bcrypt from "bcryptjs";
 
 const registerUser = async (email, password, username) => {
   const { data, error } = await supabase
@@ -73,6 +74,8 @@ const registerUser = async (email, password, username) => {
   }
 };
 
+
+
 const loginUser = async (username, email, password) => {
   const authResponse = await supabase.auth.signInWithPassword({
     username,
@@ -88,23 +91,33 @@ const loginUser = async (username, email, password) => {
   }
 
   if (authResponse.data.user) {
-    const meta = await supabase
+    const user = await supabase
       .from("users")
       .select("*")
       .eq("username", username)
       .eq("email", email)
-      .eq("password", password);
+      .eq("password", password)
+      .single();
 
-    if (meta.error) {
+    if (!user) {
       return {
         success: false,
-        error: meta.error,
+        message: "User not found",
+      };
+    }
+
+    const passwordMatch = await bcrypt.compare(password, user.password);
+
+    if (!passwordMatch) {
+      return {
+        success: false,
+        message: "Invalid password",
       };
     }
 
     return {
       ...authResponse,
-      meta,
+      user,
       success: true,
     };
   }
@@ -114,5 +127,6 @@ const loginUser = async (username, email, password) => {
     message: "An unknown error has occurred",
   };
 };
+
 
 export { registerUser, loginUser };
