@@ -31,3 +31,8 @@
   max-height: 10rem;
   max-inline-size: 10rem;
 }
+
+.text-underline {
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}
