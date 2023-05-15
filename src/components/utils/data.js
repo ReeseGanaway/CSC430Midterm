@@ -146,7 +146,7 @@ const loginUser = async (username, email, password) => {
   if (authResponse.error) {
     return {
       success: false,
-      error: authResponse.error,
+      error: authResponse.error.message,
     };
   }
 

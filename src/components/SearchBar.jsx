@@ -126,7 +126,7 @@ const SearchBar = () => {
 
       <Snackbar open={open} autoHideDuration={6000} onClose={handleClose}>
         <Alert onClose={handleClose} severity="success" sx={{ width: "100%" }}>
-       {count} Item(s) added to the cart!
+          {count} Item(s) added to the cart!
         </Alert>
       </Snackbar>
       <div className="grid gap-6 grid-cols-1 mobileM:grid-cols-[repeat(auto-fit,minmax(14rem,1fr))]">
@@ -236,12 +236,11 @@ const SearchBar = () => {
                     </span>
                   </div>
                   <button
-        className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded mt-2"
-        onClick={handleButtonClick}
-      >
-        Add To Cart
-      </button>
-
+                    className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded mt-2"
+                    onClick={handleButtonClick}
+                  >
+                    Add To Cart
+                  </button>
                 </div>
               </div>
             </div>
