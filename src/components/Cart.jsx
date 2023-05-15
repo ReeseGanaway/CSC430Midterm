@@ -1,13 +1,48 @@
 import { useSelector, useDispatch } from "react-redux";
+import { useState} from "react"
 import Rating from "@mui/material/Rating";
 import { useNavigate } from "react-router-dom";
 import { emptyCart, removeProductFromCart } from "../redux/slices/cartSlice";
+import * as React from 'react';
+import Stack from '@mui/material/Stack';
+import Button from '@mui/material/Button';
+import Snackbar from '@mui/material/Snackbar';
+import MuiAlert from '@mui/material/Alert';
+
+const Alert = React.forwardRef(function Alert(props, ref) {
+  return <MuiAlert elevation={6} ref={ref} variant="filled" {...props} />;
+});
 
 function Cart() {
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const cart = useSelector((state) => state.cart);
   const user = useSelector((state) => state.user);
+  const [count, setCount] = useState(0);
+  const [open, setOpen] = React.useState(false);
+  const [empty, setEmpty] = React.useState(false);
+  const handleDelete = () => {
+    setOpen(true);
+    setCount(count + 1); 
+  };
+
+  const handleClose = (event, reason) => {
+    if (reason === 'clickaway') {
+      return;
+    }
+    setOpen(false);
+  };
+
+  const handleEmptyCart = () => {
+    setEmpty(true);
+  };
+
+  const handleCloseEmptyCart = (event, reason) => {
+    if (reason === 'clickaway') {
+      return;
+    }
+    setEmpty(false);
+  };
 
   const getSubTotal = () => {
     let subtotal = 0;
@@ -17,7 +52,19 @@ function Cart() {
     return subtotal.toFixed(2);
   };
   return (
+    
     <div className="grid grid-cols-[1fr,260px] gap-4 ">
+        <Snackbar open={open} autoHideDuration={6000} onClose={handleClose}>
+        <Alert onClose={handleClose} severity="success" sx={{ width: "100%" }}>
+       {count} Item(s) deleted from the cart!
+        </Alert>
+      </Snackbar>
+
+      <Snackbar open={empty} autoHideDuration={6000} onClose={handleCloseEmptyCart}>
+        <Alert onClose={handleCloseEmptyCart} severity="success" sx={{ width: "100%" }}>
+        Cart is empty!
+        </Alert>
+      </Snackbar>
       <div className="grid grid-cols-1 mobileM:grid-cols-[repeat(auto-fit,minmax(14rem,1fr))] gap-4">
         {cart.map((product, id) => (
           <div
@@ -49,11 +96,14 @@ function Cart() {
             </p>
             <p className="flex my-2">Quantity: {product.quantity}</p>
             <button
-              className="bg-orange-500 hover:bg-orange-700 py-2 mt-auto rounded-md text-white"
-              onClick={() => dispatch(removeProductFromCart(cart[id]))}
-            >
-              Delete
-            </button>
+  className="bg-orange-500 hover:bg-orange-700 py-2 mt-auto rounded-md text-white"
+  onClick={() => {
+    dispatch(removeProductFromCart(cart[id]));
+    handleDelete();
+  }}
+>
+  Delete
+</button>
           </div>
         ))}
       </div>
@@ -79,6 +129,7 @@ function Cart() {
                   className="bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded"
                   onClick={() => {
                     dispatch(emptyCart());
+                    handleEmptyCart();
                   }}
                 >
                   Empty Cart

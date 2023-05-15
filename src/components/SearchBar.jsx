@@ -8,6 +8,16 @@ import Modal from "@mui/material/Modal";
 import { CgClose } from "react-icons/cg";
 import { useSelector, useDispatch } from "react-redux";
 import { addToCart } from "../redux/slices/cartSlice";
+import * as React from 'react';
+import Stack from '@mui/material/Stack';
+import Button from '@mui/material/Button';
+import Snackbar from '@mui/material/Snackbar';
+import MuiAlert from '@mui/material/Alert';
+
+const Alert = React.forwardRef(function Alert(props, ref) {
+  return <MuiAlert elevation={6} ref={ref} variant="filled" {...props} />;
+});
+
 
 const SearchBar = () => {
   const dispatch = useDispatch();
@@ -15,6 +25,30 @@ const SearchBar = () => {
   const cart = useSelector((state) => state.cart);
   const [searchTerm, setSearchTerm] = useState("");
   const [selectedProduct, setSelectedProduct] = useState(null);
+  const [count, setCount] = useState(0);
+  const [open, setOpen] = React.useState(false);
+
+  const handleClick = () => {
+    setOpen(true);
+  };
+
+  const handleAddToCart = () => {
+    setCount(count + 1);
+    dispatch(addToCart(selectedProduct));
+  };
+
+  const handleButtonClick = () => {
+    handleAddToCart();
+    handleClick();
+  };
+  
+  const handleClose = (event, reason) => {
+    if (reason === 'clickaway') {
+      return;
+    }
+
+    setOpen(false);
+  };
 
   const filteredProducts = products.filter((product) =>
     product.title.toLowerCase().includes(searchTerm.toLowerCase())
@@ -90,6 +124,11 @@ const SearchBar = () => {
         </IconButton>
       </Paper>
 
+      <Snackbar open={open} autoHideDuration={6000} onClose={handleClose}>
+        <Alert onClose={handleClose} severity="success" sx={{ width: "100%" }}>
+       {count} Item(s) added to the cart!
+        </Alert>
+      </Snackbar>
       <div className="grid gap-6 grid-cols-1 mobileM:grid-cols-[repeat(auto-fit,minmax(14rem,1fr))]">
         {filteredProducts.map((product, idx) => (
           <div
@@ -197,13 +236,12 @@ const SearchBar = () => {
                     </span>
                   </div>
                   <button
-                    className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded mt-2"
-                    onClick={() => {
-                      dispatch(addToCart(selectedProduct));
-                    }}
-                  >
-                    Add To Cart
-                  </button>
+        className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded mt-2"
+        onClick={handleButtonClick}
+      >
+        Add To Cart
+      </button>
+
                 </div>
               </div>
             </div>

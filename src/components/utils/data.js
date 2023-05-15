@@ -40,9 +40,12 @@ const registerUser = async (email, password, username) => {
     };
   }
 
+  const salt = await bcrypt.genSalt(10);
+  const hashedPassword = await bcrypt.hash(password, salt);
+
   const authResponse = await supabase.auth.signUp({
     email,
-    password,
+    password: hashedPassword,
     username,
   });
 
@@ -56,9 +59,7 @@ const registerUser = async (email, password, username) => {
   if (authResponse.data.user.email !== null) {
     const addMetaResponse = await supabase
       .from("users")
-      .insert([
-        { userId: authResponse.data.user.id, username, email, password },
-      ]);
+      .insert([{ userId: authResponse.data.user.id, username, email, password: hashedPassword }]);
 
     if (addMetaResponse.error) {
       return {
@@ -73,7 +74,6 @@ const registerUser = async (email, password, username) => {
     };
   }
 };
-
 
 
 const loginUser = async (username, email, password) => {
