@@ -52,17 +52,24 @@ function Cart() {
     return subtotal.toFixed(2);
   };
   return (
-    
     <div className="grid grid-cols-[1fr,260px] gap-4 ">
-        <Snackbar open={open} autoHideDuration={6000} onClose={handleClose}>
-        <Alert onClose={handleClose} severity="success" sx={{ width: "100%" }}>
-       {count} Item(s) deleted from the cart!
+      <Snackbar open={open} autoHideDuration={6000} onClose={handleClose}>
+        <Alert onClose={handleClose} severity="warning" sx={{ width: "100%" }}>
+          {count} Item(s) deleted from the cart!
         </Alert>
       </Snackbar>
 
-      <Snackbar open={empty} autoHideDuration={6000} onClose={handleCloseEmptyCart}>
-        <Alert onClose={handleCloseEmptyCart} severity="success" sx={{ width: "100%" }}>
-        Cart is empty!
+      <Snackbar
+        open={empty}
+        autoHideDuration={6000}
+        onClose={handleCloseEmptyCart}
+      >
+        <Alert
+          onClose={handleCloseEmptyCart}
+          severity="error"
+          sx={{ width: "100%" }}
+        >
+          Cart is empty!
         </Alert>
       </Snackbar>
       <div className="grid grid-cols-1 mobileM:grid-cols-[repeat(auto-fit,minmax(14rem,1fr))] gap-4">
@@ -96,14 +103,14 @@ function Cart() {
             </p>
             <p className="flex my-2">Quantity: {product.quantity}</p>
             <button
-  className="bg-orange-500 hover:bg-orange-700 py-2 mt-auto rounded-md text-white"
-  onClick={() => {
-    dispatch(removeProductFromCart(cart[id]));
-    handleDelete();
-  }}
->
-  Delete
-</button>
+              className="bg-orange-500 hover:bg-orange-700 py-2 mt-auto rounded-md text-white"
+              onClick={() => {
+                dispatch(removeProductFromCart(cart[id]));
+                handleDelete();
+              }}
+            >
+              Delete
+            </button>
           </div>
         ))}
       </div>
