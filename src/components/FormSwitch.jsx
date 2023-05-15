@@ -121,7 +121,7 @@ function FormSwitch() {
     } else if (!loginResponse.success) {
       setSubmitErrorLog(
         <Alert variant="filled" severity="error">
-          {loginResponse.error.message}
+          {loginResponse.error}
         </Alert>
       );
     }
@@ -174,7 +174,6 @@ function FormSwitch() {
                 sx={{ color: "action.active", mr: 1, my: 3.5 }}
               />
               <TextField
-                id="input-with-sx"
                 label="Username"
                 variant="standard"
                 type="Usermame"
@@ -184,7 +183,6 @@ function FormSwitch() {
               />
               <EmailIcon sx={{ color: "action.active", mr: 1, my: 3.5 }} />
               <TextField
-                id="input-with-sx"
                 label="E-mail"
                 variant="standard"
                 type="email"
@@ -269,7 +267,6 @@ function FormSwitch() {
                   sx={{ color: "action.active", mr: 1, my: 3.5 }}
                 />
                 <TextField
-                  id="input-with-sx"
                   label="Username"
                   variant="standard"
                   type="Usermame"

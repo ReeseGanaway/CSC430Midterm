@@ -57,9 +57,14 @@ const registerUser = async (email, password, username) => {
   }
 
   if (authResponse.data.user.email !== null) {
-    const addMetaResponse = await supabase
-      .from("users")
-      .insert([{ userId: authResponse.data.user.id, username, email, password: hashedPassword }]);
+    const addMetaResponse = await supabase.from("users").insert([
+      {
+        userId: authResponse.data.user.id,
+        username,
+        email,
+        password: hashedPassword,
+      },
+    ]);
 
     if (addMetaResponse.error) {
       return {
@@ -75,14 +80,69 @@ const registerUser = async (email, password, username) => {
   }
 };
 
-
 const loginUser = async (username, email, password) => {
+  const getUserByUsername = await supabase
+    .from("users")
+    .select()
+    .eq("username", username);
+  if (getUserByUsername.error) {
+    return {
+      success: false,
+      error: getUserByUsername.error,
+    };
+  }
+  if (getUserByUsername.data.length === 0) {
+    return {
+      success: false,
+      error: "Invalid username",
+    };
+  }
+
+  const getUserByEmail = await supabase
+    .from("users")
+    .select()
+    .eq("email", email);
+  if (getUserByEmail.error) {
+    return {
+      success: false,
+      error: getUserByEmail.error,
+    };
+  }
+  if (getUserByEmail.data.length === 0) {
+    return {
+      success: false,
+      error: "Invalid email",
+    };
+  }
+
+  const getUserEncryptedPassword = await supabase
+    .from("users")
+    .select()
+    .eq("username", username)
+    .eq("email", email);
+  if (getUserEncryptedPassword.error) {
+    return {
+      success: false,
+      error: getUserEncryptedPassword.error,
+    };
+  }
+
+  const passwordMatch = await bcrypt.compare(
+    password,
+    getUserEncryptedPassword.data[0].password
+  );
+  if (!passwordMatch) {
+    return {
+      success: false,
+      error: "Invalid password",
+    };
+  }
+
   const authResponse = await supabase.auth.signInWithPassword({
     username,
     email,
-    password,
+    password: getUserEncryptedPassword.data[0].password,
   });
-
   if (authResponse.error) {
     return {
       success: false,
@@ -90,43 +150,16 @@ const loginUser = async (username, email, password) => {
     };
   }
 
-  if (authResponse.data.user) {
-    const user = await supabase
-      .from("users")
-      .select("*")
-      .eq("username", username)
-      .eq("email", email)
-      .eq("password", password)
-      .single();
-
-    if (!user) {
-      return {
-        success: false,
-        message: "User not found",
-      };
-    }
-
-    const passwordMatch = await bcrypt.compare(password, user.password);
-
-    if (!passwordMatch) {
-      return {
-        success: false,
-        message: "Invalid password",
-      };
-    }
-
+  if (authResponse.data.user !== null) {
     return {
       ...authResponse,
-      user,
       success: true,
     };
   }
-
   return {
     success: false,
     message: "An unknown error has occurred",
   };
 };
-
 
 export { registerUser, loginUser };
