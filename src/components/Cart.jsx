@@ -8,6 +8,7 @@ import Stack from '@mui/material/Stack';
 import Button from '@mui/material/Button';
 import Snackbar from '@mui/material/Snackbar';
 import MuiAlert from '@mui/material/Alert';
+import CheckCircleOutlineIcon from '@mui/icons-material/CheckCircleOutline';
 
 const Alert = React.forwardRef(function Alert(props, ref) {
   return <MuiAlert elevation={6} ref={ref} variant="filled" {...props} />;
@@ -53,12 +54,16 @@ function Cart() {
   };
   return (
     <div className="grid grid-cols-[1fr,260px] gap-4 ">
-      <Snackbar open={open} autoHideDuration={6000} onClose={handleClose}>
-        <Alert onClose={handleClose} severity="warning" sx={{ width: "100%" }}>
+        <Snackbar open={open} autoHideDuration={6000} onClose={handleClose}>
+        <Alert
+          onClose={handleClose}
+          severity="warning"
+          sx={{ width: "100%" }}
+          icon={<CheckCircleOutlineIcon color="white" />}
+        >
           {count} Item(s) deleted from the cart!
         </Alert>
       </Snackbar>
-
       <Snackbar
         open={empty}
         autoHideDuration={6000}
@@ -68,6 +73,7 @@ function Cart() {
           onClose={handleCloseEmptyCart}
           severity="error"
           sx={{ width: "100%" }}
+         icon={<CheckCircleOutlineIcon color="white" />}
         >
           Cart is empty!
         </Alert>
