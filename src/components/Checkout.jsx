@@ -29,6 +29,7 @@ const Checkout = () => {
   const [city, setCity] = useState("");
   const [state, setState] = useState("");
   const [zipCode, setZipCode] = useState("");
+  const [userOrder, setUserOrder] = useState(false);
 
   const dispatch = useDispatch();
   const cart = useSelector((state) => state.cart);
@@ -51,6 +52,7 @@ const Checkout = () => {
     e.preventDefault();
     setModalOpen(true);
     resetFormData();
+    setUserOrder(true);
     dispatch(emptyCart());
   };
   const handleClose = () => setModalOpen(false);
@@ -164,6 +166,7 @@ const Checkout = () => {
     return subtotal.toFixed(2);
   };
 
+  console.log(user.email)
   return (
     <>
       {user.email === "" ? (
@@ -187,7 +190,7 @@ const Checkout = () => {
             alt="Image of an empty cart"
           />
         </div>
-      ) : cart.length === 0 ? (
+      ) : cart.length === 0 && userOrder === false ? (
         <div className="flex flex-col text-center min-h-[calc(100vh-7rem)] mt-5">
           <h1 className="font-semibold text-2xl text-red-600">
             Your cart is empty
@@ -205,7 +208,7 @@ const Checkout = () => {
             alt="Image of an empty cart"
           />
         </div>
-      ) : user !== null && cart.length > 0 ? (
+      ) : user.email !== "" ? (
         <div className="flex flex-col min-h-screen">
           <main>
             {" "}
